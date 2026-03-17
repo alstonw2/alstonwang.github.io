@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alston Wang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&family=Outfit:wght@200;300;400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F7F5F2;
+      --ink: #1A1916;
+      --muted: #9A9690;
+      --accent: #C4571A;
+      --line: #E2DED8;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --mono: 'DM Mono', monospace;
+      --sans: 'Outfit', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── CURSOR ── */
+    * { cursor: none; }
+    #cursor {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      transform: translate(-50%, -50%);
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 32px; height: 32px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.4;
+      transition: transform 0.4s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+      transform: translate(-50%, -50%);
+    }
+    a:hover ~ #cursor, button:hover ~ #cursor { transform: translate(-50%, -50%) scale(2.5); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 56px;
+      mix-blend-mode: multiply;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+      padding: 0 56px 80px;
+      position: relative;
+    }
+    .hero-left {
+      padding-bottom: 8px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.2s forwards;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(4rem, 8vw, 7.5rem);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--muted);
+    }
+    .hero-right {
+      padding-left: 48px;
+      border-left: 1px solid var(--line);
+      opacity: 0;
+      animation: fadeUp 1s ease 0.5s forwards;
+    }
+    .hero-bio {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: #4A4845;
+      max-width: 420px;
+      margin-bottom: 40px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.2s forwards;
+    }
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 48px;
+      background: var(--muted);
+      animation: lineGrow 1.5s ease 1.4s infinite alternate;
+    }
+    @keyframes lineGrow {
+      from { height: 24px; opacity: 0.3; }
+      to { height: 48px; opacity: 0.8; }
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--line);
+      margin: 0 56px;
+      width: calc(100% - 112px);
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 120px 56px;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 72px;
+    }
+    .section-number {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1;
+    }
+    .section-title em { font-style: italic; color: var(--muted); }
+
+    /* ── ABOUT ── */
+    #about .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: #4A4845;
+      margin-bottom: 24px;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+    .stat-card {
+      background: var(--bg);
+      padding: 32px 28px;
+    }
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 3rem;
+      font-weight: 300;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .about-experience {
+      margin-top: 48px;
+      padding-top: 48px;
+      border-top: 1px solid var(--line);
+    }
+    .exp-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 24px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-period {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      padding-top: 3px;
+    }
+    .exp-role {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .exp-company {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── PHOTOGRAPHY ── */
+    #photography {
+      background: var(--ink);
+      color: var(--bg);
+      margin: 0;
+      padding: 120px 56px;
+    }
+    #photography .section-title { color: var(--bg); }
+    #photography .section-title em { color: var(--muted); }
+    .photo-intro {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #8A8680;
+      max-width: 520px;
+      margin-bottom: 72px;
+    }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: repeat(3, 220px);
+      gap: 4px;
+    }
+    .photo-cell {
+      overflow: hidden;
+      position: relative;
+      background: #2A2925;
+    }
+    .photo-cell:nth-child(1) { grid-column: 1 / 6; grid-row: 1 / 3; }
+    .photo-cell:nth-child(2) { grid-column: 6 / 9; grid-row: 1 / 2; }
+    .photo-cell:nth-child(3) { grid-column: 9 / 13; grid-row: 1 / 2; }
+    .photo-cell:nth-child(4) { grid-column: 6 / 10; grid-row: 2 / 3; }
+    .photo-cell:nth-child(5) { grid-column: 10 / 13; grid-row: 2 / 3; }
+    .photo-cell:nth-child(6) { grid-column: 1 / 5; grid-row: 3 / 4; }
+    .photo-cell:nth-child(7) { grid-column: 5 / 9; grid-row: 3 / 4; }
+    .photo-cell:nth-child(8) { grid-column: 9 / 13; grid-row: 3 / 4; }
+
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: background 0.3s ease;
+    }
+    .photo-cell:hover .photo-placeholder { background: #363530; }
+    .photo-icon {
+      width: 28px; height: 28px;
+      opacity: 0.2;
+    }
+    .photo-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #5A5950;
+    }
+    .photo-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+      opacity: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+      transition: opacity 0.3s ease;
+    }
+    .photo-cell:hover .photo-overlay { opacity: 1; }
+    .photo-caption {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .photo-cta {
+      margin-top: 48px;
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bg);
+      text-decoration: none;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #4A4845;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .photo-cta:hover { color: var(--accent); border-color: var(--accent); }
+    .photo-cta::after { content: '→'; }
+
+    /* ── REMNANT ── */
+    #remnant {
+      padding: 120px 56px;
+    }
+    .remnant-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .remnant-tagline {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 300;
+      line-height: 1.35;
+      color: var(--ink);
+      margin-bottom: 32px;
+    }
+    .remnant-tagline em { font-style: italic; color: var(--accent); }
+    .remnant-desc {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: #4A4845;
+      margin-bottom: 48px;
+    }
+    .remnant-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .pillar {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 20px;
+      padding: 24px;
+      background: #F0EDE8;
+      align-items: start;
+      transition: background 0.2s;
+    }
+    .pillar:hover { background: #E8E4DE; }
+    .pillar-num {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .pillar-title {
+      font-size: 0.85rem;
+      font-weight: 400;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .pillar-desc {
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+    .remnant-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #4CAF50;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .remnant-waitlist {
+      display: flex;
+      gap: 0;
+      max-width: 420px;
+    }
+    .remnant-waitlist input {
+      flex: 1;
+      padding: 14px 20px;
+      border: 1px solid var(--line);
+      border-right: none;
+      background: white;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .remnant-waitlist input::placeholder { color: var(--muted); }
+    .remnant-waitlist input:focus { border-color: var(--ink); }
+    .remnant-waitlist button {
+      padding: 14px 24px;
+      background: var(--ink);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid var(--ink);
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .remnant-waitlist button:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .remnant-logo-area {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 40px;
+    }
+    .remnant-wordmark {
+      font-family: var(--serif);
+      font-size: clamp(5rem, 10vw, 9rem);
+      font-weight: 300;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .remnant-wordmark span {
+      display: block;
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.6em;
+    }
+    .remnant-visual {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: #F0EDE8;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .remnant-visual-inner {
+      text-align: center;
+    }
+    .remnant-glyph {
+      font-family: var(--serif);
+      font-size: 8rem;
+      color: var(--line);
+      line-height: 1;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .remnant-visual-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 56px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--ink); }
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--line);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 24px 28px; }
+      #home { grid-template-columns: 1fr; padding: 120px 28px 80px; gap: 48px; }
+      .hero-right { padding-left: 0; border-left: none; border-top: 1px solid var(--line); padding-top: 48px; }
+      section { padding: 80px 28px; }
+      #photography { padding: 80px 28px; }
+      #about .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .remnant-layout { grid-template-columns: 1fr; gap: 56px; }
+      .photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .photo-cell { grid-column: auto !important; grid-row: auto !important; height: 180px; }
+      footer { flex-direction: column; gap: 24px; text-align: center; padding: 40px 28px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#home" class="nav-logo">Alston Wang</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#photography">Photography</a></li>
+      <li><a href="#remnant">Remnant</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Product · Photography · Preservation</p>
+      <h1 class="hero-name">Alston<br><em>Wang</em></h1>
+    </div>
+    <div class="hero-right">
+      <p class="hero-bio">
+        Program manager, photographer, and founder. Based in the Pacific Northwest — building products that sit at the intersection of technology, culture, and the things worth remembering.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">Cornell '19</span>
+        <span class="tag">Ex-Amazon</span>
+        <span class="tag">AWS Sales</span>
+        <span class="tag">Founder @ Remnant</span>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header reveal">
+      <span class="section-number">01</span>
+      <h2 class="section-title">About <em>me</em></h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          I'm a product thinker and program manager with five years at Amazon — first in AWS Sales serving the gaming industry, then as a Program Manager at Amazon Business building the systems and processes that keep teams moving.
+        </p>
+        <p>
+          My work lives at the intersection of people and process: understanding what a team needs, designing how it should work, and making decisions that hold up under pressure. I've collaborated closely with engineers without being one — which means I know how to speak both languages.
+        </p>
+        <p>
+          Outside of work, I spend time behind a camera and thinking about what we leave behind. That second obsession led me to found Remnant — a platform for cultural preservation and legacy, starting with Chinese heritage.
+        </p>
+        <div class="about-experience">
+          <div class="exp-item">
+            <span class="exp-period">2022 – 2024</span>
+            <div>
+              <div class="exp-role">Program Manager</div>
+              <div class="exp-company">Amazon Business</div>
+            </div>
+          </div>
+          <div class="exp-item">
+            <span class="exp-period">2019 – 2022</span>
+            <div>
+              <div class="exp-role">AWS Sales — Gaming</div>
+              <div class="exp-company">Amazon Web Services</div>
+            </div>
+          </div>
+          <div class="exp-item">
+            <span class="exp-period">2015 – 2019</span>
+            <div>
+              <div class="exp-role">B.S. Information Science</div>
+              <div class="exp-company">Cornell University</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-number">5</div>
+          <div class="stat-label">Years at Amazon</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2</div>
+          <div class="stat-label">Roles across AWS & Business</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Stories worth preserving</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">1</div>
+          <div class="stat-label">Startup in progress</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- PHOTOGRAPHY -->
+  <section id="photography">
+    <div class="section-header reveal">
+      <span class="section-number" style="color:#8A8680;">02</span>
+      <h2 class="section-title">Photo<em>graphy</em></h2>
+    </div>
+    <p class="photo-intro reveal">
+      A mix of everything — landscapes, streets, people, moments. Photography is how I slow down and look more carefully at the world. All shot on film and digital.
+    </p>
+    <div class="photo-grid reveal">
+      <div class="photo-cell">
+        <div class="photo-placeholder">
+          <svg class="photo-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
+            <rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/>
+            <path d="M9 6l1.5-2h3L15 6"/>
+          </svg>
+          <span class="photo-label">Add photo</span>
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Landscape</span></div>
+      </div>
+      <div class="photo-cell">
+        <div class="photo-placeholder">
+          <svg class="photo-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
+            <rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/>
+            <path d="M9 6l1.5-2h3L15 6"/>
+          </svg>
+          <span class="photo-label">Add photo</span>
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Street</span></div>
+      </div>
+      <div class="photo-cell">
+        <div class="photo-placeholder">
+          <svg class="photo-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
+            <rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/>
+            <path d="M9 6l1.5-2h3L15 6"/>
+          </svg>
+          <span class="photo-label">Add photo</span>
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Portrait</span></div>
+      </div>
+      <div class="photo-cell">
+        <div class="photo-placeholder">
+          <svg class="photo-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
+            <rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/>
+            <path d="M9 6l1.5-2h3L15 6"/>
+          </svg>
+          <span class="photo-label">Add photo</span>
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Urban</span></div>
+      </div>
+      <div class="photo-cell">
+        <div class="photo-placeholder">
+          <svg class="photo-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
+            <rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/>
+            <path d="M9 6l1.5-2h3L15 6"/>
+          </svg>
+          <span class="photo-label">Add photo</span>
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Nature</span></div>
+      </div>
+      <div class="photo-cell">
+        <div class="photo-placeholder">
+          <svg class="photo-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
+            <rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/>
+            <path d="M9 6l1.5-2h3L15 6"/>
+          </svg>
+          <span class="photo-label">Add photo</span>
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Film</span></div>
+      </div>
+      <div class="photo-cell">
+        <div class="photo-placeholder">
+          <svg class="photo-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
+            <rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/>
+            <path d="M9 6l1.5-2h3L15 6"/>
+          </svg>
+          <span class="photo-label">Add photo</span>
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Travel</span></div>
+      </div>
+      <div class="photo-cell">
+        <div class="photo-placeholder">
+          <svg class="photo-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
+            <rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/>
+            <path d="M9 6l1.5-2h3L15 6"/>
+          </svg>
+          <span class="photo-label">Add photo</span>
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Moments</span></div>
+      </div>
+    </div>
+    <a href="#" class="photo-cta reveal" style="margin-top:48px; display:inline-flex;">View full gallery</a>
+  </section>
+
+  <!-- REMNANT -->
+  <section id="remnant">
+    <div class="section-header reveal">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Rem<em>nant</em></h2>
+    </div>
+    <div class="remnant-layout">
+      <div class="reveal">
+        <div class="remnant-status">
+          <span class="status-dot"></span>
+          In development · 2025
+        </div>
+        <p class="remnant-tagline">
+          The world's first AI platform for <em>cultural preservation</em> — starting with Chinese heritage.
+        </p>
+        <p class="remnant-desc">
+          Cultures disappear not because people stop caring, but because no one ever built the right tool to capture them. Remnant is an AI-guided platform where elders share their knowledge, families preserve their stories, and nothing gets lost between generations.
+        </p>
+        <div class="remnant-pillars">
+          <div class="pillar">
+            <span class="pillar-num">I</span>
+            <div>
+              <div class="pillar-title">AI Family Storytelling</div>
+              <div class="pillar-desc">Culturally-aware prompts that capture your memories, values, and traditions — in your voice, for your grandchildren.</div>
+            </div>
+          </div>
+          <div class="pillar">
+            <span class="pillar-num">II</span>
+            <div>
+              <div class="pillar-title">End-of-Life Organization</div>
+              <div class="pillar-desc">Burial wishes, ceremony guidance, document storage — so your family isn't scrambling when it matters most.</div>
+            </div>
+          </div>
+          <div class="pillar">
+            <span class="pillar-num">III</span>
+            <div>
+              <div class="pillar-title">Cultural Preservation Archive</div>
+              <div class="pillar-desc">Every story contributed builds a living archive of Chinese cultural knowledge — regional ceremonies, traditions, language, and ritual.</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 48px;">
+          <p style="font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px;">Join the waitlist</p>
+          <div class="remnant-waitlist">
+            <input type="email" placeholder="your@email.com" />
+            <button>Notify me</button>
+          </div>
+        </div>
+      </div>
+      <div class="remnant-logo-area reveal">
+        <div class="remnant-wordmark">
+          Remnant<span>遗留</span>
+        </div>
+        <div class="remnant-visual">
+          <div class="remnant-visual-inner">
+            <span class="remnant-glyph">遗</span>
+            <p class="remnant-visual-label">yí liú — that which remains</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">Alston Wang</span>
+    <ul class="footer-links">
+      <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+      <li><a href="https://twitter.com" target="_blank">Twitter / X</a></li>
+      <li><a href="mailto:alston@alstonwang.com">Email</a></li>
+    </ul>
+    <span class="footer-copy">© 2025 Alston Wang</span>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animateCursor() {
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+    document.querySelectorAll('a, button, input').forEach(el => {
+      el.addEventListener('mouseenter', () => { ring.style.width = '56px'; ring.style.height = '56px'; ring.style.opacity = '0.2'; });
+      el.addEventListener('mouseleave', () => { ring.style.width = '32px'; ring.style.height = '32px'; ring.style.opacity = '0.4'; });
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Waitlist form
+    const btn = document.querySelector('.remnant-waitlist button');
+    const input = document.querySelector('.remnant-waitlist input');
+    btn.addEventListener('click', () => {
+      if (input.value.includes('@')) {
+        btn.textContent = 'You\'re on the list ✓';
+        btn.style.background = '#4CAF50';
+        btn.style.borderColor = '#4CAF50';
+        input.value = '';
+        input.placeholder = 'Thanks for signing up!';
+      } else {
+        input.style.borderColor = 'var(--accent)';
+        setTimeout(() => input.style.borderColor = 'var(--line)', 1000);
+      }
+    });
+  </script>
+</body>
+</html>
