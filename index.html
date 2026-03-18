@@ -381,170 +381,6 @@
     .photo-cta:hover { color: var(--accent); border-color: var(--accent); }
     .photo-cta::after { content: '→'; }
 
-    /* ── REMNANT ── */
-    #remnant {
-      padding: 120px 56px;
-    }
-    .remnant-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-    }
-    .remnant-tagline {
-      font-family: var(--serif);
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
-      font-weight: 300;
-      line-height: 1.35;
-      color: var(--ink);
-      margin-bottom: 32px;
-    }
-    .remnant-tagline em { font-style: italic; color: var(--accent); }
-    .remnant-desc {
-      font-size: 1rem;
-      line-height: 1.85;
-      color: #4A4845;
-      margin-bottom: 48px;
-    }
-    .remnant-pillars {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .pillar {
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: 20px;
-      padding: 24px;
-      background: #F0EDE8;
-      align-items: start;
-      transition: background 0.2s;
-    }
-    .pillar:hover { background: #E8E4DE; }
-    .pillar-num {
-      font-family: var(--serif);
-      font-size: 1.6rem;
-      font-weight: 300;
-      color: var(--accent);
-      line-height: 1;
-    }
-    .pillar-title {
-      font-size: 0.85rem;
-      font-weight: 400;
-      margin-bottom: 6px;
-      color: var(--ink);
-    }
-    .pillar-desc {
-      font-size: 0.82rem;
-      line-height: 1.7;
-      color: var(--muted);
-    }
-    .remnant-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 32px;
-    }
-    .status-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #4CAF50;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
-    .remnant-waitlist {
-      display: flex;
-      gap: 0;
-      max-width: 420px;
-    }
-    .remnant-waitlist input {
-      flex: 1;
-      padding: 14px 20px;
-      border: 1px solid var(--line);
-      border-right: none;
-      background: white;
-      font-family: var(--sans);
-      font-size: 0.85rem;
-      font-weight: 300;
-      color: var(--ink);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .remnant-waitlist input::placeholder { color: var(--muted); }
-    .remnant-waitlist input:focus { border-color: var(--ink); }
-    .remnant-waitlist button {
-      padding: 14px 24px;
-      background: var(--ink);
-      color: var(--bg);
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      border: 1px solid var(--ink);
-      transition: background 0.2s, color 0.2s;
-      white-space: nowrap;
-    }
-    .remnant-waitlist button:hover {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-    .remnant-logo-area {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 40px;
-    }
-    .remnant-wordmark {
-      font-family: var(--serif);
-      font-size: clamp(5rem, 10vw, 9rem);
-      font-weight: 300;
-      line-height: 0.9;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-    }
-    .remnant-wordmark span {
-      display: block;
-      font-style: italic;
-      color: var(--muted);
-      font-size: 0.6em;
-    }
-    .remnant-visual {
-      width: 100%;
-      aspect-ratio: 4/3;
-      background: #F0EDE8;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .remnant-visual-inner {
-      text-align: center;
-    }
-    .remnant-glyph {
-      font-family: var(--serif);
-      font-size: 8rem;
-      color: var(--line);
-      line-height: 1;
-      margin-bottom: 12px;
-      display: block;
-    }
-    .remnant-visual-label {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
     /* ── FOOTER ── */
     footer {
       padding: 56px;
@@ -607,8 +443,7 @@
       section { padding: 80px 28px; }
       #photography { padding: 80px 28px; }
       #about .about-grid { grid-template-columns: 1fr; gap: 48px; }
-      .remnant-layout { grid-template-columns: 1fr; gap: 56px; }
-      .photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+.photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
       .photo-cell { grid-column: auto !important; grid-row: auto !important; height: 180px; }
       footer { flex-direction: column; gap: 24px; text-align: center; padding: 40px 28px; }
       .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
@@ -626,7 +461,6 @@
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#photography">Photography</a></li>
-      <li><a href="#remnant">Remnant</a></li>
     </ul>
   </nav>
 
@@ -810,69 +644,6 @@
     <a href="#" class="photo-cta reveal" style="margin-top:48px; display:inline-flex;">View full gallery</a>
   </section>
 
-  <!-- REMNANT -->
-  <section id="remnant">
-    <div class="section-header reveal">
-      <span class="section-number">03</span>
-      <h2 class="section-title">Rem<em>nant</em></h2>
-    </div>
-    <div class="remnant-layout">
-      <div class="reveal">
-        <div class="remnant-status">
-          <span class="status-dot"></span>
-          In development · 2025
-        </div>
-        <p class="remnant-tagline">
-          The world's first AI platform for <em>cultural preservation</em> — starting with Chinese heritage.
-        </p>
-        <p class="remnant-desc">
-          Cultures disappear not because people stop caring, but because no one ever built the right tool to capture them. Remnant is an AI-guided platform where elders share their knowledge, families preserve their stories, and nothing gets lost between generations.
-        </p>
-        <div class="remnant-pillars">
-          <div class="pillar">
-            <span class="pillar-num">I</span>
-            <div>
-              <div class="pillar-title">AI Family Storytelling</div>
-              <div class="pillar-desc">Culturally-aware prompts that capture your memories, values, and traditions — in your voice, for your grandchildren.</div>
-            </div>
-          </div>
-          <div class="pillar">
-            <span class="pillar-num">II</span>
-            <div>
-              <div class="pillar-title">End-of-Life Organization</div>
-              <div class="pillar-desc">Burial wishes, ceremony guidance, document storage — so your family isn't scrambling when it matters most.</div>
-            </div>
-          </div>
-          <div class="pillar">
-            <span class="pillar-num">III</span>
-            <div>
-              <div class="pillar-title">Cultural Preservation Archive</div>
-              <div class="pillar-desc">Every story contributed builds a living archive of Chinese cultural knowledge — regional ceremonies, traditions, language, and ritual.</div>
-            </div>
-          </div>
-        </div>
-        <div style="margin-top: 48px;">
-          <p style="font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px;">Join the waitlist</p>
-          <div class="remnant-waitlist">
-            <input type="email" placeholder="your@email.com" />
-            <button>Notify me</button>
-          </div>
-        </div>
-      </div>
-      <div class="remnant-logo-area reveal">
-        <div class="remnant-wordmark">
-          Remnant<span>遗留</span>
-        </div>
-        <div class="remnant-visual">
-          <div class="remnant-visual-inner">
-            <span class="remnant-glyph">遗</span>
-            <p class="remnant-visual-label">yí liú — that which remains</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- FOOTER -->
   <footer>
     <span class="footer-name">Alston Wang</span>
@@ -917,21 +688,6 @@
     }, { threshold: 0.1 });
     reveals.forEach(el => observer.observe(el));
 
-    // Waitlist form
-    const btn = document.querySelector('.remnant-waitlist button');
-    const input = document.querySelector('.remnant-waitlist input');
-    btn.addEventListener('click', () => {
-      if (input.value.includes('@')) {
-        btn.textContent = 'You\'re on the list ✓';
-        btn.style.background = '#4CAF50';
-        btn.style.borderColor = '#4CAF50';
-        input.value = '';
-        input.placeholder = 'Thanks for signing up!';
-      } else {
-        input.style.borderColor = 'var(--accent)';
-        setTimeout(() => input.style.borderColor = 'var(--line)', 1000);
-      }
-    });
   </script>
 </body>
 </html>
