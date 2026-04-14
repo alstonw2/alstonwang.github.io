@@ -172,6 +172,11 @@
       grid-row: span 2;
     }
 
+    /* Portrait-orientation photos get a taller cell automatically */
+    .photo-cell.portrait {
+      grid-row: span 2;
+    }
+
     /* Drone: featured spans wide instead of tall — suits landscape aerials */
     .drone-grid .photo-cell.featured {
       grid-row: span 1;
@@ -476,8 +481,12 @@
         img.loading = 'lazy';
         img.style.objectPosition = '50% 50%'; // default until analysed
 
-        // Once loaded, detect focal point and update object-position
+        // Once loaded, detect orientation + focal point
         const applyFocus = () => {
+          // If portrait, make the cell taller so the photo isn't squashed
+          if (img.naturalHeight > img.naturalWidth) {
+            cell.classList.add('portrait');
+          }
           img.style.objectPosition = getFocusPoint(img);
         };
         if (img.complete && img.naturalWidth > 0) {
