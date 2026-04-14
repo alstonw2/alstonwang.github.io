@@ -419,6 +419,43 @@
       initReveal();
     }
 
+    // Analyse a loaded image and return the focal point as "x% y%"
+    // Uses a saturation × brightness weighted centroid — subjects tend to
+    // be more vibrant/saturated than sky, walls, or blurred backgrounds.
+    function getFocusPoint(img) {
+      try {
+        const W = 80, H = 80;
+        const canvas = document.createElement('canvas');
+        canvas.width = W; canvas.height = H;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, W, H);
+        const { data } = ctx.getImageData(0, 0, W, H);
+
+        let totalW = 0, wx = 0, wy = 0;
+        for (let y = 0; y < H; y++) {
+          for (let x = 0; x < W; x++) {
+            const i = (y * W + x) * 4;
+            const r = data[i], g = data[i + 1], b = data[i + 2];
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            const sat = max > 0 ? (max - min) / max : 0;
+            const lum = (r + g + b) / 765;
+            const weight = sat * lum;
+            totalW += weight;
+            wx += x * weight;
+            wy += y * weight;
+          }
+        }
+
+        if (totalW === 0) return '50% 50%';
+        const px = Math.round(wx / totalW / W * 100);
+        const py = Math.round(wy / totalW / H * 100);
+        // Clamp so the crop doesn't push the subject fully off-screen
+        return `${Math.min(Math.max(px, 20), 80)}% ${Math.min(Math.max(py, 20), 80)}%`;
+      } catch (e) {
+        return '50% 50%'; // fallback (e.g. canvas security error)
+      }
+    }
+
     function renderGrid(gridId, photos, section) {
       const grid = document.getElementById(gridId);
       if (!grid) return;
@@ -437,6 +474,17 @@
         img.src = `images/${section}/${photo.file}`;
         img.alt = photo.caption;
         img.loading = 'lazy';
+        img.style.objectPosition = '50% 50%'; // default until analysed
+
+        // Once loaded, detect focal point and update object-position
+        const applyFocus = () => {
+          img.style.objectPosition = getFocusPoint(img);
+        };
+        if (img.complete && img.naturalWidth > 0) {
+          applyFocus();
+        } else {
+          img.addEventListener('load', applyFocus, { once: true });
+        }
 
         const overlay = document.createElement('div');
         overlay.className = 'photo-overlay';
