@@ -160,14 +160,21 @@
     }
 
     /* ── PHOTO STRIP ── */
-    .strip-wrapper {
-      position: relative;
+    .strip-block {
+      margin-bottom: 40px;
+    }
+    .strip-block:last-child { margin-bottom: 0; }
+    .strip-type-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
     }
     .photo-strip {
       display: grid;
-      grid-template-rows: repeat(3, 280px);
       grid-auto-flow: column;
-      grid-auto-columns: 400px;
       gap: 4px;
       overflow-x: auto;
       overflow-y: hidden;
@@ -176,6 +183,14 @@
       cursor: grab;
     }
     .photo-strip:active { cursor: grabbing; }
+    .landscape-strip {
+      grid-template-rows: repeat(2, 260px);
+      grid-auto-columns: 420px;
+    }
+    .portrait-strip {
+      grid-template-rows: 400px;
+      grid-auto-columns: 267px;
+    }
 
     /* Scrollbar */
     .photo-strip::-webkit-scrollbar { height: 2px; }
@@ -315,9 +330,13 @@
       nav { padding: 24px 28px; }
       .page-hero { padding: 120px 28px 60px; }
       .photo-section { padding: 64px 28px; }
-      .photo-strip {
-        grid-template-rows: repeat(3, 130px);
-        grid-auto-columns: 180px;
+      .landscape-strip {
+        grid-template-rows: repeat(2, 150px);
+        grid-auto-columns: 240px;
+      }
+      .portrait-strip {
+        grid-template-rows: 240px;
+        grid-auto-columns: 160px;
       }
       footer { flex-direction: column; gap: 24px; text-align: center; padding: 40px 28px; }
       .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
@@ -355,11 +374,20 @@
     </div>
     <p class="section-subtitle reveal">Landscapes · Streets · Portraits · Film</p>
 
-    <div class="strip-wrapper reveal">
-      <div id="camera-strip" class="photo-strip"></div>
+    <div class="strip-block reveal" id="camera-landscape-block" style="display:none">
+      <p class="strip-type-label">Landscape</p>
+      <div id="camera-landscape" class="photo-strip landscape-strip"></div>
       <div class="strip-footer">
-        <span class="strip-counter" id="camera-counter"></span>
-        <button class="load-more" id="camera-load-more">Load more</button>
+        <span class="strip-counter" id="camera-landscape-counter"></span>
+        <button class="load-more" id="camera-landscape-more">Load more</button>
+      </div>
+    </div>
+    <div class="strip-block reveal" id="camera-portrait-block" style="display:none">
+      <p class="strip-type-label">Portrait</p>
+      <div id="camera-portrait" class="photo-strip portrait-strip"></div>
+      <div class="strip-footer">
+        <span class="strip-counter" id="camera-portrait-counter"></span>
+        <button class="load-more" id="camera-portrait-more">Load more</button>
       </div>
     </div>
   </section>
@@ -372,11 +400,20 @@
     </div>
     <p class="section-subtitle reveal">Aerial · Topography · Pacific Northwest</p>
 
-    <div class="strip-wrapper reveal">
-      <div id="drone-strip" class="photo-strip"></div>
+    <div class="strip-block reveal" id="drone-landscape-block" style="display:none">
+      <p class="strip-type-label">Landscape</p>
+      <div id="drone-landscape" class="photo-strip landscape-strip"></div>
       <div class="strip-footer">
-        <span class="strip-counter" id="drone-counter"></span>
-        <button class="load-more" id="drone-load-more">Load more</button>
+        <span class="strip-counter" id="drone-landscape-counter"></span>
+        <button class="load-more" id="drone-landscape-more">Load more</button>
+      </div>
+    </div>
+    <div class="strip-block reveal" id="drone-portrait-block" style="display:none">
+      <p class="strip-type-label">Portrait</p>
+      <div id="drone-portrait" class="photo-strip portrait-strip"></div>
+      <div class="strip-footer">
+        <span class="strip-counter" id="drone-portrait-counter"></span>
+        <button class="load-more" id="drone-portrait-more">Load more</button>
       </div>
     </div>
   </section>
@@ -423,6 +460,33 @@
       reveals.forEach(el => observer.observe(el));
     }
 
+    // Detect orientation by preloading the image
+    function detectOrientation(src) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload  = () => resolve(img.naturalWidth >= img.naturalHeight ? 'landscape' : 'portrait');
+        img.onerror = () => resolve('landscape'); // fallback
+        img.src = src;
+      });
+    }
+
+    // Route photos to landscape/portrait strips after detecting orientation
+    async function buildSection(photos, section) {
+      const orientations = await Promise.all(
+        photos.map(p => detectOrientation(`images/${section}/${p.file}`))
+      );
+      const landscape = photos.filter((_, i) => orientations[i] === 'landscape');
+      const portrait  = photos.filter((_, i) => orientations[i] === 'portrait');
+
+      const lBlock = document.getElementById(`${section}-landscape-block`);
+      const pBlock = document.getElementById(`${section}-portrait-block`);
+      if (lBlock) lBlock.style.display = landscape.length ? '' : 'none';
+      if (pBlock) pBlock.style.display = portrait.length  ? '' : 'none';
+
+      renderStrip(`${section}-landscape`, `${section}-landscape-counter`, `${section}-landscape-more`, landscape, section);
+      renderStrip(`${section}-portrait`,  `${section}-portrait-counter`,  `${section}-portrait-more`,  portrait,  section);
+    }
+
     // Build photo strips from photos.json
     async function buildGallery() {
       const res = await fetch('photos.json');
@@ -436,8 +500,10 @@
         return b.date.localeCompare(a.date);
       });
 
-      renderStrip('camera-strip', 'camera-counter', 'camera-load-more', photos.filter(p => p.section === 'camera'), 'camera');
-      renderStrip('drone-strip',  'drone-counter',  'drone-load-more',  photos.filter(p => p.section === 'drone'),  'drone');
+      await Promise.all([
+        buildSection(photos.filter(p => p.section === 'camera'), 'camera'),
+        buildSection(photos.filter(p => p.section === 'drone'),  'drone')
+      ]);
 
       initReveal();
     }
