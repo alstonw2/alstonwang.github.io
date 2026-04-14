@@ -181,14 +181,36 @@
     .photo-strip::-webkit-scrollbar-thumb { background: var(--muted); }
     .photo-strip::-webkit-scrollbar-thumb:hover { background: var(--ink); }
 
-    /* Photo counter — bottom right of strip */
+    /* Strip footer — counter + load more */
+    .strip-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
     .strip-counter {
       font-family: var(--mono);
       font-size: 0.6rem;
       letter-spacing: 0.1em;
       color: var(--muted);
-      text-align: right;
-      margin-top: 12px;
+    }
+    .load-more {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: none;
+      border: 1px solid var(--line);
+      padding: 10px 24px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .load-more:hover {
+      border-color: var(--ink);
+      color: var(--accent);
+    }
+    .load-more:disabled {
+      display: none;
     }
 
     /* ── PHOTO CELL ── */
@@ -329,7 +351,10 @@
 
     <div class="strip-wrapper reveal">
       <div id="camera-strip" class="photo-strip"></div>
-      <p class="strip-counter" id="camera-counter"></p>
+      <div class="strip-footer">
+        <span class="strip-counter" id="camera-counter"></span>
+        <button class="load-more" id="camera-load-more">Load more</button>
+      </div>
     </div>
   </section>
 
@@ -343,7 +368,10 @@
 
     <div class="strip-wrapper reveal">
       <div id="drone-strip" class="photo-strip"></div>
-      <p class="strip-counter" id="drone-counter"></p>
+      <div class="strip-footer">
+        <span class="strip-counter" id="drone-counter"></span>
+        <button class="load-more" id="drone-load-more">Load more</button>
+      </div>
     </div>
   </section>
 
@@ -402,26 +430,16 @@
         return b.date.localeCompare(a.date);
       });
 
-      renderStrip('camera-strip', 'camera-counter', photos.filter(p => p.section === 'camera'), 'camera');
-      renderStrip('drone-strip',  'drone-counter',  photos.filter(p => p.section === 'drone'),  'drone');
+      renderStrip('camera-strip', 'camera-counter', 'camera-load-more', photos.filter(p => p.section === 'camera'), 'camera');
+      renderStrip('drone-strip',  'drone-counter',  'drone-load-more',  photos.filter(p => p.section === 'drone'),  'drone');
 
       initReveal();
     }
 
-    function renderStrip(stripId, counterId, photos, section) {
-      const strip = document.getElementById(stripId);
-      const counter = document.getElementById(counterId);
-      if (!strip) return;
+    const PAGE_SIZE = 15;
 
-      // Cap at 15 photos
-      const visible = photos.slice(0, 15);
-
-      if (visible.length === 0) {
-        strip.innerHTML = `<div style="display:flex; align-items:center; padding: 48px; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);">No photos yet — add entries to photos.json</div>`;
-        return;
-      }
-
-      visible.forEach(photo => {
+    function appendPhotos(strip, photos, section, from, to) {
+      photos.slice(from, to).forEach(photo => {
         const cell = document.createElement('div');
         cell.className = 'photo-cell';
 
@@ -438,20 +456,49 @@
         cell.appendChild(overlay);
         strip.appendChild(cell);
       });
+    }
 
-      // Photo counter — updates as user scrolls
-      if (counter) {
-        const updateCounter = () => {
-          const cells = strip.querySelectorAll('.photo-cell');
-          let current = 1;
-          cells.forEach((cell, i) => {
-            if (cell.offsetLeft <= strip.scrollLeft + strip.clientWidth / 2) current = i + 1;
-          });
-          counter.textContent = `${current} / ${visible.length}`;
-        };
-        updateCounter();
-        strip.addEventListener('scroll', updateCounter, { passive: true });
+    function renderStrip(stripId, counterId, loadMoreId, photos, section) {
+      const strip    = document.getElementById(stripId);
+      const counter  = document.getElementById(counterId);
+      const loadMore = document.getElementById(loadMoreId);
+      if (!strip) return;
+
+      if (photos.length === 0) {
+        strip.innerHTML = `<div style="display:flex;align-items:center;padding:48px;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">No photos yet — add entries to photos.json</div>`;
+        if (loadMore) loadMore.disabled = true;
+        return;
       }
+
+      // Load first page
+      let loaded = Math.min(PAGE_SIZE, photos.length);
+      appendPhotos(strip, photos, section, 0, loaded);
+
+      // Hide load more if everything fits on first page
+      if (loadMore) {
+        loadMore.disabled = loaded >= photos.length;
+        loadMore.addEventListener('click', () => {
+          const next = Math.min(loaded + PAGE_SIZE, photos.length);
+          appendPhotos(strip, photos, section, loaded, next);
+          loaded = next;
+          // Scroll strip to reveal newly added photos
+          strip.scrollBy({ left: strip.clientWidth * 0.8, behavior: 'smooth' });
+          if (loaded >= photos.length) loadMore.disabled = true;
+          if (counter) updateCounter();
+        });
+      }
+
+      // Counter — updates on scroll and after load more
+      const updateCounter = () => {
+        const cells = strip.querySelectorAll('.photo-cell');
+        let current = 1;
+        cells.forEach((cell, i) => {
+          if (cell.offsetLeft <= strip.scrollLeft + strip.clientWidth / 2) current = i + 1;
+        });
+        if (counter) counter.textContent = `${current} / ${photos.length}`;
+      };
+      updateCounter();
+      strip.addEventListener('scroll', updateCounter, { passive: true });
 
       // Drag to scroll (desktop)
       let isDown = false, startX, scrollLeft;
