@@ -400,12 +400,12 @@
       const res = await fetch('photos.json');
       const photos = await res.json();
 
-      // Sort chronologically — photos with no date go to the end
+      // Sort reverse chronologically (newest first) — photos with no date go to the end
       photos.sort((a, b) => {
         if (!a.date && !b.date) return 0;
         if (!a.date) return 1;
         if (!b.date) return -1;
-        return a.date.localeCompare(b.date);
+        return b.date.localeCompare(a.date);
       });
 
       renderGrid('camera-grid', photos.filter(p => p.section === 'camera'), 'camera');
