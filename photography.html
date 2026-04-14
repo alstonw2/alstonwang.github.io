@@ -159,67 +159,54 @@
       padding-left: calc(0.65rem + 24px + 16px); /* align under title */
     }
 
-    /* ── PHOTO GRID ── */
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: 280px;
+    /* ── PHOTO STRIP ── */
+    .strip-wrapper {
+      position: relative;
+    }
+    .photo-strip {
+      display: flex;
       gap: 4px;
+      height: 520px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
     }
+    .photo-strip:active { cursor: grabbing; }
 
-    /* First photo is always the featured (tall) cell */
-    .photo-cell.featured {
-      grid-row: span 2;
-    }
+    /* Scrollbar */
+    .photo-strip::-webkit-scrollbar { height: 2px; }
+    .photo-strip::-webkit-scrollbar-track { background: var(--line); }
+    .photo-strip::-webkit-scrollbar-thumb { background: var(--muted); }
+    .photo-strip::-webkit-scrollbar-thumb:hover { background: var(--ink); }
 
-    /* Portrait-orientation photos get a taller cell automatically */
-    .photo-cell.portrait {
-      grid-row: span 2;
-    }
-
-    /* Drone: featured spans wide instead of tall — suits landscape aerials */
-    .drone-grid .photo-cell.featured {
-      grid-row: span 1;
-      grid-column: span 2;
+    /* Photo counter — bottom right of strip */
+    .strip-counter {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-align: right;
+      margin-top: 12px;
     }
 
     /* ── PHOTO CELL ── */
     .photo-cell {
-      overflow: hidden;
+      flex-shrink: 0;
+      height: 100%;
       position: relative;
+      overflow: hidden;
       background: #E8E4DE;
+      scroll-snap-align: start;
     }
     .photo-cell img {
-      width: 100%;
       height: 100%;
-      object-fit: cover;
+      width: auto;
       display: block;
       transition: transform 0.6s ease;
     }
     .photo-cell:hover img { transform: scale(1.03); }
-    .photo-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: #E8E4DE;
-      transition: background 0.3s ease;
-    }
-    .photo-cell:hover .photo-placeholder { background: #DDD9D3; }
-    .photo-icon {
-      width: 28px; height: 28px;
-      opacity: 0.25;
-    }
-    .photo-label {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
     .photo-overlay {
       position: absolute;
       inset: 0;
@@ -303,11 +290,7 @@
       nav { padding: 24px 28px; }
       .page-hero { padding: 120px 28px 60px; }
       .photo-section { padding: 64px 28px; }
-      .photo-grid {
-        grid-template-columns: 1fr 1fr;
-        grid-auto-rows: 180px;
-      }
-      .photo-cell.featured { grid-row: span 1; grid-column: span 1; }
+      .photo-strip { height: 300px; }
       footer { flex-direction: column; gap: 24px; text-align: center; padding: 40px 28px; }
       .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
     }
@@ -344,7 +327,10 @@
     </div>
     <p class="section-subtitle reveal">Landscapes · Streets · Portraits · Film</p>
 
-    <div id="camera-grid" class="photo-grid camera-grid reveal"></div>
+    <div class="strip-wrapper reveal">
+      <div id="camera-strip" class="photo-strip"></div>
+      <p class="strip-counter" id="camera-counter"></p>
+    </div>
   </section>
 
   <!-- SECTION 02 — DRONE -->
@@ -355,7 +341,10 @@
     </div>
     <p class="section-subtitle reveal">Aerial · Topography · Pacific Northwest</p>
 
-    <div id="drone-grid" class="photo-grid drone-grid reveal"></div>
+    <div class="strip-wrapper reveal">
+      <div id="drone-strip" class="photo-strip"></div>
+      <p class="strip-counter" id="drone-counter"></p>
+    </div>
   </section>
 
   <!-- FOOTER -->
@@ -400,7 +389,7 @@
       reveals.forEach(el => observer.observe(el));
     }
 
-    // Build photo grids from photos.json
+    // Build photo strips from photos.json
     async function buildGallery() {
       const res = await fetch('photos.json');
       const photos = await res.json();
@@ -413,87 +402,33 @@
         return b.date.localeCompare(a.date);
       });
 
-      renderGrid('camera-grid', photos.filter(p => p.section === 'camera'), 'camera');
-      renderGrid('drone-grid',  photos.filter(p => p.section === 'drone'),  'drone');
+      renderStrip('camera-strip', 'camera-counter', photos.filter(p => p.section === 'camera'), 'camera');
+      renderStrip('drone-strip',  'drone-counter',  photos.filter(p => p.section === 'drone'),  'drone');
 
-      // Re-run cursor listener and reveal after cells are injected
-      document.querySelectorAll('a, button').forEach(el => {
-        el.addEventListener('mouseenter', () => { ring.style.width = '56px'; ring.style.height = '56px'; ring.style.opacity = '0.2'; });
-        el.addEventListener('mouseleave', () => { ring.style.width = '32px'; ring.style.height = '32px'; ring.style.opacity = '0.4'; });
-      });
       initReveal();
     }
 
-    // Analyse a loaded image and return the focal point as "x% y%"
-    // Uses a saturation × brightness weighted centroid — subjects tend to
-    // be more vibrant/saturated than sky, walls, or blurred backgrounds.
-    function getFocusPoint(img) {
-      try {
-        const W = 80, H = 80;
-        const canvas = document.createElement('canvas');
-        canvas.width = W; canvas.height = H;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, W, H);
-        const { data } = ctx.getImageData(0, 0, W, H);
+    function renderStrip(stripId, counterId, photos, section) {
+      const strip = document.getElementById(stripId);
+      const counter = document.getElementById(counterId);
+      if (!strip) return;
 
-        let totalW = 0, wx = 0, wy = 0;
-        for (let y = 0; y < H; y++) {
-          for (let x = 0; x < W; x++) {
-            const i = (y * W + x) * 4;
-            const r = data[i], g = data[i + 1], b = data[i + 2];
-            const max = Math.max(r, g, b), min = Math.min(r, g, b);
-            const sat = max > 0 ? (max - min) / max : 0;
-            const lum = (r + g + b) / 765;
-            const weight = sat * lum;
-            totalW += weight;
-            wx += x * weight;
-            wy += y * weight;
-          }
-        }
+      // Cap at 15 photos
+      const visible = photos.slice(0, 15);
 
-        if (totalW === 0) return '50% 50%';
-        const px = Math.round(wx / totalW / W * 100);
-        const py = Math.round(wy / totalW / H * 100);
-        // Clamp so the crop doesn't push the subject fully off-screen
-        return `${Math.min(Math.max(px, 20), 80)}% ${Math.min(Math.max(py, 20), 80)}%`;
-      } catch (e) {
-        return '50% 50%'; // fallback (e.g. canvas security error)
-      }
-    }
-
-    function renderGrid(gridId, photos, section) {
-      const grid = document.getElementById(gridId);
-      if (!grid) return;
-
-      if (photos.length === 0) {
-        grid.innerHTML = `<div style="grid-column: span 3; padding: 48px; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);">No photos yet — add entries to photos.json</div>`;
+      if (visible.length === 0) {
+        strip.innerHTML = `<div style="display:flex; align-items:center; padding: 48px; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);">No photos yet — add entries to photos.json</div>`;
         return;
       }
 
-      photos.forEach((photo, i) => {
+      visible.forEach(photo => {
         const cell = document.createElement('div');
-        // First photo is always the featured (large) cell
-        cell.className = 'photo-cell' + (i === 0 ? ' featured' : '');
+        cell.className = 'photo-cell';
 
         const img = document.createElement('img');
         img.src = `images/${section}/${photo.file}`;
         img.alt = photo.caption;
         img.loading = 'lazy';
-        img.style.objectPosition = '50% 50%'; // default until analysed
-
-        // Once loaded, detect orientation + focal point
-        const applyFocus = () => {
-          // If portrait, make the cell taller so the photo isn't squashed
-          if (img.naturalHeight > img.naturalWidth) {
-            cell.classList.add('portrait');
-          }
-          img.style.objectPosition = getFocusPoint(img);
-        };
-        if (img.complete && img.naturalWidth > 0) {
-          applyFocus();
-        } else {
-          img.addEventListener('load', applyFocus, { once: true });
-        }
 
         const overlay = document.createElement('div');
         overlay.className = 'photo-overlay';
@@ -501,7 +436,37 @@
 
         cell.appendChild(img);
         cell.appendChild(overlay);
-        grid.appendChild(cell);
+        strip.appendChild(cell);
+      });
+
+      // Photo counter — updates as user scrolls
+      if (counter) {
+        const updateCounter = () => {
+          const cells = strip.querySelectorAll('.photo-cell');
+          let current = 1;
+          cells.forEach((cell, i) => {
+            if (cell.offsetLeft <= strip.scrollLeft + strip.clientWidth / 2) current = i + 1;
+          });
+          counter.textContent = `${current} / ${visible.length}`;
+        };
+        updateCounter();
+        strip.addEventListener('scroll', updateCounter, { passive: true });
+      }
+
+      // Drag to scroll (desktop)
+      let isDown = false, startX, scrollLeft;
+      strip.addEventListener('mousedown', e => {
+        isDown = true;
+        startX = e.pageX - strip.offsetLeft;
+        scrollLeft = strip.scrollLeft;
+      });
+      strip.addEventListener('mouseleave', () => { isDown = false; });
+      strip.addEventListener('mouseup',    () => { isDown = false; });
+      strip.addEventListener('mousemove',  e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - strip.offsetLeft;
+        strip.scrollLeft = scrollLeft - (x - startX) * 1.5;
       });
     }
 
