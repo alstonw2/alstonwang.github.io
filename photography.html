@@ -553,7 +553,9 @@
     function appendPhotos(strip, photos, section, from, to) {
       photos.slice(from, to).forEach(photo => {
         const cell = document.createElement('div');
-        const caption = formatCaption(photo.caption, photo.date);
+        const caption = photo.type === 'video'
+          ? photo.caption
+          : formatCaption(photo.caption, photo.date);
 
         if (photo.type === 'video') {
           // ── VIDEO CELL ──
