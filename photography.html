@@ -499,7 +499,7 @@
 
     // Build photo strips from photos.json
     async function buildGallery() {
-      const res = await fetch('photos.json');
+      const res = await fetch('photos.json?v=' + Date.now());
       const photos = await res.json();
 
       // Sort reverse chronologically (newest first) — photos with no date go to the end
