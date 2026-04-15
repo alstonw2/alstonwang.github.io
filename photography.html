@@ -198,37 +198,6 @@
     .photo-strip::-webkit-scrollbar-thumb { background: var(--muted); }
     .photo-strip::-webkit-scrollbar-thumb:hover { background: var(--ink); }
 
-    /* Strip footer — counter + load more */
-    .strip-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 20px;
-    }
-    .strip-counter {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-    }
-    .load-more {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink);
-      background: none;
-      border: 1px solid var(--line);
-      padding: 10px 24px;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .load-more:hover {
-      border-color: var(--ink);
-      color: var(--accent);
-    }
-    .load-more:disabled {
-      display: none;
-    }
 
     /* ── VIDEO CELL ── */
     .photo-cell.video-cell { cursor: pointer; }
@@ -400,18 +369,10 @@
     <div class="strip-block reveal" id="camera-landscape-block" style="display:none">
       <p class="strip-type-label">Landscape</p>
       <div id="camera-landscape" class="photo-strip landscape-strip"></div>
-      <div class="strip-footer">
-        <span class="strip-counter" id="camera-landscape-counter"></span>
-        <button class="load-more" id="camera-landscape-more">Load more</button>
-      </div>
     </div>
     <div class="strip-block reveal" id="camera-portrait-block" style="display:none">
       <p class="strip-type-label">Portrait</p>
       <div id="camera-portrait" class="photo-strip portrait-strip"></div>
-      <div class="strip-footer">
-        <span class="strip-counter" id="camera-portrait-counter"></span>
-        <button class="load-more" id="camera-portrait-more">Load more</button>
-      </div>
     </div>
   </section>
 
@@ -426,18 +387,10 @@
     <div class="strip-block reveal" id="drone-landscape-block" style="display:none">
       <p class="strip-type-label">Landscape</p>
       <div id="drone-landscape" class="photo-strip landscape-strip"></div>
-      <div class="strip-footer">
-        <span class="strip-counter" id="drone-landscape-counter"></span>
-        <button class="load-more" id="drone-landscape-more">Load more</button>
-      </div>
     </div>
     <div class="strip-block reveal" id="drone-portrait-block" style="display:none">
       <p class="strip-type-label">Portrait</p>
       <div id="drone-portrait" class="photo-strip portrait-strip"></div>
-      <div class="strip-footer">
-        <span class="strip-counter" id="drone-portrait-counter"></span>
-        <button class="load-more" id="drone-portrait-more">Load more</button>
-      </div>
     </div>
   </section>
 
@@ -523,8 +476,8 @@
       if (lBlock) lBlock.style.display = landscape.length ? '' : 'none';
       if (pBlock) pBlock.style.display = portrait.length  ? '' : 'none';
 
-      renderStrip(`${section}-landscape`, `${section}-landscape-counter`, `${section}-landscape-more`, landscape, section);
-      renderStrip(`${section}-portrait`,  `${section}-portrait-counter`,  `${section}-portrait-more`,  portrait,  section);
+      renderStrip(`${section}-landscape`, landscape, section);
+      renderStrip(`${section}-portrait`,  portrait,  section);
     }
 
     // Build photo strips from photos.json
@@ -548,10 +501,17 @@
       initReveal();
     }
 
-    const PAGE_SIZE = 15;
+    function renderStrip(stripId, photos, section) {
+      const strip = document.getElementById(stripId);
+      if (!strip) return;
 
-    function appendPhotos(strip, photos, section, from, to) {
-      photos.slice(from, to).forEach(photo => {
+      if (photos.length === 0) {
+        strip.innerHTML = `<div style="display:flex;align-items:center;padding:48px;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">No photos yet — add entries to photos.json</div>`;
+        return;
+      }
+
+      // Render all photos at once
+      photos.forEach(photo => {
         const cell = document.createElement('div');
         const caption = photo.type === 'video'
           ? photo.caption
@@ -579,7 +539,6 @@
           cell.appendChild(playBtn);
           cell.appendChild(overlay);
 
-          // Click: swap thumbnail for embedded player
           cell.addEventListener('click', () => {
             cell.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
           });
@@ -603,49 +562,6 @@
 
         strip.appendChild(cell);
       });
-    }
-
-    function renderStrip(stripId, counterId, loadMoreId, photos, section) {
-      const strip    = document.getElementById(stripId);
-      const counter  = document.getElementById(counterId);
-      const loadMore = document.getElementById(loadMoreId);
-      if (!strip) return;
-
-      if (photos.length === 0) {
-        strip.innerHTML = `<div style="display:flex;align-items:center;padding:48px;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">No photos yet — add entries to photos.json</div>`;
-        if (loadMore) loadMore.disabled = true;
-        return;
-      }
-
-      // Load first page
-      let loaded = Math.min(PAGE_SIZE, photos.length);
-      appendPhotos(strip, photos, section, 0, loaded);
-
-      // Hide load more if everything fits on first page
-      if (loadMore) {
-        loadMore.disabled = loaded >= photos.length;
-        loadMore.addEventListener('click', () => {
-          const next = Math.min(loaded + PAGE_SIZE, photos.length);
-          appendPhotos(strip, photos, section, loaded, next);
-          loaded = next;
-          // Scroll strip to reveal newly added photos
-          strip.scrollBy({ left: strip.clientWidth * 0.8, behavior: 'smooth' });
-          if (loaded >= photos.length) loadMore.disabled = true;
-          if (counter) updateCounter();
-        });
-      }
-
-      // Counter — updates on scroll and after load more
-      const updateCounter = () => {
-        const cells = strip.querySelectorAll('.photo-cell');
-        let current = 1;
-        cells.forEach((cell, i) => {
-          if (cell.offsetLeft <= strip.scrollLeft + strip.clientWidth / 2) current = i + 1;
-        });
-        if (counter) counter.textContent = `${current} / ${photos.length}`;
-      };
-      updateCounter();
-      strip.addEventListener('scroll', updateCounter, { passive: true });
 
       // Drag to scroll (desktop)
       let isDown = false, startX, scrollLeft;
