@@ -184,11 +184,12 @@
     }
     .photo-strip:active { cursor: grabbing; }
 
-    /* Natural-aspect strip for drone — flex row, each cell sized to photo's own ratio */
-    .natural-strip {
-      display: flex;
-      flex-direction: row;
-      height: 500px;
+    /* 3-row grid for drone — variable-width columns, object-fit cover, no empty space */
+    .drone-grid-strip {
+      display: grid;
+      grid-template-rows: repeat(3, 190px);
+      grid-auto-columns: 280px;
+      grid-auto-flow: column dense;
       gap: 4px;
       overflow-x: auto;
       overflow-y: hidden;
@@ -196,11 +197,11 @@
       -webkit-overflow-scrolling: touch;
       cursor: grab;
     }
-    .natural-strip:active { cursor: grabbing; }
-    .natural-strip .photo-cell {
-      height: 100%;
-      flex-shrink: 0;
-    }
+    .drone-grid-strip:active { cursor: grabbing; }
+    .drone-grid-strip::-webkit-scrollbar { height: 2px; }
+    .drone-grid-strip::-webkit-scrollbar-track { background: var(--line); }
+    .drone-grid-strip::-webkit-scrollbar-thumb { background: var(--muted); }
+    .drone-grid-strip::-webkit-scrollbar-thumb:hover { background: var(--ink); }
     .landscape-strip {
       grid-template-rows: repeat(2, 260px);
       grid-auto-columns: 420px;
@@ -403,7 +404,7 @@
     <p class="section-subtitle reveal">Aerial · Topography · Pacific Northwest</p>
 
     <div class="strip-block reveal" id="drone-photos-block" style="display:none">
-      <div id="drone-photos" class="natural-strip"></div>
+      <div id="drone-photos" class="drone-grid-strip"></div>
     </div>
   </section>
 
@@ -493,71 +494,114 @@
       renderStrip(`${section}-portrait`,  portrait,  section);
     }
 
-    // Drone section — single strip, each cell sized to natural aspect ratio
-    const DRONE_HEIGHT = 500;
+    // Drone section — 3-row grid, randomised per refresh, no same location within 3 slots
+
+    // Portrait → span 2 rows | Pano (very wide) → span 2 cols | Landscape → 1×1
+    function getDroneSpan(w, h) {
+      const r = w / h;
+      if (r < 0.75)  return { row: 2, col: 1 };
+      if (r > 2.5)   return { row: 1, col: 2 };
+      return           { row: 1, col: 1 };
+    }
+
+    // Fisher-Yates shuffle then repair same-location violations
+    function shuffleWithLocationConstraint(arr, minDist = 3) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      for (let pass = 0; pass < 5; pass++) {
+        for (let i = 0; i < a.length; i++) {
+          const loc = a[i].caption;
+          if (!loc || loc === 'placeholder') continue;
+          let violated = false;
+          for (let k = 1; k <= minDist; k++) {
+            if (i - k >= 0 && a[i - k].caption === loc) { violated = true; break; }
+          }
+          if (!violated) continue;
+          for (let j = i + 1; j < a.length; j++) {
+            const locJ = a[j].caption;
+            let iOK = true, jOK = true;
+            for (let k = 1; k <= minDist; k++) {
+              if (i - k >= 0 && a[i - k].caption === locJ) { iOK = false; break; }
+            }
+            for (let k = 1; k <= minDist; k++) {
+              if (j - k >= 0 && j - k !== i && a[j - k].caption === loc) { jOK = false; break; }
+              if (j + k < a.length && a[j + k].caption === loc) { jOK = false; break; }
+            }
+            if (iOK && jOK) { [a[i], a[j]] = [a[j], a[i]]; break; }
+          }
+        }
+      }
+      return a;
+    }
 
     async function buildDroneSection(photos) {
       const block = document.getElementById('drone-photos-block');
       const strip = document.getElementById('drone-photos');
       if (!strip) return;
-
       if (photos.length === 0) { if (block) block.style.display = 'none'; return; }
       if (block) block.style.display = '';
 
-      // Preload all photos to get natural dimensions
-      const widths = await Promise.all(photos.map(photo => {
-        if (photo.type === 'video') return Promise.resolve(DRONE_HEIGHT * 16 / 9);
-        return new Promise(resolve => {
-          const img = new Image();
-          img.onload  = () => resolve(DRONE_HEIGHT * img.naturalWidth / img.naturalHeight);
-          img.onerror = () => resolve(DRONE_HEIGHT); // fallback square
-          img.src = `images/drone/${photo.file}`;
-        });
-      }));
+      const videos = photos.filter(p => p.type === 'video');
+      const photoItems = photos.filter(p => p.type !== 'video');
 
-      photos.forEach((photo, i) => {
+      // Preload photos to get natural dimensions
+      const dims = await Promise.all(photoItems.map(p => new Promise(resolve => {
+        const img = new Image();
+        img.onload  = () => resolve({ w: img.naturalWidth, h: img.naturalHeight });
+        img.onerror = () => resolve({ w: 16, h: 9 });
+        img.src = `images/drone/${p.file}`;
+      })));
+
+      const photosWithDims = photoItems.map((p, i) => ({ ...p, _dims: dims[i] }));
+      const shuffled = shuffleWithLocationConstraint(photosWithDims);
+
+      // Videos pinned first, then shuffled photos
+      [...videos, ...shuffled].forEach(photo => {
         const cell = document.createElement('div');
-        cell.className = 'photo-cell' + (photo.type === 'video' ? ' video-cell' : '');
-        cell.style.width = widths[i] + 'px';
-
         const caption = photo.type === 'video'
           ? photo.caption
           : formatCaption(photo.caption, photo.date);
 
         if (photo.type === 'video') {
-          const videoId = getYouTubeId(photo.url);
+          cell.className = 'photo-cell video-cell';
+          // Videos are landscape — span 1 row, span 1 col (fits in 280×190 cell, 16:9 cover)
+          cell.style.gridRow = 'span 1';
+          cell.style.gridColumn = 'span 1';
 
+          const videoId = getYouTubeId(photo.url);
           const thumb = document.createElement('img');
           thumb.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
           thumb.alt = caption;
           thumb.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-
           const playBtn = document.createElement('div');
           playBtn.className = 'play-btn';
           playBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
-
           const overlay = document.createElement('div');
           overlay.className = 'photo-overlay';
           overlay.innerHTML = `<span class="photo-caption">${caption}</span>`;
-
           cell.appendChild(thumb);
           cell.appendChild(playBtn);
           cell.appendChild(overlay);
-
           cell.addEventListener('click', () => {
             cell.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
           });
 
         } else {
+          cell.className = 'photo-cell';
+          const span = getDroneSpan(photo._dims.w, photo._dims.h);
+          cell.style.gridRow    = `span ${span.row}`;
+          cell.style.gridColumn = `span ${span.col}`;
+
           const img = document.createElement('img');
           img.src = `images/drone/${photo.file}`;
           img.alt = caption;
           img.loading = 'lazy';
-
           const overlay = document.createElement('div');
           overlay.className = 'photo-overlay';
           overlay.innerHTML = `<span class="photo-caption">${caption}</span>`;
-
           cell.appendChild(img);
           cell.appendChild(overlay);
         }
