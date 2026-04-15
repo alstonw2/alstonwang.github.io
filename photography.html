@@ -460,6 +460,16 @@
       reveals.forEach(el => observer.observe(el));
     }
 
+    // Build "Location, Mon. 'YY" from a location string + ISO date
+    const MONTHS = ['Jan.','Feb.','Mar.','Apr.','May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.'];
+    function formatCaption(location, date) {
+      if (!date) return location;
+      const [year, month] = date.split('-');
+      const mon = MONTHS[parseInt(month, 10) - 1];
+      const yy  = year.slice(2);
+      return `${location}, ${mon} '${yy}`;
+    }
+
     // Detect orientation by preloading the image
     function detectOrientation(src) {
       return new Promise(resolve => {
@@ -517,12 +527,13 @@
 
         const img = document.createElement('img');
         img.src = `images/${section}/${photo.file}`;
-        img.alt = photo.caption;
+        const caption = formatCaption(photo.caption, photo.date);
+        img.alt = caption;
         img.loading = 'lazy';
 
         const overlay = document.createElement('div');
         overlay.className = 'photo-overlay';
-        overlay.innerHTML = `<span class="photo-caption">${photo.caption}</span>`;
+        overlay.innerHTML = `<span class="photo-caption">${caption}</span>`;
 
         cell.appendChild(img);
         cell.appendChild(overlay);
