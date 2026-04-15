@@ -183,6 +183,24 @@
       cursor: grab;
     }
     .photo-strip:active { cursor: grabbing; }
+
+    /* Natural-aspect strip for drone — flex row, each cell sized to photo's own ratio */
+    .natural-strip {
+      display: flex;
+      flex-direction: row;
+      height: 500px;
+      gap: 4px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
+    }
+    .natural-strip:active { cursor: grabbing; }
+    .natural-strip .photo-cell {
+      height: 100%;
+      flex-shrink: 0;
+    }
     .landscape-strip {
       grid-template-rows: repeat(2, 260px);
       grid-auto-columns: 420px;
@@ -384,13 +402,8 @@
     </div>
     <p class="section-subtitle reveal">Aerial · Topography · Pacific Northwest</p>
 
-    <div class="strip-block reveal" id="drone-landscape-block" style="display:none">
-      <p class="strip-type-label">Landscape</p>
-      <div id="drone-landscape" class="photo-strip landscape-strip"></div>
-    </div>
-    <div class="strip-block reveal" id="drone-portrait-block" style="display:none">
-      <p class="strip-type-label">Portrait</p>
-      <div id="drone-portrait" class="photo-strip portrait-strip"></div>
+    <div class="strip-block reveal" id="drone-photos-block" style="display:none">
+      <div id="drone-photos" class="natural-strip"></div>
     </div>
   </section>
 
@@ -463,7 +476,7 @@
       });
     }
 
-    // Route photos to landscape/portrait strips after detecting orientation
+    // Route camera photos to landscape/portrait strips after detecting orientation
     async function buildSection(photos, section) {
       const orientations = await Promise.all(
         photos.map(p => detectOrientation(p, section))
@@ -478,6 +491,90 @@
 
       renderStrip(`${section}-landscape`, landscape, section);
       renderStrip(`${section}-portrait`,  portrait,  section);
+    }
+
+    // Drone section — single strip, each cell sized to natural aspect ratio
+    const DRONE_HEIGHT = 500;
+
+    async function buildDroneSection(photos) {
+      const block = document.getElementById('drone-photos-block');
+      const strip = document.getElementById('drone-photos');
+      if (!strip) return;
+
+      if (photos.length === 0) { if (block) block.style.display = 'none'; return; }
+      if (block) block.style.display = '';
+
+      // Preload all photos to get natural dimensions
+      const widths = await Promise.all(photos.map(photo => {
+        if (photo.type === 'video') return Promise.resolve(DRONE_HEIGHT * 16 / 9);
+        return new Promise(resolve => {
+          const img = new Image();
+          img.onload  = () => resolve(DRONE_HEIGHT * img.naturalWidth / img.naturalHeight);
+          img.onerror = () => resolve(DRONE_HEIGHT); // fallback square
+          img.src = `images/drone/${photo.file}`;
+        });
+      }));
+
+      photos.forEach((photo, i) => {
+        const cell = document.createElement('div');
+        cell.className = 'photo-cell' + (photo.type === 'video' ? ' video-cell' : '');
+        cell.style.width = widths[i] + 'px';
+
+        const caption = photo.type === 'video'
+          ? photo.caption
+          : formatCaption(photo.caption, photo.date);
+
+        if (photo.type === 'video') {
+          const videoId = getYouTubeId(photo.url);
+
+          const thumb = document.createElement('img');
+          thumb.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+          thumb.alt = caption;
+          thumb.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+
+          const playBtn = document.createElement('div');
+          playBtn.className = 'play-btn';
+          playBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+
+          const overlay = document.createElement('div');
+          overlay.className = 'photo-overlay';
+          overlay.innerHTML = `<span class="photo-caption">${caption}</span>`;
+
+          cell.appendChild(thumb);
+          cell.appendChild(playBtn);
+          cell.appendChild(overlay);
+
+          cell.addEventListener('click', () => {
+            cell.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+          });
+
+        } else {
+          const img = document.createElement('img');
+          img.src = `images/drone/${photo.file}`;
+          img.alt = caption;
+          img.loading = 'lazy';
+
+          const overlay = document.createElement('div');
+          overlay.className = 'photo-overlay';
+          overlay.innerHTML = `<span class="photo-caption">${caption}</span>`;
+
+          cell.appendChild(img);
+          cell.appendChild(overlay);
+        }
+
+        strip.appendChild(cell);
+      });
+
+      // Drag to scroll
+      let isDown = false, startX, scrollLeft;
+      strip.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - strip.offsetLeft; scrollLeft = strip.scrollLeft; });
+      strip.addEventListener('mouseleave', () => { isDown = false; });
+      strip.addEventListener('mouseup',    () => { isDown = false; });
+      strip.addEventListener('mousemove',  e => {
+        if (!isDown) return;
+        e.preventDefault();
+        strip.scrollLeft = scrollLeft - (e.pageX - strip.offsetLeft - startX) * 1.5;
+      });
     }
 
     // Build photo strips from photos.json
@@ -495,7 +592,7 @@
 
       await Promise.all([
         buildSection(photos.filter(p => p.section === 'camera'), 'camera'),
-        buildSection(photos.filter(p => p.section === 'drone'),  'drone')
+        buildDroneSection(photos.filter(p => p.section === 'drone'))
       ]);
 
       initReveal();
