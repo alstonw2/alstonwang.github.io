@@ -233,5 +233,47 @@
     "section": "drone",
     "caption": "Shingle Mills, Oregon Coast",
     "date": "2026-03-25"
+  },
+  {
+    "type": "video",
+    "url": "https://youtu.be/pe4iGaTIvzo",
+    "section": "drone",
+    "caption": "Thor's Well, Oregon Coast",
+    "date": "2026-03-25"
+  },
+  {
+    "type": "video",
+    "url": "https://youtu.be/vLBDJSs_OkY",
+    "section": "drone",
+    "caption": "Samuel H. Boardman Scenic State Park, Oregon Coast",
+    "date": "2026-03-25"
+  },
+  {
+    "type": "video",
+    "url": "https://youtu.be/PVebPzdNJxg",
+    "section": "drone",
+    "caption": "Deception Pass Bridge State Park, Whidbey Island, Washington",
+    "date": "2026-01-30"
+  },
+  {
+    "type": "video",
+    "url": "https://youtu.be/APTed2nsYuE",
+    "section": "drone",
+    "caption": "Volcan de Fuego, Guatemala",
+    "date": "2025-09-30"
+  },
+  {
+    "type": "video",
+    "url": "https://youtu.be/Nl-vJRuLz0k",
+    "section": "drone",
+    "caption": "Santa Cruz, Guatemala",
+    "date": "2025-09-29"
+  },
+  {
+    "type": "video",
+    "url": "https://youtu.be/q5FjjyQM17c",
+    "section": "drone",
+    "caption": "San Pedro, Guatemala",
+    "date": "2025-09-29"
   }
 ]
