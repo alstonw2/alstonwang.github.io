@@ -230,6 +230,29 @@
       display: none;
     }
 
+    /* ── VIDEO CELL ── */
+    .photo-cell.video-cell { cursor: pointer; }
+    .play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.88);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s ease, background 0.2s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .photo-cell.video-cell:hover .play-btn {
+      transform: translate(-50%, -50%) scale(1.1);
+      background: white;
+    }
+    .play-btn svg { width: 18px; height: 18px; fill: var(--ink); margin-left: 3px; }
+    .photo-cell iframe {
+      width: 100%; height: 100%; border: none; display: block;
+    }
+
     /* ── PHOTO CELL ── */
     .photo-cell {
       flex-shrink: 0;
@@ -470,20 +493,27 @@
       return `${location}, ${mon} '${yy}`;
     }
 
-    // Detect orientation by preloading the image
-    function detectOrientation(src) {
+    // Extract YouTube video ID from any YouTube URL
+    function getYouTubeId(url) {
+      const m = url.match(/(?:v=|youtu\.be\/)([^&\n?#]+)/);
+      return m ? m[1] : null;
+    }
+
+    // Detect orientation — videos are always landscape, photos preload to check
+    function detectOrientation(photo, section) {
+      if (photo.type === 'video') return Promise.resolve('landscape');
       return new Promise(resolve => {
         const img = new Image();
         img.onload  = () => resolve(img.naturalWidth >= img.naturalHeight ? 'landscape' : 'portrait');
-        img.onerror = () => resolve('landscape'); // fallback
-        img.src = src;
+        img.onerror = () => resolve('landscape');
+        img.src = `images/${section}/${photo.file}`;
       });
     }
 
     // Route photos to landscape/portrait strips after detecting orientation
     async function buildSection(photos, section) {
       const orientations = await Promise.all(
-        photos.map(p => detectOrientation(`images/${section}/${p.file}`))
+        photos.map(p => detectOrientation(p, section))
       );
       const landscape = photos.filter((_, i) => orientations[i] === 'landscape');
       const portrait  = photos.filter((_, i) => orientations[i] === 'portrait');
@@ -523,20 +553,52 @@
     function appendPhotos(strip, photos, section, from, to) {
       photos.slice(from, to).forEach(photo => {
         const cell = document.createElement('div');
-        cell.className = 'photo-cell';
-
-        const img = document.createElement('img');
-        img.src = `images/${section}/${photo.file}`;
         const caption = formatCaption(photo.caption, photo.date);
-        img.alt = caption;
-        img.loading = 'lazy';
 
-        const overlay = document.createElement('div');
-        overlay.className = 'photo-overlay';
-        overlay.innerHTML = `<span class="photo-caption">${caption}</span>`;
+        if (photo.type === 'video') {
+          // ── VIDEO CELL ──
+          const videoId = getYouTubeId(photo.url);
+          cell.className = 'photo-cell video-cell';
 
-        cell.appendChild(img);
-        cell.appendChild(overlay);
+          const thumb = document.createElement('img');
+          thumb.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+          thumb.alt = caption;
+          thumb.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+
+          const playBtn = document.createElement('div');
+          playBtn.className = 'play-btn';
+          playBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+
+          const overlay = document.createElement('div');
+          overlay.className = 'photo-overlay';
+          overlay.innerHTML = `<span class="photo-caption">${caption}</span>`;
+
+          cell.appendChild(thumb);
+          cell.appendChild(playBtn);
+          cell.appendChild(overlay);
+
+          // Click: swap thumbnail for embedded player
+          cell.addEventListener('click', () => {
+            cell.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+          });
+
+        } else {
+          // ── PHOTO CELL ──
+          cell.className = 'photo-cell';
+
+          const img = document.createElement('img');
+          img.src = `images/${section}/${photo.file}`;
+          img.alt = caption;
+          img.loading = 'lazy';
+
+          const overlay = document.createElement('div');
+          overlay.className = 'photo-overlay';
+          overlay.innerHTML = `<span class="photo-caption">${caption}</span>`;
+
+          cell.appendChild(img);
+          cell.appendChild(overlay);
+        }
+
         strip.appendChild(cell);
       });
     }
