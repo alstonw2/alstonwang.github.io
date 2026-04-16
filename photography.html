@@ -417,7 +417,7 @@
       <div id="drone-portrait" class="drone-photo-strip" style="height:420px"></div>
     </div>
     <div class="strip-block reveal" id="drone-landscape-block" style="display:none">
-      <p class="strip-type-label">Landscape</p>
+      <p class="strip-type-label">Photos</p>
       <div id="drone-landscape" class="drone-photo-strip" style="height:260px"></div>
     </div>
     <div class="strip-block reveal" id="drone-pano-block" style="display:none">
@@ -619,15 +619,11 @@
           const cell = document.createElement('div');
           cell.className = 'photo-cell';
           cell.style.width = (height * photo._dims.w / photo._dims.h) + 'px';
-          const caption = formatCaption(photo.caption, photo.date);
           const img = document.createElement('img');
           img.src = `images/drone/${photo.file}`;
-          img.alt = caption;
+          img.alt = '';
           img.loading = 'lazy';
-          const overlay = document.createElement('div');
-          overlay.className = 'photo-overlay';
-          overlay.innerHTML = `<span class="photo-caption">${caption}</span>`;
-          cell.appendChild(img); cell.appendChild(overlay);
+          cell.appendChild(img);
           strip.appendChild(cell);
         });
         dragScroll(strip);
