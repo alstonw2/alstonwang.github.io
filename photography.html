@@ -561,8 +561,15 @@
     async function buildDroneSection(photos) {
       if (photos.length === 0) return;
 
-      const videos     = photos.filter(p => p.type === 'video');
+      const rawVideos  = photos.filter(p => p.type === 'video');
       const photoItems = photos.filter(p => p.type !== 'video');
+
+      // Pin Volcan de Fuego first, Monteverde last — rest in date order
+      const videos = [
+        ...rawVideos.filter(v => v.caption.includes('Fuego')),
+        ...rawVideos.filter(v => !v.caption.includes('Fuego') && !v.caption.includes('Monteverde')),
+        ...rawVideos.filter(v => v.caption.includes('Monteverde'))
+      ];
 
       // Preload photos to get natural dimensions
       const dims = await Promise.all(photoItems.map(p => new Promise(resolve => {
