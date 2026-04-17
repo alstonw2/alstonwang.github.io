@@ -229,6 +229,18 @@
     }
     .about-text p:last-child { margin-bottom: 0; }
     .about-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .about-profile-img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .about-stats-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2px;
@@ -521,21 +533,24 @@
         </div>
       </div>
       <div class="about-stats reveal">
-        <div class="stat-card">
-          <div class="stat-number">5</div>
-          <div class="stat-label">Years at Amazon</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">2</div>
-          <div class="stat-label">Roles across AWS & Amazon Retail</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">∞</div>
-          <div class="stat-label">Stories worth preserving</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">1</div>
-          <div class="stat-label">Idea in progress</div>
+        <img src="images/profile/main.jpg" alt="Alston Wang" class="about-profile-img">
+        <div class="about-stats-grid">
+          <div class="stat-card">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Years at Amazon</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">2</div>
+            <div class="stat-label">Roles across AWS & Amazon Retail</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Stories worth preserving</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">1</div>
+            <div class="stat-label">Idea in progress</div>
+          </div>
         </div>
       </div>
     </div>
