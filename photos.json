@@ -360,12 +360,6 @@
     "date": "2025-10-13"
   },
   {
-    "file": "La Paz.jpeg",
-    "section": "camera",
-    "caption": "La Paz",
-    "date": "2025-09-27"
-  },
-  {
     "file": "Maple Pass 2.jpg",
     "section": "camera",
     "caption": "Maple Pass",
@@ -573,7 +567,7 @@
     "file": "La Fortuna waterfall, costa rica.jpeg",
     "section": "camera",
     "caption": "La Fortuna, Costa Rica",
-    "date": null
+    "date": "2025-09-27"
   },
   {
     "file": "La paz waterfall, costa rica.jpeg",
@@ -698,123 +692,15 @@
     "date": "2026-09-28"
   },
   {
-    "file": "DJI_0037.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0146.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0166.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0177.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0196.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0202.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0206.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0254.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
     "file": "DJI_0278_santa_cruz.jpg",
     "section": "drone",
     "caption": "Santa Cruz, Guatemala",
     "date": null
   },
   {
-    "file": "DJI_0279.jpg",
+    "file": "Volcan de Fuego.jpg",
     "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0332.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0354.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0390.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0541.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0547.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0703.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0852.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0969.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0976.jpg",
-    "section": "drone",
-    "caption": "placeholder",
-    "date": null
-  },
-  {
-    "file": "DJI_0993.jpg",
-    "section": "drone",
-    "caption": "placeholder",
+    "caption": "Volcan de Fuego, Guatemala",
     "date": null
   },
   {
