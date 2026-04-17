@@ -372,15 +372,15 @@
     "date": "2025-10-19"
   },
   {
-    "file": "Monteverde1.jpeg",
+    "file": "Arenal Volcano.jpeg",
     "section": "camera",
-    "caption": "Monteverde",
+    "caption": "Arenal Volcano, Costa Rica",
     "date": "2025-09-27"
   },
   {
-    "file": "Monteverde2.jpeg",
+    "file": "Areanl Volcano 2.jpeg",
     "section": "camera",
-    "caption": "Monteverde",
+    "caption": "Arenal Volcano, Costa Rica",
     "date": "2025-09-27"
   },
   {
@@ -468,6 +468,180 @@
     "date": "2025-12-25"
   },
   {
+    "file": "Angkor Wat, Cambodia.jpeg",
+    "section": "camera",
+    "caption": "Angkor Wat, Cambodia",
+    "date": null
+  },
+  {
+    "file": "Angkor wat 2.jpeg",
+    "section": "camera",
+    "caption": "Angkor Wat, Cambodia",
+    "date": null
+  },
+  {
+    "file": "angkor wat 3.jpeg",
+    "section": "camera",
+    "caption": "Angkor Wat, Cambodia",
+    "date": null
+  },
+  {
+    "file": "Arenal .jpeg",
+    "section": "camera",
+    "caption": "Arenal Volcano, Costa Rica",
+    "date": "2025-09-27"
+  },
+  {
+    "file": "Blue Angels1.jpg",
+    "section": "camera",
+    "caption": "Blue Angels",
+    "date": null
+  },
+  {
+    "file": "blue angels 2.jpeg",
+    "section": "camera",
+    "caption": "Blue Angels",
+    "date": null
+  },
+  {
+    "file": "clouds.jpeg",
+    "section": "camera",
+    "caption": "Clouds",
+    "date": null
+  },
+  {
+    "file": "Costa rica.jpeg",
+    "section": "camera",
+    "caption": "Costa Rica",
+    "date": null
+  },
+  {
+    "file": "Deep Sea fishing.jpeg",
+    "section": "camera",
+    "caption": "Deep Sea Fishing",
+    "date": null
+  },
+  {
+    "file": "deep sea fishing2.jpeg",
+    "section": "camera",
+    "caption": "Deep Sea Fishing",
+    "date": null
+  },
+  {
+    "file": "Glacier National Park .jpg",
+    "section": "camera",
+    "caption": "Glacier National Park",
+    "date": null
+  },
+  {
+    "file": "Glacier National Park.jpeg",
+    "section": "camera",
+    "caption": "Glacier National Park",
+    "date": null
+  },
+  {
+    "file": "Glacier national park3.jpeg",
+    "section": "camera",
+    "caption": "Glacier National Park",
+    "date": null
+  },
+  {
+    "file": "Glacier national park4.jpeg",
+    "section": "camera",
+    "caption": "Glacier National Park",
+    "date": null
+  },
+  {
+    "file": "Glacier national park5.jpeg",
+    "section": "camera",
+    "caption": "Glacier National Park",
+    "date": null
+  },
+  {
+    "file": "Glacier national park6.jpeg",
+    "section": "camera",
+    "caption": "Glacier National Park",
+    "date": null
+  },
+  {
+    "file": "Grinnell Glacier, Glacier national park.jpeg",
+    "section": "camera",
+    "caption": "Grinnell Glacier, Glacier National Park",
+    "date": null
+  },
+  {
+    "file": "La Fortuna waterfall, costa rica.jpeg",
+    "section": "camera",
+    "caption": "La Fortuna, Costa Rica",
+    "date": null
+  },
+  {
+    "file": "La paz waterfall, costa rica.jpeg",
+    "section": "camera",
+    "caption": "La Paz Waterfall, Costa Rica",
+    "date": null
+  },
+  {
+    "file": "lenticular clouds on Mount rainier.jpeg",
+    "section": "camera",
+    "caption": "Mount Rainier",
+    "date": null
+  },
+  {
+    "file": "Olympic Coast.jpeg",
+    "section": "camera",
+    "caption": "Olympic Coast",
+    "date": null
+  },
+  {
+    "file": "Panama1.jpeg",
+    "section": "camera",
+    "caption": "Panama",
+    "date": null
+  },
+  {
+    "file": "Panama2.jpeg",
+    "section": "camera",
+    "caption": "Panama",
+    "date": null
+  },
+  {
+    "file": "Paris, Las Vegas.jpg",
+    "section": "camera",
+    "caption": "Paris, Las Vegas",
+    "date": null
+  },
+  {
+    "file": "Port Angeles.jpeg",
+    "section": "camera",
+    "caption": "Port Angeles",
+    "date": null
+  },
+  {
+    "file": "sail.jpeg",
+    "section": "camera",
+    "caption": "Sailing",
+    "date": null
+  },
+  {
+    "file": "Shedd Aquarium.jpeg",
+    "section": "camera",
+    "caption": "Shedd Aquarium, Chicago",
+    "date": null
+  },
+  {
+    "file": "Shedd Aquarium 2.jpeg",
+    "section": "camera",
+    "caption": "Shedd Aquarium, Chicago",
+    "date": null
+  },
+  {
+    "file": "St.Patrick's Day, Chicago.jpeg",
+    "section": "camera",
+    "caption": "St. Patrick's Day, Chicago",
+    "date": null
+  },
+  {
     "type": "video",
     "url": "https://www.youtube.com/watch?v=Mk-JG3_Wp4c",
     "section": "drone",
@@ -520,7 +694,7 @@
     "type": "video",
     "url": "https://youtu.be/M3Lvgr04tIQ",
     "section": "drone",
-    "caption": "Monteverde, Costa Rica",
+    "caption": "Arenal Volcano, Costa Rica",
     "date": "2026-09-28"
   },
   {
@@ -659,6 +833,108 @@
     "file": "barclay_panarama.jpg",
     "section": "drone",
     "caption": "Barclay Lake",
+    "date": null
+  },
+  {
+    "file": "Arenal Volcano.jpg",
+    "section": "drone",
+    "caption": "Arenal Volcano, Costa Rica",
+    "date": null
+  },
+  {
+    "file": "Arenal Volcano2.jpg",
+    "section": "drone",
+    "caption": "Arenal Volcano, Costa Rica",
+    "date": null
+  },
+  {
+    "file": "Cap hill.jpg",
+    "section": "drone",
+    "caption": "Capitol Hill",
+    "date": null
+  },
+  {
+    "file": "Fuego 2.jpg",
+    "section": "drone",
+    "caption": "Volcan de Fuego, Guatemala",
+    "date": null
+  },
+  {
+    "file": "Fuego 3.jpg",
+    "section": "drone",
+    "caption": "Volcan de Fuego, Guatemala",
+    "date": null
+  },
+  {
+    "file": "Gold creek pond.jpg",
+    "section": "drone",
+    "caption": "Gold Creek Pond",
+    "date": null
+  },
+  {
+    "file": "San Pedro.jpg",
+    "section": "drone",
+    "caption": "San Pedro, Guatemala",
+    "date": null
+  },
+  {
+    "file": "Santa cruz.jpg",
+    "section": "drone",
+    "caption": "Santa Cruz, Guatemala",
+    "date": null
+  },
+  {
+    "file": "St.Lucia.jpg",
+    "section": "drone",
+    "caption": "St. Lucia",
+    "date": null
+  },
+  {
+    "file": "brooklyn.jpg",
+    "section": "drone",
+    "caption": "Brooklyn",
+    "date": null
+  },
+  {
+    "file": "deception pass bridge.jpg",
+    "section": "drone",
+    "caption": "Deception Pass",
+    "date": null
+  },
+  {
+    "file": "shingle mills.jpg",
+    "section": "drone",
+    "caption": "Shingle Mills, Oregon Coast",
+    "date": null
+  },
+  {
+    "file": "shingle mills2.jpg",
+    "section": "drone",
+    "caption": "Shingle Mills, Oregon Coast",
+    "date": null
+  },
+  {
+    "file": "snoqualmie falls.jpg",
+    "section": "drone",
+    "caption": "Snoqualmie Falls",
+    "date": null
+  },
+  {
+    "file": "snoqualmie falls 2.jpg",
+    "section": "drone",
+    "caption": "Snoqualmie Falls",
+    "date": null
+  },
+  {
+    "file": "snoqualmie falls 3.jpg",
+    "section": "drone",
+    "caption": "Snoqualmie Falls",
+    "date": null
+  },
+  {
+    "file": "space needle.jpg",
+    "section": "drone",
+    "caption": "Space Needle",
     "date": null
   }
 ]
