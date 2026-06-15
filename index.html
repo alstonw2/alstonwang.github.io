@@ -66,7 +66,10 @@
       justify-content: space-between;
       align-items: center;
       padding: 28px 56px;
-      mix-blend-mode: multiply;
+      background: rgba(247, 245, 242, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
     }
     .nav-logo {
       font-family: var(--serif);
@@ -91,6 +94,8 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--ink); }
+    /* Keep anchored sections clear of the fixed header */
+    section { scroll-margin-top: 96px; }
 
     /* ── HERO ── */
     #home {
@@ -501,13 +506,13 @@
     <div class="about-grid">
       <div class="about-text reveal">
         <p>
-          I'm a product thinker and program manager with five years at Amazon — first in AWS Sales serving the gaming industry, then as a Program Manager at Amazon Business building the systems and processes that keep teams moving.
+          I'm a product thinker and program manager with five years at Amazon — first in AWS Sales serving the gaming industry, then as a Program Manager at Amazon Business building the systems and processes that keep sales teams moving.
         </p>
         <p>
-          My work lives at the intersection of people and process: understanding what a team needs, designing how it should work, and making decisions that hold up under pressure. I've collaborated closely with engineers without being one — which means I know how to speak both languages.
+          My work lives at the intersection of people and process: understanding what a team needs, designing how it should work, and making decisions that hold up under pressure. I've collaborated with engineers, designers, and sales leaders, and have learned how to translate requirements across stakeholders.
         </p>
         <p>
-          Outside of work, I spend time behind a camera and on the pickleball court. I compete at the 4.5 level and am always looking for the next tournament — follow the journey on Instagram <a href="https://www.instagram.com/alston_pb/" target="_blank" style="color:var(--accent);text-decoration:none;">@alston_pb</a>.
+          Outside of work, I spend time taking photos and playing pickleball. I compete at the 5.0 level and am always looking for the next tournament — follow the journey on Instagram <a href="https://www.instagram.com/alston_pb/" target="_blank" style="color:var(--accent);text-decoration:none;">@alston_pb</a>.
         </p>
         <div class="about-experience">
           <div class="exp-item">
