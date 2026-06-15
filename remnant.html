@@ -1,0 +1,2718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remnant — Honor the life you've lived</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    :root {
+      --cream:    #FAF7F2;
+      --green:    #2D4A3E;
+      --green-lt: #3D6357;
+      --terra:    #C4713A;
+      --gold:     #B8953F;
+      --warm:     #F0EBE1;
+      --muted:    #7A6E62;
+      --ink:      #2C2C2C;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, .serif { font-family: 'Lora', serif; }
+
+    /* ── Landing ─────────────────────────────────── */
+    #landing {
+      min-height: 100vh;
+      background: var(--green);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #landing::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 60%, rgba(196,113,58,.18) 0%, transparent 60%),
+                  radial-gradient(ellipse at 75% 20%, rgba(184,149,63,.12) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .logo-mark {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 3rem;
+    }
+    .landing-headline {
+      font-family: 'Lora', serif;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      color: #fff;
+      line-height: 1.2;
+      max-width: 680px;
+      margin-bottom: 1.25rem;
+    }
+    .landing-sub {
+      color: rgba(255,255,255,.68);
+      font-size: 1.1rem;
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 2.8rem;
+    }
+    .btn-primary {
+      background: var(--terra);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: .9rem 2.4rem;
+      border-radius: 2rem;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+      letter-spacing: .02em;
+    }
+    .btn-primary:hover { background: #b5622e; transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: rgba(255,255,255,.7);
+      font-size: .95rem;
+      padding: .75rem 2rem;
+      border-radius: 2rem;
+      border: 1px solid rgba(255,255,255,.25);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,.08); color: #fff; }
+
+    .pillars {
+      display: flex;
+      gap: 2rem;
+      margin-top: 4rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 640px;
+    }
+    .pillar {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      color: rgba(255,255,255,.55);
+      font-size: .85rem;
+    }
+    .pillar-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--terra);
+      flex-shrink: 0;
+    }
+
+    /* ── App Shell ───────────────────────────────── */
+    #app { display: none; min-height: 100vh; }
+
+    /* ── Progress Bar ────────────────────────────── */
+    #progress-bar {
+      background: #fff;
+      border-bottom: 1px solid rgba(0,0,0,.07);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .prog-logo {
+      font-family: 'Lora', serif;
+      font-size: 1.1rem;
+      color: var(--green);
+      font-weight: 600;
+    }
+    .steps-track {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .step-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .35rem;
+    }
+    .step-circle {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 2px solid #D9D4CC;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .75rem;
+      font-weight: 600;
+      color: #9E9589;
+      transition: all .3s;
+    }
+    .step-circle.active {
+      border-color: var(--green);
+      background: var(--green);
+      color: #fff;
+    }
+    .step-circle.done {
+      border-color: var(--green);
+      background: var(--green);
+      color: #fff;
+    }
+    .step-label {
+      font-size: .68rem;
+      color: #9E9589;
+      white-space: nowrap;
+      transition: color .3s;
+    }
+    .step-label.active, .step-label.done { color: var(--green); }
+    .step-connector {
+      width: 48px;
+      height: 2px;
+      background: #D9D4CC;
+      margin-bottom: 1.1rem;
+      transition: background .3s;
+    }
+    .step-connector.done { background: var(--green); }
+    .save-indicator {
+      font-size: .78rem;
+      color: #9E9589;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+
+    /* ── Step Panels ─────────────────────────────── */
+    .step-panel {
+      display: none;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+    }
+    .step-panel.active { display: block; }
+
+    .step-eyebrow {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: .75rem;
+    }
+    .step-title {
+      font-family: 'Lora', serif;
+      font-size: 2rem;
+      color: var(--green);
+      margin-bottom: .6rem;
+      line-height: 1.25;
+    }
+    .step-desc {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.65;
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── Form Elements ───────────────────────────── */
+    .form-section {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(0,0,0,.06);
+    }
+    .form-section-title {
+      font-family: 'Lora', serif;
+      font-size: 1.15rem;
+      color: var(--green);
+      margin-bottom: 1.25rem;
+      padding-bottom: .75rem;
+      border-bottom: 1px solid rgba(0,0,0,.07);
+    }
+    .form-row { margin-bottom: 1.25rem; }
+    .form-row:last-child { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: .85rem;
+      font-weight: 500;
+      color: #4A4540;
+      margin-bottom: .4rem;
+    }
+    .label-hint {
+      font-weight: 400;
+      color: var(--muted);
+      font-size: .78rem;
+      margin-left: .4rem;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: .7rem 1rem;
+      border: 1.5px solid #D9D4CC;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: .95rem;
+      color: var(--ink);
+      background: var(--cream);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(45,74,62,.1);
+    }
+    textarea { resize: vertical; min-height: 100px; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 540px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Toggle Cards ────────────────────────────── */
+    .toggle-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: .75rem;
+    }
+    .toggle-card {
+      border: 1.5px solid #D9D4CC;
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      cursor: pointer;
+      transition: all .2s;
+      background: var(--cream);
+      display: flex;
+      align-items: flex-start;
+      gap: .7rem;
+    }
+    .toggle-card:hover { border-color: var(--green-lt); background: #F5F1EB; }
+    .toggle-card.selected {
+      border-color: var(--green);
+      background: rgba(45,74,62,.06);
+    }
+    .toggle-card input { display: none; }
+    .toggle-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: .05rem;
+    }
+    .toggle-text strong {
+      display: block;
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: .15rem;
+    }
+    .toggle-text span {
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ── Radio Pills ─────────────────────────────── */
+    .radio-pills { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .radio-pill {
+      border: 1.5px solid #D9D4CC;
+      border-radius: 2rem;
+      padding: .5rem 1.1rem;
+      cursor: pointer;
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--muted);
+      background: var(--cream);
+      transition: all .2s;
+      user-select: none;
+    }
+    .radio-pill:hover { border-color: var(--green-lt); color: var(--green); }
+    .radio-pill.selected { border-color: var(--green); background: var(--green); color: #fff; }
+
+    /* ── MPA Card ────────────────────────────────── */
+    .mpa-card {
+      background: rgba(45,74,62,.05);
+      border: 1px dashed rgba(45,74,62,.3);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    /* ── Tradition Builder ───────────────────────── */
+    .tradition-item {
+      background: var(--warm);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(0,0,0,.07);
+      position: relative;
+    }
+    .tradition-remove {
+      position: absolute;
+      top: .75rem;
+      right: .75rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #C0B8AF;
+      font-size: 1.1rem;
+      transition: color .2s;
+    }
+    .tradition-remove:hover { color: #C0503A; }
+    .add-btn {
+      width: 100%;
+      padding: .8rem;
+      border: 1.5px dashed #C0B8AF;
+      border-radius: 12px;
+      background: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 500;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+    }
+    .add-btn:hover { border-color: var(--green); color: var(--green); background: rgba(45,74,62,.04); }
+
+    /* ── Time-lock Messages ──────────────────────── */
+    .message-card {
+      background: linear-gradient(135deg, rgba(45,74,62,.06) 0%, rgba(196,113,58,.05) 100%);
+      border: 1px solid rgba(45,74,62,.15);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .lock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      background: var(--green);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 600;
+      padding: .25rem .7rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Navigation ──────────────────────────────── */
+    .step-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0; right: 0;
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(0,0,0,.08);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 99;
+    }
+    .btn-back {
+      background: none;
+      border: 1.5px solid #D9D4CC;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: .95rem;
+      padding: .75rem 1.75rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-back:hover { border-color: var(--green); color: var(--green); }
+    .btn-next {
+      background: var(--green);
+      color: #fff;
+      font-weight: 600;
+      font-size: .95rem;
+      padding: .8rem 2.2rem;
+      border-radius: 2rem;
+      border: none;
+      cursor: pointer;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .btn-next:hover { background: var(--green-lt); }
+    .step-counter { font-size: .85rem; color: var(--muted); }
+
+    /* ── Summary / Profile ───────────────────────── */
+    #summary-panel {
+      display: none;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+    #summary-panel.active { display: block; }
+
+    .profile-hero {
+      background: var(--green);
+      border-radius: 20px;
+      padding: 2.5rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .profile-avatar {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      flex-shrink: 0;
+      border: 3px solid rgba(255,255,255,.3);
+    }
+    .profile-name {
+      font-family: 'Lora', serif;
+      font-size: 1.8rem;
+      margin-bottom: .25rem;
+    }
+    .profile-meta { color: rgba(255,255,255,.65); font-size: .9rem; line-height: 1.7; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    @media (max-width: 600px) { .summary-grid { grid-template-columns: 1fr; } }
+
+    .summary-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid rgba(0,0,0,.06);
+    }
+    .summary-card.full { grid-column: 1 / -1; }
+    .summary-card-header {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      margin-bottom: 1rem;
+      padding-bottom: .75rem;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .summary-card-icon {
+      width: 34px; height: 34px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .icon-green  { background: rgba(45,74,62,.1); }
+    .icon-terra  { background: rgba(196,113,58,.1); }
+    .icon-gold   { background: rgba(184,149,63,.1); }
+    .icon-purple { background: rgba(100,80,160,.1); }
+
+    .summary-card-title {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      color: var(--green);
+      font-weight: 600;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: .45rem 0;
+      border-bottom: 1px solid rgba(0,0,0,.05);
+      font-size: .875rem;
+    }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-key { color: var(--muted); flex-shrink: 0; }
+    .summary-val { color: var(--ink); font-weight: 500; text-align: right; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .tag {
+      background: rgba(45,74,62,.08);
+      color: var(--green);
+      font-size: .75rem;
+      font-weight: 600;
+      padding: .25rem .7rem;
+      border-radius: 1rem;
+    }
+
+    .share-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .btn-share {
+      flex: 1;
+      min-width: 160px;
+      padding: .9rem 1.5rem;
+      border-radius: 12px;
+      border: 1.5px solid #D9D4CC;
+      background: #fff;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: .9rem;
+      color: var(--ink);
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+    }
+    .btn-share:hover { border-color: var(--green); color: var(--green); }
+    .btn-share.primary-share {
+      background: var(--terra);
+      border-color: var(--terra);
+      color: #fff;
+    }
+    .btn-share.primary-share:hover { background: #b5622e; }
+
+    /* ── Chapters ────────────────────────────────── */
+    #chapters {
+      display: none;
+      min-height: 100vh;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 5rem;
+    }
+    .chapters-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+    }
+    .upload-zone {
+      border: 2px dashed #C0B8AF;
+      border-radius: 18px;
+      padding: 3rem 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      background: #fff;
+    }
+    .upload-zone:hover { border-color: var(--terra); background: rgba(196,113,58,.04); }
+    .upload-zone .big { font-size: 2.2rem; margin-bottom: .75rem; }
+    .thumb-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+      gap: .6rem;
+      margin-top: 1.25rem;
+    }
+    .thumb-grid img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,.08);
+      display: block;
+    }
+    .thumb { position: relative; }
+    .thumb.starred img { border-color: var(--terra); box-shadow: 0 0 0 2px var(--terra); }
+    .star-btn {
+      position: absolute;
+      top: 5px; right: 5px;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: rgba(0,0,0,.45);
+      border: none; cursor: pointer;
+      color: #fff; font-size: .85rem; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .star-btn.on { background: var(--terra); }
+    .key-row {
+      display: flex;
+      gap: .75rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+    .key-row input { flex: 1; min-width: 220px; }
+    .cost-pill {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--green);
+      background: rgba(45,74,62,.08);
+      padding: .35rem .9rem;
+      border-radius: 1rem;
+      white-space: nowrap;
+    }
+    /* Viewer */
+    #chapter-viewer { display: none; }
+    .viewer-stage {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--green);
+      aspect-ratio: 3 / 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .viewer-stage img, .viewer-stage .demo-slide {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: opacity .5s;
+    }
+    .demo-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+    }
+    .viewer-caption {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,.07);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1rem;
+    }
+    .viewer-caption .cap { font-family: 'Lora', serif; font-size: 1.1rem; color: var(--green); margin-bottom: .35rem; }
+    .viewer-caption .why { font-size: .82rem; color: var(--muted); }
+    .viewer-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .ctrl-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid #D9D4CC;
+      background: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all .2s;
+    }
+    .ctrl-btn:hover { border-color: var(--green); }
+    .ctrl-btn.play { background: var(--terra); border-color: var(--terra); color: #fff; width: 56px; height: 56px; font-size: 1.2rem; }
+    .viewer-dots { display: flex; gap: .45rem; justify-content: center; margin-top: 1rem; }
+    .viewer-dots .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #D9D4CC;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .viewer-dots .dot.on { background: var(--terra); transform: scale(1.3); }
+    .chapter-narrative {
+      font-family: 'Lora', serif;
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: var(--ink);
+      background: linear-gradient(135deg, rgba(45,74,62,.05), rgba(196,113,58,.05));
+      border-radius: 16px;
+      padding: 1.75rem 2rem;
+      margin-top: 1.5rem;
+      font-style: italic;
+    }
+    .spinner {
+      display: inline-block;
+      width: 18px; height: 18px;
+      border: 2.5px solid rgba(255,255,255,.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      vertical-align: middle;
+      margin-right: .5rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Collage layout — bounded side-by-side grid (max 3 photos) */
+    .viewer-stage.collage-mode { padding: 4px; }
+    .collage {
+      width: 100%; height: 100%;
+      display: grid;
+      gap: 4px;
+    }
+    .collage.n2 { grid-template-columns: 1fr 1fr; }                 /* two photos side by side */
+    .collage.n3 { grid-template-columns: 1.4fr 1fr; grid-template-rows: 1fr 1fr; }
+    .collage.n3 > .ctile:first-child { grid-row: 1 / 3; }           /* one large + two stacked */
+    .ctile {
+      position: relative;
+      width: 100%; height: 100%;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .ctile img, .ctile video { width: 100%; height: 100%; object-fit: cover; }
+    .ctile .demo {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem;
+    }
+    .collage-rm {
+      position: absolute;
+      top: 5px; right: 5px;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: rgba(0,0,0,.6);
+      color: #fff; border: none; cursor: pointer;
+      font-size: .8rem;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 5;
+    }
+    .collage-rm:hover { background: #C0503A; }
+    .collage-badge {
+      position: absolute;
+      top: .75rem; left: .75rem;
+      background: rgba(0,0,0,.45);
+      color: #fff;
+      font-size: .68rem;
+      font-weight: 600;
+      padding: .25rem .6rem;
+      border-radius: 1rem;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Editable fields */
+    [contenteditable="true"] {
+      outline: none;
+      border-radius: 8px;
+      transition: background .15s, box-shadow .15s;
+      cursor: text;
+    }
+    .editing [contenteditable="true"] {
+      background: rgba(196,113,58,.06);
+      box-shadow: 0 0 0 1.5px rgba(196,113,58,.25);
+      padding: .15rem .4rem;
+    }
+    .edit-hint {
+      display: none;
+      font-size: .72rem;
+      color: var(--terra);
+      font-weight: 600;
+      margin-bottom: .75rem;
+    }
+    .editing .edit-hint { display: block; }
+
+    /* Map */
+    .chapter-map {
+      height: 320px;
+      border-radius: 16px;
+      margin-top: 1.5rem;
+      border: 1px solid rgba(0,0,0,.08);
+      z-index: 1;
+    }
+    .map-label {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      color: var(--green);
+      font-weight: 600;
+      margin: 2rem 0 .5rem;
+    }
+    .leaflet-popup-content { font-family: 'Inter', sans-serif; font-size: .85rem; }
+    .popup-delete {
+      display: inline-block;
+      margin-top: .5rem;
+      color: #C0503A;
+      font-weight: 600;
+      font-size: .78rem;
+      cursor: pointer;
+      background: none; border: none; padding: 0;
+    }
+    .popup-delete:hover { text-decoration: underline; }
+    .popup-edit {
+      display: inline-block;
+      margin-top: .5rem;
+      color: var(--green);
+      font-weight: 600;
+      font-size: .78rem;
+      cursor: pointer;
+      background: none; border: none; padding: 0;
+    }
+    .popup-edit:hover { text-decoration: underline; }
+    .pe-input {
+      width: 100%; margin-bottom: 5px;
+      padding: .35rem .5rem;
+      border: 1px solid #D9D4CC; border-radius: 6px;
+      font-family: 'Inter', sans-serif; font-size: .82rem;
+    }
+    .pe-icons { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 6px; }
+    .pe-ic {
+      border: 1px solid #D9D4CC; background: #fff;
+      border-radius: 6px; padding: .15rem .35rem;
+      cursor: pointer; font-size: 1rem; line-height: 1;
+    }
+    .pe-ic.on { border-color: var(--terra); background: rgba(196,113,58,.12); }
+    .pe-save {
+      background: var(--green); color: #fff; border: none;
+      border-radius: 6px; padding: .35rem .9rem;
+      font-weight: 600; font-size: .8rem; cursor: pointer;
+    }
+    .pin-toolbar { display: flex; gap: .4rem; flex-wrap: wrap; margin: .25rem 0 .75rem; }
+    .pin-cat {
+      border: 1.5px solid #D9D4CC;
+      background: #fff;
+      border-radius: 2rem;
+      padding: .35rem .8rem;
+      font-size: .82rem;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .pin-cat:hover { border-color: var(--green-lt); }
+    .pin-cat.on { border-color: var(--terra); background: rgba(196,113,58,.1); font-weight: 600; }
+
+    /* ── Animations ──────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp .45s ease both; }
+
+    /* ── Utilities ───────────────────────────────── */
+    .text-terra { color: var(--terra); }
+    .text-muted  { color: var(--muted); font-size: .85rem; }
+    .mt-1 { margin-top: .5rem; }
+    .mt-2 { margin-top: 1rem; }
+    .mt-3 { margin-top: 1.5rem; }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     LANDING
+════════════════════════════════════════════════ -->
+<div id="landing">
+  <div class="logo-mark">Remnant</div>
+
+  <h1 class="landing-headline fade-up">
+    Your wishes, your traditions,<br/>your legacy — all in one place.
+  </h1>
+  <p class="landing-sub fade-up" style="animation-delay:.1s">
+    A gentle, guided space to record how you want to be cared for,
+    what matters most to your family, and who you truly are —
+    so the people you love never have to guess.
+  </p>
+
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;" class="fade-up" style="animation-delay:.2s">
+    <button class="btn-primary" onclick="startApp()">Begin Your Remnant</button>
+    <button class="btn-secondary" onclick="openChapters()">✨ Chapters — AI photo stories</button>
+  </div>
+
+  <div class="pillars fade-up" style="animation-delay:.3s">
+    <div class="pillar"><div class="pillar-dot"></div>Care preferences</div>
+    <div class="pillar"><div class="pillar-dot"></div>Advance directive</div>
+    <div class="pillar"><div class="pillar-dot"></div>Family traditions</div>
+    <div class="pillar"><div class="pillar-dot"></div>Legacy messages</div>
+    <div class="pillar"><div class="pillar-dot"></div>Heritage preservation</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     APP SHELL
+════════════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- Progress Bar -->
+  <div id="progress-bar">
+    <div class="prog-logo">Remnant</div>
+    <div class="steps-track" id="steps-track"></div>
+    <div class="save-indicator">
+      <span>●</span> Auto-saved
+    </div>
+  </div>
+
+  <!-- ── STEP 1: The Basics ──────────────────────── -->
+  <div class="step-panel active fade-up" id="panel-1">
+    <div class="step-eyebrow">Step 1 of 4</div>
+    <h2 class="step-title">Let's start with you.</h2>
+    <p class="step-desc">
+      This is your Remnant — a living record that reflects who you are.
+      Start with the basics, and build from there over time.
+    </p>
+
+    <div class="form-section">
+      <div class="form-section-title">About You</div>
+      <div class="two-col">
+        <div class="form-row">
+          <label>First Name</label>
+          <input type="text" id="firstName" placeholder="e.g. Maria" />
+        </div>
+        <div class="form-row">
+          <label>Last Name</label>
+          <input type="text" id="lastName" placeholder="e.g. Santos" />
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="form-row">
+          <label>Date of Birth</label>
+          <input type="date" id="dob" />
+        </div>
+        <div class="form-row">
+          <label>Preferred Language</label>
+          <select id="language">
+            <option value="">Select…</option>
+            <option>English</option>
+            <option>Spanish</option>
+            <option>Portuguese</option>
+            <option>Mandarin</option>
+            <option>Cantonese</option>
+            <option>French</option>
+            <option>Tagalog</option>
+            <option>Vietnamese</option>
+            <option>Korean</option>
+            <option>Arabic</option>
+            <option>Hindi</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Hometown / Where you grew up</label>
+        <input type="text" id="hometown" placeholder="e.g. San Juan, Puerto Rico" />
+      </div>
+      <div class="form-row">
+        <label>A one-line description of yourself <span class="label-hint">— how would you introduce yourself?</span></label>
+        <input type="text" id="tagline" placeholder='e.g. "Builder, traveler, and maker of the world's best arroz con pollo"' />
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Cultural & Spiritual Identity</div>
+      <p class="text-muted mt-1" style="margin-bottom:1rem">This helps ensure your care and ceremonies reflect who you truly are.</p>
+      <div class="form-row">
+        <label>Cultural or ethnic background <span class="label-hint">optional</span></label>
+        <input type="text" id="culture" placeholder="e.g. Mexican-American, Nigerian, Jewish-Italian…" />
+      </div>
+      <div class="form-row">
+        <label>Religious or spiritual beliefs <span class="label-hint">optional</span></label>
+        <input type="text" id="religion" placeholder="e.g. Catholic, Buddhist, Agnostic, Spiritual but not religious…" />
+      </div>
+      <div class="form-row">
+        <label>Primary spoken language(s) at home</label>
+        <input type="text" id="homeLanguage" placeholder="e.g. English and Spanish" />
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Emergency Contact</div>
+      <div class="two-col">
+        <div class="form-row">
+          <label>Full Name</label>
+          <input type="text" id="ecName" placeholder="Who should be called first?" />
+        </div>
+        <div class="form-row">
+          <label>Relationship</label>
+          <input type="text" id="ecRelation" placeholder="e.g. Spouse, Daughter, Close friend" />
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="form-row">
+          <label>Phone</label>
+          <input type="tel" id="ecPhone" placeholder="+1 (555) 000-0000" />
+        </div>
+        <div class="form-row">
+          <label>Email</label>
+          <input type="email" id="ecEmail" placeholder="their@email.com" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── STEP 2: Care Preferences ───────────────── -->
+  <div class="step-panel fade-up" id="panel-2">
+    <div class="step-eyebrow">Step 2 of 4</div>
+    <h2 class="step-title">How you want to be cared for.</h2>
+    <p class="step-desc">
+      These are your advance directives — made simple. This isn't about planning to die.
+      It's about protecting the people you love from having to guess, and ensuring your
+      wishes are honored if you're ever unable to speak for yourself.
+    </p>
+
+    <div class="form-section">
+      <div class="form-section-title">Medical Wishes (Living Will)</div>
+      <p class="text-muted mt-1" style="margin-bottom:1.25rem">
+        If you were in a medical crisis and could not communicate, what would you want?
+        You can always update these as your views evolve.
+      </p>
+
+      <div class="form-row">
+        <label>If my heart stops, I want attempts to restart it (CPR)</label>
+        <div class="radio-pills" data-group="cpr">
+          <div class="radio-pill" data-val="yes">Yes — attempt resuscitation</div>
+          <div class="radio-pill" data-val="no">No — allow natural death</div>
+          <div class="radio-pill" data-val="depends">Depends on the situation</div>
+        </div>
+      </div>
+
+      <div class="form-row mt-2">
+        <label>If I cannot breathe on my own, I want a ventilator</label>
+        <div class="radio-pills" data-group="ventilator">
+          <div class="radio-pill" data-val="yes">Yes — use a ventilator</div>
+          <div class="radio-pill" data-val="limited">Only short-term, if recovery is likely</div>
+          <div class="radio-pill" data-val="no">No — comfort only</div>
+        </div>
+      </div>
+
+      <div class="form-row mt-2">
+        <label>If I cannot eat on my own, I want a feeding tube</label>
+        <div class="radio-pills" data-group="feeding">
+          <div class="radio-pill" data-val="yes">Yes — use a feeding tube</div>
+          <div class="radio-pill" data-val="limited">Only short-term</div>
+          <div class="radio-pill" data-val="no">No — comfort measures only</div>
+        </div>
+      </div>
+
+      <div class="form-row mt-2">
+        <label>My overall care priority if facing a serious illness</label>
+        <div class="radio-pills" data-group="carePriority">
+          <div class="radio-pill" data-val="extend">Extend life as long as possible</div>
+          <div class="radio-pill" data-val="balance">Balance quality and length</div>
+          <div class="radio-pill" data-val="comfort">Prioritize comfort and dignity</div>
+        </div>
+      </div>
+
+      <div class="form-row mt-2">
+        <label>Organ &amp; tissue donation <span class="label-hint">optional</span></label>
+        <div class="radio-pills" data-group="organDonation">
+          <div class="radio-pill" data-val="yes-all">Yes — donate anything that helps</div>
+          <div class="radio-pill" data-val="yes-specific">Yes — specific organs only</div>
+          <div class="radio-pill" data-val="no">No donation</div>
+          <div class="radio-pill" data-val="undecided">Not sure yet</div>
+        </div>
+      </div>
+
+      <div class="form-row mt-2">
+        <label>Additional wishes or context <span class="label-hint">optional</span></label>
+        <textarea id="medWishesNotes" placeholder="Any nuances, values, or beliefs that should guide these decisions…"></textarea>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Medical Power of Attorney (MPA)</div>
+      <p class="text-muted mt-1" style="margin-bottom:1rem">
+        This is the person who speaks for you when you cannot. Choose someone who
+        <strong>knows your values deeply</strong> — not just who's closest by default.
+        Asking someone to hold this role is meaningful; be honest about what it involves.
+      </p>
+
+      <div class="mpa-card">
+        <div class="two-col">
+          <div class="form-row">
+            <label>MPA Full Name</label>
+            <input type="text" id="mpaName" placeholder="Who do you trust most?" />
+          </div>
+          <div class="form-row">
+            <label>Relationship to You</label>
+            <input type="text" id="mpaRelation" placeholder="e.g. Sister, Best friend, Partner" />
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="form-row">
+            <label>Phone</label>
+            <input type="tel" id="mpaPhone" placeholder="+1 (555) 000-0000" />
+          </div>
+          <div class="form-row">
+            <label>Email</label>
+            <input type="email" id="mpaEmail" placeholder="their@email.com" />
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Why you chose them <span class="label-hint">— this is for your own clarity</span></label>
+          <textarea id="mpaWhy" placeholder="What values do they share with you? Why do you trust them with this?" style="min-height:80px"></textarea>
+        </div>
+      </div>
+
+      <div class="form-row mt-2">
+        <label>Backup MPA <span class="label-hint">optional but recommended</span></label>
+        <input type="text" id="mpBackup" placeholder="Name and relationship of a backup person" />
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">After Death — Body &amp; Ceremony</div>
+
+      <div class="form-row">
+        <label>How I want my body cared for</label>
+        <div class="toggle-grid" id="burialGrid">
+          <label class="toggle-card" onclick="selectToggle(this, 'burial')">
+            <div class="toggle-icon">⚰️</div>
+            <div class="toggle-text"><strong>Traditional burial</strong><span>Embalming, casket, cemetery</span></div>
+          </label>
+          <label class="toggle-card" onclick="selectToggle(this, 'burial')">
+            <div class="toggle-icon">🔥</div>
+            <div class="toggle-text"><strong>Cremation</strong><span>Ashes kept or scattered</span></div>
+          </label>
+          <label class="toggle-card" onclick="selectToggle(this, 'burial')">
+            <div class="toggle-icon">🌿</div>
+            <div class="toggle-text"><strong>Green burial</strong><span>Environmentally friendly, no embalming</span></div>
+          </label>
+          <label class="toggle-card" onclick="selectToggle(this, 'burial')">
+            <div class="toggle-icon">🍄</div>
+            <div class="toggle-text"><strong>Human composting</strong><span>Body returns to soil naturally</span></div>
+          </label>
+          <label class="toggle-card" onclick="selectToggle(this, 'burial')">
+            <div class="toggle-icon">🌊</div>
+            <div class="toggle-text"><strong>Memorial reef</strong><span>Remains form an ocean reef</span></div>
+          </label>
+          <label class="toggle-card" onclick="selectToggle(this, 'burial')">
+            <div class="toggle-icon">💭</div>
+            <div class="toggle-text"><strong>Not sure yet</strong><span>Leave it to my family</span></div>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-row mt-2">
+        <label>Type of ceremony or gathering</label>
+        <div class="radio-pills" data-group="ceremony">
+          <div class="radio-pill" data-val="formal">Formal funeral service</div>
+          <div class="radio-pill" data-val="celebration">Celebration of life</div>
+          <div class="radio-pill" data-val="private">Private, family only</div>
+          <div class="radio-pill" data-val="none">No ceremony</div>
+          <div class="radio-pill" data-val="undecided">Family's choice</div>
+        </div>
+      </div>
+
+      <div class="form-row mt-2">
+        <label>Anything specific you want at the ceremony <span class="label-hint">optional</span></label>
+        <textarea id="ceremonyNotes" placeholder="Songs, readings, people you'd want to speak, foods, meaningful objects…"></textarea>
+      </div>
+
+      <div class="form-row mt-2">
+        <label>Where should ashes be scattered or buried? <span class="label-hint">optional</span></label>
+        <input type="text" id="ashesLocation" placeholder="A place that was meaningful to you…" />
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Financial &amp; Legal</div>
+      <div class="form-row">
+        <label>Do you have a financial will?</label>
+        <div class="radio-pills" data-group="hasWill">
+          <div class="radio-pill" data-val="yes">Yes, it's up to date</div>
+          <div class="radio-pill" data-val="outdated">Yes, but it needs updating</div>
+          <div class="radio-pill" data-val="no">Not yet</div>
+        </div>
+      </div>
+      <div class="form-row mt-2">
+        <label>Where is your will stored / who has a copy? <span class="label-hint">optional</span></label>
+        <input type="text" id="willLocation" placeholder="e.g. Safe at home, Attorney Jane Smith, Google Drive folder…" />
+      </div>
+      <div class="form-row mt-2">
+        <label>Who should receive a copy of this advance directive?</label>
+        <textarea id="directiveCopies" placeholder="e.g. My doctor Dr. Chen, my MPA Elena, my daughter Sofia, stored in my bedside drawer…" style="min-height:75px"></textarea>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── STEP 3: Traditions ──────────────────────── -->
+  <div class="step-panel fade-up" id="panel-3">
+    <div class="step-eyebrow">Step 3 of 4</div>
+    <h2 class="step-title">Traditions worth keeping.</h2>
+    <p class="step-desc">
+      The small rituals and customs that shape a family are often the first things
+      lost between generations. Record them here so they live on — in the people
+      and the moments that matter most.
+    </p>
+
+    <div class="form-section">
+      <div class="form-section-title">Family Traditions</div>
+      <p class="text-muted mt-1" style="margin-bottom:1.25rem">
+        Think holidays, reunions, seasonal rituals, or anything your family "always does."
+      </p>
+
+      <div id="traditions-list"></div>
+      <button class="add-btn" onclick="addTradition()">
+        <span>＋</span> Add a tradition
+      </button>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Heritage &amp; Cultural Practices</div>
+      <div class="form-row">
+        <label>Languages to preserve in your family</label>
+        <input type="text" id="heritageLang" placeholder="e.g. We always spoke Tagalog at dinner, grandma's stories were in Cantonese…" />
+      </div>
+      <div class="form-row mt-2">
+        <label>Cultural or religious practices important to continue</label>
+        <textarea id="culturalPractices" placeholder="e.g. Friday night Shabbat dinner, Día de los Muertos altar, Chinese New Year dumplings, Eid morning prayer…"></textarea>
+      </div>
+      <div class="form-row mt-2">
+        <label>Family recipes that must not be lost <span class="label-hint">optional</span></label>
+        <textarea id="recipes" placeholder="Name the dishes and who has the recipes — or write them here…"></textarea>
+      </div>
+      <div class="form-row mt-2">
+        <label>Objects, heirlooms, or places with family significance</label>
+        <textarea id="heirlooms" placeholder="e.g. Grandma's rosary beads, the farm in Oaxaca, my father's vinyl record collection…"></textarea>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Values &amp; Life Principles</div>
+      <p class="text-muted mt-1" style="margin-bottom:1.25rem">
+        What do you believe in? What shaped who you are? What do you hope the next
+        generation carries forward?
+      </p>
+      <div class="form-row">
+        <label>Core values you want passed down</label>
+        <div class="toggle-grid" id="valuesGrid">
+          <label class="toggle-card" onclick="selectToggle(this, 'values', true)">
+            <div class="toggle-icon">🤝</div>
+            <div class="toggle-text"><strong>Loyalty</strong><span>Family above all</span></div>
+          </label>
+          <label class="toggle-card" onclick="selectToggle(this, 'values', true)">
+            <div class="toggle-icon">📚</div>
+            <div class="toggle-text"><strong>Education</strong><span>Always keep learning</span></div>
+          </label>
+          <label class="toggle-card" onclick="selectToggle(this, 'values', true)">
+            <div class="toggle-icon">🌍</div>
+            <div class="toggle-text"><strong>Service</strong><span>Give back to community</span></div>
+          </label>
+          <label class="toggle-card" onclick="selectToggle(this, 'values', true)">
+            <div class="toggle-icon">💪</div>
+            <div class="toggle-text"><strong>Resilience</strong><span>Get up, always</span></div>
+          </label>
+          <label class="toggle-card" onclick="selectToggle(this, 'values', true)">
+            <div class="toggle-icon">❤️</div>
+            <div class="toggle-text"><strong>Compassion</strong><span>Lead with empathy</span></div>
+          </label>
+          <label class="toggle-card" onclick="selectToggle(this, 'values', true)">
+            <div class="toggle-icon">🎨</div>
+            <div class="toggle-text"><strong>Creativity</strong><span>Make things with your hands</span></div>
+          </label>
+          <label class="toggle-card" onclick="selectToggle(this, 'values', true)">
+            <div class="toggle-icon">🙏</div>
+            <div class="toggle-text"><strong>Faith</strong><span>Something greater than us</span></div>
+          </label>
+          <label class="toggle-card" onclick="selectToggle(this, 'values', true)">
+            <div class="toggle-icon">😄</div>
+            <div class="toggle-text"><strong>Humor</strong><span>Never take life too seriously</span></div>
+          </label>
+        </div>
+      </div>
+      <div class="form-row mt-2">
+        <label>Your own words on what matters most in life</label>
+        <textarea id="lifeValues" placeholder="In your own voice — what would you want your grandchildren to know about how to live?"></textarea>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">For Future Generations</div>
+      <div class="form-row">
+        <label>Who in your family should be the keeper of traditions?</label>
+        <input type="text" id="traditionKeeper" placeholder="e.g. My daughter Lucia — she already knows all the recipes" />
+      </div>
+      <div class="form-row mt-2">
+        <label>How do you hope to be remembered by people who never met you?</label>
+        <textarea id="legacyHope" placeholder="What story do you want told about you 50 years from now?"></textarea>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── STEP 4: Legacy Messages ─────────────────── -->
+  <div class="step-panel fade-up" id="panel-4">
+    <div class="step-eyebrow">Step 4 of 4</div>
+    <h2 class="step-title">Leave something behind.</h2>
+    <p class="step-desc">
+      This is the part that matters most — your voice, your stories, your advice.
+      These messages can be delivered immediately, or unlocked at a moment you choose.
+      Death ends a life. It doesn't end a relationship.
+    </p>
+
+    <div class="form-section">
+      <div class="form-section-title">Your Story</div>
+      <div class="form-row">
+        <label>The chapter of your life you're most proud of</label>
+        <textarea id="proudChapter" placeholder="Not your biggest achievement — the moment that changed you most…"></textarea>
+      </div>
+      <div class="form-row mt-2">
+        <label>Something you wish you'd known earlier</label>
+        <textarea id="wishKnown" placeholder="The advice you'd give your 25-year-old self…"></textarea>
+      </div>
+      <div class="form-row mt-2">
+        <label>The hardest thing you've ever overcome</label>
+        <textarea id="hardestThing" placeholder="You don't have to share specifics — just the shape of the struggle and what it taught you…"></textarea>
+      </div>
+      <div class="form-row mt-2">
+        <label>What brings you the most joy</label>
+        <textarea id="mostJoy" placeholder="People, places, sounds, smells, moments…"></textarea>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Time-Locked Messages</div>
+      <p class="text-muted mt-1" style="margin-bottom:1.25rem">
+        Write letters to be delivered at a milestone — a graduation, a wedding, a new baby,
+        or simply a hard day. These will wait until the moment is right.
+      </p>
+
+      <div id="messages-list"></div>
+      <button class="add-btn" onclick="addMessage()">
+        <span>✉️</span> Add a message
+      </button>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Media &amp; Memories</div>
+      <div class="form-row">
+        <label>Songs that defined different seasons of your life</label>
+        <textarea id="songs" placeholder="e.g. "Clair de Lune" for quiet mornings, Celia Cruz at every birthday, the album I played on my first road trip…"></textarea>
+      </div>
+      <div class="form-row mt-2">
+        <label>Books, films, or places that shaped who you are</label>
+        <textarea id="mediaShaping" placeholder="e.g. "Tuesdays with Morrie," the river behind my parents' house, the first time I saw the ocean…"></textarea>
+      </div>
+      <div class="form-row mt-2">
+        <label>How you want people to gather and remember you</label>
+        <div class="radio-pills" data-group="gatherStyle">
+          <div class="radio-pill" data-val="photos">Slideshow of photos</div>
+          <div class="radio-pill" data-val="stories">Everyone shares a story</div>
+          <div class="radio-pill" data-val="music">Music &amp; dancing</div>
+          <div class="radio-pill" data-val="meal">Share a meal together</div>
+          <div class="radio-pill" data-val="quiet">Quiet, candle-lit</div>
+          <div class="radio-pill" data-val="nature">In nature, outside</div>
+        </div>
+      </div>
+      <div class="form-row mt-2">
+        <label>One sentence you want read aloud at your service</label>
+        <input type="text" id="finalSentence" placeholder='"The goal in life is not to live as long as possible, but to live as fully as possible."' />
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">A Note on Grief</div>
+      <div class="form-row">
+        <label>How do you hope the people who love you will grieve?</label>
+        <textarea id="griefNote" placeholder="Not instructions — permission. What would feel right to you? What would you want them to know it's okay to do or feel?"></textarea>
+      </div>
+      <div class="form-row mt-2">
+        <label>Anything else you want the people you love to know</label>
+        <textarea id="finalNote" placeholder="This space is yours. No structure. Just speak." style="min-height:130px"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SUMMARY ─────────────────────────────────── -->
+  <div id="summary-panel" class="fade-up">
+    <div class="step-eyebrow" style="text-align:center;margin-bottom:1rem">Your Remnant Profile</div>
+    <div class="profile-hero" id="profile-hero">
+      <div class="profile-avatar" id="profile-avatar">🌿</div>
+      <div>
+        <div class="profile-name" id="profile-name">Your Name</div>
+        <div class="profile-meta" id="profile-meta"></div>
+      </div>
+    </div>
+
+    <div class="summary-grid">
+      <!-- Care Card -->
+      <div class="summary-card">
+        <div class="summary-card-header">
+          <div class="summary-card-icon icon-green">🏥</div>
+          <div class="summary-card-title">Care Preferences</div>
+        </div>
+        <div id="summary-care"></div>
+      </div>
+
+      <!-- MPA Card -->
+      <div class="summary-card">
+        <div class="summary-card-header">
+          <div class="summary-card-icon icon-terra">🤝</div>
+          <div class="summary-card-title">Medical Power of Attorney</div>
+        </div>
+        <div id="summary-mpa"></div>
+      </div>
+
+      <!-- Traditions Card -->
+      <div class="summary-card full">
+        <div class="summary-card-header">
+          <div class="summary-card-icon icon-gold">🌿</div>
+          <div class="summary-card-title">Traditions &amp; Heritage</div>
+        </div>
+        <div id="summary-traditions"></div>
+      </div>
+
+      <!-- Values Card -->
+      <div class="summary-card">
+        <div class="summary-card-header">
+          <div class="summary-card-icon icon-purple">💡</div>
+          <div class="summary-card-title">Core Values</div>
+        </div>
+        <div id="summary-values"></div>
+      </div>
+
+      <!-- Legacy Card -->
+      <div class="summary-card">
+        <div class="summary-card-header">
+          <div class="summary-card-icon icon-green">✉️</div>
+          <div class="summary-card-title">Legacy Messages</div>
+        </div>
+        <div id="summary-messages"></div>
+      </div>
+    </div>
+
+    <div class="share-row">
+      <button class="btn-share primary-share" onclick="downloadProfile()">
+        ⬇️ Download Your Remnant
+      </button>
+      <button class="btn-share" onclick="copyShareLink()">
+        🔗 Copy Share Link
+      </button>
+      <button class="btn-share" onclick="alert('Print / PDF coming soon')">
+        🖨️ Print / PDF
+      </button>
+    </div>
+
+    <p class="text-muted" style="text-align:center;margin-top:1.5rem">
+      Share a copy with your Medical Power of Attorney, your doctor, and anyone who
+      should have access to your wishes. Your Remnant is automatically saved to this device.
+    </p>
+  </div>
+
+  <!-- Step Nav (hidden on summary) -->
+  <div class="step-nav" id="step-nav">
+    <button class="btn-back" id="btn-back" onclick="prevStep()">← Back</button>
+    <div class="step-counter" id="step-counter">Step 1 of 4</div>
+    <button class="btn-next" id="btn-next" onclick="nextStep()">
+      Continue <span>→</span>
+    </button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     CHAPTERS — AI Photo Stories
+════════════════════════════════════════════════ -->
+<div id="chapters">
+  <div class="chapters-topbar">
+    <div class="prog-logo">Remnant <span style="color:var(--terra)">· Chapters</span></div>
+    <button class="btn-back" onclick="closeChapters()">← Home</button>
+  </div>
+
+  <!-- Setup view -->
+  <div id="chapter-setup">
+    <div class="step-eyebrow">A chapter of your life</div>
+    <h2 class="step-title">Turn a camera roll into a story.</h2>
+    <p class="step-desc">
+      Upload photos from a trip or a season of life. AI studies them, chooses the
+      handful that best tell the story, and writes the thread that connects them —
+      so picking the right photo for grandma never has to be hard again.
+    </p>
+
+    <div class="form-section hidden" id="saved-gallery" style="margin-bottom:2rem">
+      <div class="form-section-title">Example chapters</div>
+      <div id="saved-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem"></div>
+    </div>
+
+    <div class="upload-zone" onclick="document.getElementById('photo-input').click()">
+      <div class="big">📷</div>
+      <strong>Click to choose photos</strong>
+      <p class="text-muted mt-1">Up to 30 photos · resized in your browser before anything is sent</p>
+      <input type="file" id="photo-input" accept="image/*" multiple class="hidden" onchange="handleFiles(this.files)" />
+    </div>
+
+    <p class="text-muted hidden" id="star-hint" style="margin-top:1rem">
+      ☆ Tap the star on any photo to <strong>highlight</strong> it — starred photos are always included in the chapter, ideally as their own hero slide.
+    </p>
+    <div class="thumb-grid" id="thumb-grid"></div>
+    <p class="text-terra" id="star-count" style="font-weight:600;font-size:.85rem;margin-top:.5rem"></p>
+
+    <div class="form-section" style="margin-top:1.5rem">
+      <div class="form-section-title">Curate with AI</div>
+      <div class="form-row">
+        <label>What was this chapter? <span class="label-hint">helps the AI find the story</span></label>
+        <input type="text" id="chapter-context" placeholder='e.g. "Our family trip to Lisbon, spring 2026"' />
+      </div>
+      <div class="form-row">
+        <label>Story tone <span class="label-hint">how the captions and narrative are written</span></label>
+        <select id="tone-select">
+          <option value="warm">Warm &amp; reflective (default)</option>
+          <option value="playful">Playful &amp; light</option>
+          <option value="poetic">Poetic &amp; literary</option>
+          <option value="plain">Plain &amp; factual</option>
+        </select>
+      </div>
+      <div class="key-row">
+        <input type="text" id="api-key" placeholder="Your Anthropic API key (stays in your browser)" />
+        <span class="cost-pill" id="cost-estimate">~$0.00</span>
+      </div>
+      <p class="text-muted mt-1">
+        Your key is stored only on this device and photos go directly from your browser to
+        the Claude API — nothing touches a server we run.
+      </p>
+      <div style="display:flex;gap:.75rem;margin-top:1.25rem;flex-wrap:wrap">
+        <button class="btn-next" id="curate-btn" onclick="runCuration()">✨ Curate this chapter</button>
+        <button class="btn-back" onclick="loadDemo()">See a sample chapter (free)</button>
+      </div>
+      <p class="text-muted mt-2 hidden" id="chapter-error" style="color:#C0503A"></p>
+    </div>
+  </div>
+
+  <!-- Viewer -->
+  <div id="chapter-viewer">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap">
+      <div style="flex:1;min-width:240px">
+        <div class="step-eyebrow" id="viewer-eyebrow">Chapter</div>
+        <h2 class="step-title" id="viewer-title" data-field="title"></h2>
+      </div>
+      <button class="btn-back edit-toggle-btn" id="edit-toggle" onclick="toggleEdit()">✏️ Edit story</button>
+    </div>
+    <div class="edit-hint">✏️ Edit mode on — click the title, story, or any caption to rewrite it. Changes are saved when you export.</div>
+
+    <div class="viewer-stage" id="viewer-stage"></div>
+    <div class="viewer-dots" id="viewer-dots"></div>
+
+    <div class="viewer-caption">
+      <div class="cap" id="viewer-cap" data-field="caption"></div>
+      <div class="why" id="viewer-why"></div>
+    </div>
+
+    <div class="viewer-controls">
+      <button class="ctrl-btn" onclick="slideStep(-1)">←</button>
+      <button class="ctrl-btn play" id="play-btn" onclick="togglePlay()">▶</button>
+      <button class="ctrl-btn" onclick="slideStep(1)">→</button>
+    </div>
+
+    <div id="reorder-bar" class="hidden" style="text-align:center;margin-top:1rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;align-items:center">
+      <span class="text-muted" id="slide-position" style="margin-right:.25rem"></span>
+      <button class="btn-back" id="move-earlier" onclick="moveSlide(-1)">◀ Move earlier</button>
+      <button class="btn-back" id="move-later" onclick="moveSlide(1)">Move later ▶</button>
+      <button class="btn-back" id="make-intro" onclick="makeIntro()">⭐ Make intro</button>
+    </div>
+
+    <div style="text-align:center;margin-top:1.25rem">
+      <button class="btn-back edit-toggle-btn" onclick="toggleEdit()">✏️ Edit story</button>
+    </div>
+
+    <div class="chapter-narrative" id="viewer-narrative" data-field="narrative"></div>
+
+    <div id="map-section" class="hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap">
+        <div class="map-label">📍 Where this chapter took place</div>
+        <button class="btn-back" id="add-pin-btn" onclick="toggleAddPin()">＋ Add a place</button>
+      </div>
+      <div class="pin-toolbar hidden" id="pin-toolbar">
+        <button class="pin-cat on" data-icon="📌" onclick="selectPinCat(this)">📌 Pin</button>
+        <button class="pin-cat" data-icon="🍴" onclick="selectPinCat(this)">🍴 Food</button>
+        <button class="pin-cat" data-icon="🍷" onclick="selectPinCat(this)">🍷 Drinks</button>
+        <button class="pin-cat" data-icon="🌳" onclick="selectPinCat(this)">🌳 Park</button>
+        <button class="pin-cat" data-icon="🏛️" onclick="selectPinCat(this)">🏛️ Museum</button>
+        <button class="pin-cat" data-icon="📷" onclick="selectPinCat(this)">📷 View</button>
+        <button class="pin-cat" data-icon="🏨" onclick="selectPinCat(this)">🏨 Stay</button>
+        <button class="pin-cat" data-icon="🛍️" onclick="selectPinCat(this)">🛍️ Shop</button>
+        <button class="pin-cat" data-icon="⭐" onclick="selectPinCat(this)">⭐ Other</button>
+      </div>
+      <p class="text-muted hidden" id="add-pin-hint" style="margin:0 0 .5rem">Pick an icon above, then click the map to drop it — name the spot and add a detail to remember. Click any pin to delete it.</p>
+      <div class="chapter-map" id="chapter-map"></div>
+    </div>
+
+    <div style="display:flex;gap:.75rem;margin-top:2rem;flex-wrap:wrap;justify-content:center">
+      <button class="btn-back" onclick="backToSetup()">← Curate another chapter</button>
+      <button class="btn-back" onclick="exportChapter()">⬇ Export chapter (.json)</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let currentStep = 1;
+const TOTAL_STEPS = 4;
+let traditionCount = 0;
+let messageCount = 0;
+
+const stepLabels = ['The Basics', 'Care', 'Traditions', 'Legacy'];
+
+// Selections state
+const selections = {
+  cpr: null, ventilator: null, feeding: null,
+  carePriority: null, organDonation: null, ceremony: null,
+  burial: null, hasWill: null, gatherStyle: null,
+  values: []
+};
+
+const traditions = [];
+const messages  = [];
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+function startApp() {
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  buildProgressBar();
+  updateUI();
+  addTradition();
+  addMessage();
+  loadFromStorage();
+}
+
+function buildProgressBar() {
+  const track = document.getElementById('steps-track');
+  track.innerHTML = '';
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const node = document.createElement('div');
+    node.className = 'step-node';
+    node.innerHTML = `
+      <div class="step-circle" id="sc-${i}">${i}</div>
+      <div class="step-label" id="sl-${i}">${stepLabels[i-1]}</div>
+    `;
+    track.appendChild(node);
+    if (i < TOTAL_STEPS) {
+      const conn = document.createElement('div');
+      conn.className = 'step-connector';
+      conn.id = `conn-${i}`;
+      track.appendChild(conn);
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function nextStep() {
+  saveToStorage();
+  if (currentStep < TOTAL_STEPS) {
+    currentStep++;
+    updateUI();
+  } else {
+    showSummary();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) {
+    currentStep--;
+    updateUI();
+    document.getElementById('summary-panel').classList.remove('active');
+    document.getElementById('step-nav').style.display = 'flex';
+  }
+}
+
+function updateUI() {
+  // Panels
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById(`panel-${currentStep}`);
+  if (panel) { panel.classList.add('active'); panel.classList.add('fade-up'); }
+
+  // Progress circles
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const c = document.getElementById(`sc-${i}`);
+    const l = document.getElementById(`sl-${i}`);
+    const conn = document.getElementById(`conn-${i}`);
+    c.className = 'step-circle' + (i < currentStep ? ' done' : i === currentStep ? ' active' : '');
+    l.className = 'step-label' + (i < currentStep ? ' done' : i === currentStep ? ' active' : '');
+    if (conn) conn.className = 'step-connector' + (i < currentStep ? ' done' : '');
+    c.textContent = i < currentStep ? '✓' : i;
+  }
+
+  // Back button
+  document.getElementById('btn-back').style.visibility = currentStep > 1 ? 'visible' : 'hidden';
+
+  // Next button
+  const btn = document.getElementById('btn-next');
+  btn.innerHTML = currentStep === TOTAL_STEPS
+    ? '✓ Complete My Remnant'
+    : 'Continue <span>→</span>';
+
+  // Counter
+  document.getElementById('step-counter').textContent = `Step ${currentStep} of ${TOTAL_STEPS}`;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════════════
+// RADIO PILLS
+// ═══════════════════════════════════════════════
+document.addEventListener('click', e => {
+  const pill = e.target.closest('.radio-pill');
+  if (!pill) return;
+  const group = pill.parentElement.dataset.group;
+  if (!group) return;
+  pill.parentElement.querySelectorAll('.radio-pill').forEach(p => p.classList.remove('selected'));
+  pill.classList.add('selected');
+  selections[group] = pill.dataset.val;
+  autoSave();
+});
+
+// ═══════════════════════════════════════════════
+// TOGGLE CARDS
+// ═══════════════════════════════════════════════
+function selectToggle(el, group, multi = false) {
+  if (multi) {
+    el.classList.toggle('selected');
+    const vals = [...el.closest('.toggle-grid').querySelectorAll('.toggle-card.selected')]
+      .map(c => c.querySelector('strong').textContent);
+    selections[group] = vals;
+  } else {
+    el.closest('.toggle-grid').querySelectorAll('.toggle-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selections[group] = el.querySelector('strong').textContent;
+  }
+  autoSave();
+}
+
+// ═══════════════════════════════════════════════
+// TRADITIONS
+// ═══════════════════════════════════════════════
+function addTradition() {
+  traditionCount++;
+  const id = traditionCount;
+  traditions.push({ id });
+  const list = document.getElementById('traditions-list');
+  const div = document.createElement('div');
+  div.className = 'tradition-item';
+  div.id = `trad-${id}`;
+  div.innerHTML = `
+    <button class="tradition-remove" onclick="removeTradition(${id})" title="Remove">✕</button>
+    <div class="two-col" style="margin-bottom:.75rem">
+      <div>
+        <label>Tradition Name</label>
+        <input type="text" id="trad-name-${id}" placeholder='e.g. "Christmas tamale night"' oninput="autoSave()" />
+      </div>
+      <div>
+        <label>When / How Often</label>
+        <input type="text" id="trad-when-${id}" placeholder="e.g. Every December 24th" oninput="autoSave()" />
+      </div>
+    </div>
+    <div class="form-row">
+      <label>What happens — describe it as if to someone who's never seen it</label>
+      <textarea id="trad-desc-${id}" placeholder="The smells, the people, the sequence of events…" style="min-height:80px" oninput="autoSave()"></textarea>
+    </div>
+    <div class="form-row mt-1">
+      <label>Why this tradition matters</label>
+      <input type="text" id="trad-why-${id}" placeholder="What would be lost if it disappeared?" oninput="autoSave()" />
+    </div>
+    <div class="form-row mt-1">
+      <label>Who should carry it on?</label>
+      <input type="text" id="trad-owner-${id}" placeholder="e.g. My daughter Sofia already knows how" oninput="autoSave()" />
+    </div>
+  `;
+  list.appendChild(div);
+}
+
+function removeTradition(id) {
+  const el = document.getElementById(`trad-${id}`);
+  if (el) el.remove();
+}
+
+// ═══════════════════════════════════════════════
+// TIME-LOCKED MESSAGES
+// ═══════════════════════════════════════════════
+function addMessage() {
+  messageCount++;
+  const id = messageCount;
+  messages.push({ id });
+  const list = document.getElementById('messages-list');
+  const div = document.createElement('div');
+  div.className = 'message-card';
+  div.id = `msg-${id}`;
+  div.innerHTML = `
+    <button class="tradition-remove" onclick="removeMessage(${id})" title="Remove">✕</button>
+    <div class="lock-badge">🔒 Time-locked message</div>
+    <div class="two-col" style="margin-bottom:.75rem">
+      <div>
+        <label>To</label>
+        <input type="text" id="msg-to-${id}" placeholder="Who is this for?" oninput="autoSave()" />
+      </div>
+      <div>
+        <label>Unlock When</label>
+        <select id="msg-unlock-${id}" onchange="autoSave()">
+          <option value="">Choose a moment…</option>
+          <option>When they graduate</option>
+          <option>When they get married</option>
+          <option>When they have a child</option>
+          <option>When they turn 18</option>
+          <option>When they turn 30</option>
+          <option>When they turn 40</option>
+          <option>When they need it most</option>
+          <option>On the anniversary of my passing</option>
+          <option>Immediately after I'm gone</option>
+          <option>On my birthday each year</option>
+          <option>Custom…</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Your message</label>
+      <textarea id="msg-body-${id}" placeholder="Write as if you're in the room with them — because in a way, you will be." style="min-height:120px" oninput="autoSave()"></textarea>
+    </div>
+  `;
+  list.appendChild(div);
+}
+
+function removeMessage(id) {
+  const el = document.getElementById(`msg-${id}`);
+  if (el) el.remove();
+}
+
+// ═══════════════════════════════════════════════
+// SUMMARY
+// ═══════════════════════════════════════════════
+function showSummary() {
+  saveToStorage();
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step-nav').style.display = 'none';
+
+  const summary = document.getElementById('summary-panel');
+  summary.classList.add('active');
+
+  // Progress bar — all done
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const c = document.getElementById(`sc-${i}`);
+    const l = document.getElementById(`sl-${i}`);
+    if (c) { c.className = 'step-circle done'; c.textContent = '✓'; }
+    if (l) { l.className = 'step-label done'; }
+    const conn = document.getElementById(`conn-${i}`);
+    if (conn) conn.className = 'step-connector done';
+  }
+
+  const first = val('firstName');
+  const last  = val('lastName');
+  const name  = [first, last].filter(Boolean).join(' ') || 'Your Remnant';
+
+  document.getElementById('profile-name').textContent = name;
+  document.getElementById('profile-avatar').textContent = first ? first[0].toUpperCase() : '🌿';
+
+  const metaParts = [];
+  if (val('dob')) metaParts.push(formatDob(val('dob')));
+  if (val('hometown')) metaParts.push(val('hometown'));
+  if (val('religion')) metaParts.push(val('religion'));
+  document.getElementById('profile-meta').textContent = metaParts.join('  ·  ');
+
+  // Care
+  document.getElementById('summary-care').innerHTML = rows([
+    ['CPR', labelFor('cpr')],
+    ['Ventilator', labelFor('ventilator')],
+    ['Feeding tube', labelFor('feeding')],
+    ['Priority', labelFor('carePriority')],
+    ['Organ donation', labelFor('organDonation')],
+    ['Body care', selections.burial || '—'],
+    ['Ceremony', labelFor('ceremony')],
+  ]);
+
+  // MPA
+  document.getElementById('summary-mpa').innerHTML = rows([
+    ['Name', val('mpaName')],
+    ['Relationship', val('mpaRelation')],
+    ['Phone', val('mpaPhone')],
+    ['Email', val('mpaEmail')],
+    ['Backup', val('mpBackup')],
+    ['Will', labelFor('hasWill')],
+  ]);
+
+  // Traditions
+  const tradItems = [];
+  document.querySelectorAll('[id^="trad-name-"]').forEach(el => {
+    if (el.value) tradItems.push(`<div class="summary-row"><span class="summary-key">${el.value}</span><span class="summary-val">${document.getElementById(el.id.replace('name','when'))?.value || ''}</span></div>`);
+  });
+  const culturalText = val('culturalPractices') || val('heritageLang') || '';
+  document.getElementById('summary-traditions').innerHTML =
+    (tradItems.length ? tradItems.join('') : '<div class="text-muted">No traditions added yet</div>') +
+    (culturalText ? `<div class="summary-row" style="margin-top:.5rem"><span class="summary-key">Cultural practices</span><span class="summary-val" style="font-style:italic">${culturalText.slice(0,120)}…</span></div>` : '');
+
+  // Values
+  const vals = Array.isArray(selections.values) ? selections.values : [];
+  document.getElementById('summary-values').innerHTML = vals.length
+    ? `<div class="tag-list">${vals.map(v => `<span class="tag">${v}</span>`).join('')}</div>`
+    : '<div class="text-muted">None selected yet</div>';
+
+  // Messages
+  const msgItems = [];
+  document.querySelectorAll('[id^="msg-to-"]').forEach(el => {
+    const unlock = document.getElementById(el.id.replace('to','unlock'))?.value || '';
+    if (el.value) msgItems.push(`<div class="summary-row"><span class="summary-key">To ${el.value}</span><span class="summary-val">${unlock}</span></div>`);
+  });
+  document.getElementById('summary-messages').innerHTML = msgItems.length
+    ? msgItems.join('')
+    : '<div class="text-muted">No messages added yet</div>';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════
+function val(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function rows(pairs) {
+  return pairs.map(([k, v]) =>
+    `<div class="summary-row"><span class="summary-key">${k}</span><span class="summary-val">${v || '—'}</span></div>`
+  ).join('');
+}
+
+function labelFor(group) {
+  const sel = selections[group];
+  if (!sel) return '—';
+  const map = {
+    yes: 'Yes', no: 'No', depends: 'Situation-dependent',
+    limited: 'Short-term only', 'yes-all': 'Yes — all organs',
+    'yes-specific': 'Yes — specific', undecided: 'Undecided',
+    extend: 'Extend life', balance: 'Balance quality & length',
+    comfort: 'Comfort & dignity', formal: 'Formal service',
+    celebration: 'Celebration of life', private: 'Private', none: 'No ceremony',
+    photos: 'Photo slideshow', stories: 'Share stories', music: 'Music & dancing',
+    meal: 'Share a meal', quiet: 'Quiet, candle-lit', nature: 'In nature',
+    outdated: 'Yes, needs updating'
+  };
+  return map[sel] || sel;
+}
+
+function formatDob(s) {
+  if (!s) return '';
+  try {
+    const d = new Date(s + 'T00:00:00');
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  } catch { return s; }
+}
+
+// ═══════════════════════════════════════════════
+// STORAGE
+// ═══════════════════════════════════════════════
+let saveTimer;
+function autoSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveToStorage, 800);
+}
+
+function saveToStorage() {
+  const fields = ['firstName','lastName','dob','language','hometown','tagline',
+    'culture','religion','homeLanguage','ecName','ecRelation','ecPhone','ecEmail',
+    'medWishesNotes','mpaName','mpaRelation','mpaPhone','mpaEmail','mpaWhy','mpBackup',
+    'ceremonyNotes','ashesLocation','willLocation','directiveCopies',
+    'heritageLang','culturalPractices','recipes','heirlooms','lifeValues',
+    'traditionKeeper','legacyHope','proudChapter','wishKnown','hardestThing',
+    'mostJoy','songs','mediaShaping','finalSentence','griefNote','finalNote'];
+
+  const data = {};
+  fields.forEach(f => { data[f] = val(f); });
+  data.selections = selections;
+  localStorage.setItem('remnant_v1', JSON.stringify(data));
+}
+
+function loadFromStorage() {
+  try {
+    const raw = localStorage.getItem('remnant_v1');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    Object.entries(data).forEach(([k, v]) => {
+      if (k === 'selections') return;
+      const el = document.getElementById(k);
+      if (el) el.value = v;
+    });
+    if (data.selections) {
+      Object.assign(selections, data.selections);
+      // Re-apply radio pills
+      Object.entries(data.selections).forEach(([group, val]) => {
+        if (group === 'values') return;
+        const pills = document.querySelectorAll(`[data-group="${group}"] .radio-pill`);
+        pills.forEach(p => { if (p.dataset.val === val) p.classList.add('selected'); });
+      });
+    }
+  } catch(e) { /* ignore */ }
+}
+
+// ═══════════════════════════════════════════════
+// EXPORT
+// ═══════════════════════════════════════════════
+function downloadProfile() {
+  const name = [val('firstName'), val('lastName')].filter(Boolean).join(' ') || 'My Remnant';
+  const date = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+
+  let txt = `REMNANT PROFILE — ${name}\nCreated: ${date}\n`;
+  txt += '='.repeat(60) + '\n\n';
+
+  txt += 'ABOUT\n' + '-'.repeat(30) + '\n';
+  txt += `Name: ${name}\n`;
+  if (val('dob')) txt += `Born: ${val('dob')}\n`;
+  if (val('hometown')) txt += `Hometown: ${val('hometown')}\n`;
+  if (val('tagline')) txt += `In their own words: "${val('tagline')}"\n`;
+  if (val('culture')) txt += `Background: ${val('culture')}\n`;
+  if (val('religion')) txt += `Beliefs: ${val('religion')}\n\n`;
+
+  txt += 'CARE PREFERENCES\n' + '-'.repeat(30) + '\n';
+  txt += `CPR: ${labelFor('cpr')}\nVentilator: ${labelFor('ventilator')}\n`;
+  txt += `Feeding tube: ${labelFor('feeding')}\nCare priority: ${labelFor('carePriority')}\n`;
+  txt += `Organ donation: ${labelFor('organDonation')}\nBody care: ${selections.burial || '—'}\n`;
+  txt += `Ceremony: ${labelFor('ceremony')}\n`;
+  if (val('medWishesNotes')) txt += `\nAdditional wishes:\n${val('medWishesNotes')}\n`;
+  txt += '\n';
+
+  txt += 'MEDICAL POWER OF ATTORNEY\n' + '-'.repeat(30) + '\n';
+  txt += `Name: ${val('mpaName')}\nRelationship: ${val('mpaRelation')}\n`;
+  txt += `Phone: ${val('mpaPhone')}\nEmail: ${val('mpaEmail')}\n`;
+  if (val('mpaWhy')) txt += `Why chosen: ${val('mpaWhy')}\n`;
+  if (val('mpBackup')) txt += `Backup: ${val('mpBackup')}\n\n`;
+
+  txt += 'TRADITIONS\n' + '-'.repeat(30) + '\n';
+  document.querySelectorAll('[id^="trad-name-"]').forEach(el => {
+    const suffix = el.id.replace('trad-name-','');
+    if (el.value) {
+      txt += `\n• ${el.value}`;
+      const when = document.getElementById(`trad-when-${suffix}`)?.value;
+      if (when) txt += ` (${when})`;
+      txt += '\n';
+      const desc = document.getElementById(`trad-desc-${suffix}`)?.value;
+      if (desc) txt += `  ${desc}\n`;
+      const why = document.getElementById(`trad-why-${suffix}`)?.value;
+      if (why) txt += `  Why it matters: ${why}\n`;
+    }
+  });
+  txt += '\n';
+
+  txt += 'LEGACY MESSAGES\n' + '-'.repeat(30) + '\n';
+  document.querySelectorAll('[id^="msg-to-"]').forEach(el => {
+    const suffix = el.id.replace('msg-to-','');
+    if (el.value) {
+      const unlock = document.getElementById(`msg-unlock-${suffix}`)?.value || '';
+      const body   = document.getElementById(`msg-body-${suffix}`)?.value || '';
+      txt += `\nTo: ${el.value} — Unlock: ${unlock}\n${body}\n`;
+    }
+  });
+  txt += '\n';
+
+  if (val('lifeValues')) txt += `LIFE VALUES\n${'-'.repeat(30)}\n${val('lifeValues')}\n\n`;
+  if (val('legacyHope')) txt += `LEGACY\n${'-'.repeat(30)}\n${val('legacyHope')}\n\n`;
+  if (val('finalNote'))  txt += `FINAL NOTE\n${'-'.repeat(30)}\n${val('finalNote')}\n\n`;
+
+  txt += `${'='.repeat(60)}\nGenerated by Remnant\n"Death ends a life. It doesn't end a relationship."\n`;
+
+  const blob = new Blob([txt], { type: 'text/plain' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  a.download = `${name.replace(/\s+/g,'-')}-Remnant.txt`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function copyShareLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    alert('Link copied! Share it with your MPA, doctor, or family.');
+  });
+}
+
+// Auto-save on any input
+document.addEventListener('input', () => autoSave());
+
+// ═══════════════════════════════════════════════
+// CHAPTERS — AI Photo Stories
+// ═══════════════════════════════════════════════
+const MAX_PHOTOS = 30;
+const MAX_DIM = 768;                       // downscale → ~1k tokens per image
+const HAIKU = 'claude-haiku-4-5-20251001'; // cheapest vision model
+const TOKENS_PER_PHOTO = 1100;             // rough estimate after downscale
+const HAIKU_INPUT_PER_MTOK = 1.00;         // USD
+
+let chapterPhotos = [];   // { dataUrl, base64 }
+let slides = [];          // { src | demo, caption, why }
+let slideIdx = 0;
+let playTimer = null;
+let currentChapter = null; // last chapter shown, for export
+
+function openChapters() {
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('chapters').style.display = 'block';
+  const saved = localStorage.getItem('remnant_api_key');
+  if (saved) document.getElementById('api-key').value = saved;
+  loadSavedChapters();
+  window.scrollTo(0, 0);
+}
+
+// ── Saved example chapters (static "backend") ─
+// Curate a chapter → Export → drop the .json into remnant/chapters/
+// → add its filename to chapters/manifest.json. Visitors see it free.
+async function loadSavedChapters() {
+  try {
+    const res = await fetch('chapters/manifest.json', { cache: 'no-store' });
+    if (!res.ok) return;
+    const manifest = await res.json();
+    const list = document.getElementById('saved-list');
+    list.innerHTML = '';
+    for (const file of manifest.chapters) {
+      const c = await fetch('chapters/' + file, { cache: 'no-store' }).then(r => r.json());
+      const first = c.slides[0];
+      const cover = first.collage ? first.collage[0] : first;
+      const card = document.createElement('div');
+      card.className = 'toggle-card';
+      card.style.flexDirection = 'column';
+      card.style.alignItems = 'stretch';
+      card.innerHTML = `
+        <div style="width:100%;aspect-ratio:3/2;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:${cover.bg || 'var(--warm)'}">
+          ${cover.src ? `<img src="${cover.src}" style="width:100%;height:100%;object-fit:cover" alt="">` : (cover.demo || '🌿')}
+        </div>
+        <div class="toggle-text" style="margin-top:.6rem">
+          <strong>${c.title}</strong>
+          <span>${c.slides.length} photos · tap to play</span>
+        </div>`;
+      card.onclick = () => {
+        slides = c.slides;
+        showChapter(c.title, c.narrative, c.eyebrow || 'Saved chapter', c.locations || [], c.userPins || []);
+      };
+      list.appendChild(card);
+    }
+    if (manifest.chapters.length) {
+      document.getElementById('saved-gallery').classList.remove('hidden');
+    }
+  } catch (e) { /* no chapters dir yet — gallery stays hidden */ }
+}
+
+function exportChapter() {
+  if (!currentChapter) return;
+  const blob = new Blob([JSON.stringify(currentChapter, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentChapter.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function closeChapters() {
+  stopPlay();
+  document.getElementById('chapters').style.display = 'none';
+  document.getElementById('landing').style.display = 'flex';
+}
+
+function backToSetup() {
+  stopPlay();
+  document.getElementById('chapter-viewer').style.display = 'none';
+  document.getElementById('chapter-setup').style.display = 'block';
+}
+
+// ── Upload & downscale ────────────────────────
+async function handleFiles(files) {
+  const list = [...files].slice(0, MAX_PHOTOS);
+  chapterPhotos = [];
+  const grid = document.getElementById('thumb-grid');
+  grid.innerHTML = '';
+  for (const file of list) {
+    const { dataUrl, ar } = await downscale(file);
+    const idx = chapterPhotos.length;
+    chapterPhotos.push({ dataUrl, base64: dataUrl.split(',')[1], ar, starred: false });
+    const wrap = document.createElement('div');
+    wrap.className = 'thumb';
+    wrap.id = `thumb-${idx}`;
+    wrap.innerHTML =
+      `<img src="${dataUrl}" alt="">` +
+      `<button class="star-btn" title="Star to highlight in this chapter" onclick="toggleStar(${idx})">☆</button>`;
+    grid.appendChild(wrap);
+  }
+  document.getElementById('star-hint').classList.toggle('hidden', list.length === 0);
+  updateStarCount();
+  updateCostEstimate();
+}
+
+// Star = "must include, ideally as a hero slide" (set before curation).
+function toggleStar(idx) {
+  const p = chapterPhotos[idx];
+  if (!p) return;
+  p.starred = !p.starred;
+  const wrap = document.getElementById(`thumb-${idx}`);
+  wrap.classList.toggle('starred', p.starred);
+  const btn = wrap.querySelector('.star-btn');
+  btn.classList.toggle('on', p.starred);
+  btn.textContent = p.starred ? '★' : '☆';
+  updateStarCount();
+}
+
+function updateStarCount() {
+  const n = chapterPhotos.filter(p => p.starred).length;
+  const el = document.getElementById('star-count');
+  if (el) el.textContent = n ? `★ ${n} starred — these will be prioritized` : '';
+}
+
+function downscale(file) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, MAX_DIM / Math.max(img.width, img.height));
+      const canvas = document.createElement('canvas');
+      canvas.width  = Math.round(img.width  * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(img.src);
+      resolve({ dataUrl: canvas.toDataURL('image/jpeg', 0.72), ar: img.width / img.height });
+    };
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+function updateCostEstimate() {
+  const tokens = chapterPhotos.length * TOKENS_PER_PHOTO + 600;
+  const usd = (tokens / 1e6) * HAIKU_INPUT_PER_MTOK + 0.005; // + output
+  document.getElementById('cost-estimate').textContent =
+    `${chapterPhotos.length} photos · ~$${usd.toFixed(2)}`;
+}
+
+// ── Curation via Claude API ───────────────────
+async function runCuration() {
+  const errEl = document.getElementById('chapter-error');
+  errEl.classList.add('hidden');
+
+  const key = document.getElementById('api-key').value.trim();
+  if (!key) return showChapterError('Add your Anthropic API key first — or try the free sample chapter.');
+  if (chapterPhotos.length < 3) return showChapterError('Upload at least 3 photos to curate a chapter.');
+  localStorage.setItem('remnant_api_key', key);
+
+  const btn = document.getElementById('curate-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Curating…';
+
+  const context = document.getElementById('chapter-context').value.trim() || 'A chapter of someone\'s life';
+  const TONES = {
+    warm:   'Write in a warm, reflective, intimate memoir voice — nostalgic but restrained, never saccharine.',
+    playful:'Write in a playful, light, upbeat voice with a gentle sense of humor.',
+    poetic: 'Write in a poetic, lyrical, literary voice — vivid imagery, careful rhythm.',
+    plain:  'Write in a plain, factual, understated voice — minimal sentiment, let the moments speak.'
+  };
+  const tone = document.getElementById('tone-select')?.value || 'warm';
+  const starred = chapterPhotos.map((p, i) => p.starred ? i : -1).filter(i => i >= 0);
+  const starLine = starred.length
+    ? `\n\nSTARRED PHOTOS (the user marked these as must-haves): [${starred.join(', ')}]. You MUST include every starred photo in the chapter. Give each its own SINGLE hero slide unless two starred photos clearly belong together as a pair.`
+    : '';
+  const content = [{
+    type: 'text',
+    text: `You are the photo curator for Remnant, a legacy product that turns camera rolls into life chapters. Context from the user: "${context}".
+
+VOICE: ${TONES[tone]}
+
+Below are ${chapterPhotos.length} photos, numbered 0 to ${chapterPhotos.length - 1} in order. Build a story of 5–8 slides that best TELL THE STORY of this chapter — favor emotional and narrative value over technical quality, skip near-duplicates, and order them so they read as a story.${starLine}
+
+Each slide is either:
+- a SINGLE hero photo (use for the most powerful, standalone moments, and ALWAYS for wide/panoramic shots so they show in full), or
+- a COLLAGE of related photos (use for a tight cluster that belongs together — a meal, a group of friends, two views of one place).
+Collage rules: prefer 2 photos, never more than 3. Drop only NEAR-IDENTICAL shots — same subject AND same setting AND same moment (e.g. two photos of the same person in the same spot seconds apart): keep just the best one. DO keep the same person across different places, activities, or moments — those tell different parts of the story. When unsure, keep the photo. A clean, simple chapter still beats a crowded one. Don't put wide/landscape photos in collages (they belong as single slides). Mix singles and collages, but never force a collage.
+
+Also infer the real-world places this chapter happened and give approximate coordinates for a map.
+
+Respond with ONLY valid JSON, no markdown fences:
+{"title":"evocative 2-5 word chapter title","narrative":"2-3 warm sentences connecting the chapter, written like a memoir","locations":[{"name":"City, Country","lat":38.72,"lng":-9.14}],"slides":[{"type":"single","index":0,"caption":"one warm sentence","why":"one short sentence on why chosen"},{"type":"collage","indices":[2,3,4],"caption":"one warm sentence for the group","why":"why these belong together"}]}`
+  }];
+  chapterPhotos.forEach((p, i) => {
+    content.push({ type: 'text', text: `Photo ${i}:` });
+    content.push({ type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: p.base64 } });
+  });
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({ model: HAIKU, max_tokens: 1500, messages: [{ role: 'user', content }] })
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body?.error?.message || `API error ${res.status}`);
+    }
+    const data = await res.json();
+    const text = data.content.map(b => b.text || '').join('');
+    const parsed = JSON.parse(text.replace(/^```json?\s*|\s*```$/g, ''));
+    const photoAt = i => chapterPhotos[i] ? { src: chapterPhotos[i].dataUrl, ar: chapterPhotos[i].ar } : null;
+    slides = (parsed.slides || parsed.selections || []).map(s => {
+      if (s.type === 'collage' && Array.isArray(s.indices)) {
+        const items = s.indices.map(photoAt).filter(Boolean);
+        return items.length ? { collage: items, caption: s.caption, why: s.why } : null;
+      }
+      const p = photoAt(s.index);
+      return p ? { ...p, caption: s.caption, why: s.why } : null;
+    }).filter(Boolean);
+    slides = splitWideFromCollages(slides);   // guarantee wide photos never get cropped in a collage
+    showChapter(parsed.title, parsed.narrative, 'Curated by AI · ' + new Date().toLocaleDateString(), parsed.locations || []);
+  } catch (e) {
+    showChapterError(e.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '✨ Curate this chapter';
+  }
+}
+
+// Pull wide/panoramic photos (ar >= 1.5) out of collages into their own full
+// slides — collages crop to fill, single slides don't, so wide shots stay whole.
+const WIDE_AR = 1.5;
+function splitWideFromCollages(list) {
+  const out = [];
+  list.forEach(s => {
+    if (!s.collage || !s.collage.length) { out.push(s); return; }
+    const wides = s.collage.filter(i => i.ar && i.ar >= WIDE_AR);
+    const rest  = s.collage.filter(i => !(i.ar && i.ar >= WIDE_AR));
+    if (rest.length >= 2)      out.push({ collage: rest, caption: s.caption, why: s.why });
+    else if (rest.length === 1) out.push({ ...rest[0], caption: s.caption, why: s.why });
+    wides.forEach((w, i) => out.push({ ...w, caption: i === 0 ? s.caption : '', why: s.why }));
+  });
+  return out;
+}
+
+function showChapterError(msg) {
+  const el = document.getElementById('chapter-error');
+  el.textContent = msg;
+  el.classList.remove('hidden');
+}
+
+// ── Demo chapter (zero-cost for visitors) ─────
+const DEMO = {
+  title: 'Lisbon, in Spring',
+  narrative: 'We came for the pastéis and stayed for the light. Somewhere between the tram bells and the tiled hills, four days became the kind of memory a family retells for decades.',
+  locations: [
+    { name: 'Lisbon, Portugal', lat: 38.7223, lng: -9.1393 },
+    { name: 'Cabo da Roca, Portugal', lat: 38.7805, lng: -9.4989 },
+    { name: 'Sintra, Portugal', lat: 38.7989, lng: -9.3883 }
+  ],
+  slides: [
+    { demo: '🌅', bg: 'linear-gradient(135deg,#E8985E,#C4713A)', caption: 'First morning over the Alfama rooftops.', why: 'Chosen as the opening — it sets the light the whole trip lived in.' },
+    { demo: '🚋', bg: 'linear-gradient(135deg,#5E8C7B,#2D4A3E)', caption: 'Tram 28, exactly as crowded as promised.', why: 'A standalone moment — the most retold story of the trip deserves its own slide.' },
+    { collage: [
+        { demo: '🏛️', bg: 'linear-gradient(135deg,#7A8C9E,#3D5B6E)' },
+        { demo: '🎨', bg: 'linear-gradient(135deg,#C98B6A,#9E5B3A)' }
+      ], caption: 'A morning wandering the tiled hills.', why: 'Two views of the same neighborhood — stronger together than apart.' },
+    { demo: '🥮', bg: 'linear-gradient(135deg,#D9B36A,#B8953F)', caption: 'Six pastéis de nata. None survived.', why: 'Food photos carry memory — this one had everyone\'s hands in frame.' },
+    { demo: '🌊', bg: 'linear-gradient(135deg,#6A93A8,#3D5B6E)', caption: 'Cabo da Roca — the edge of the continent.', why: 'The only photo where everyone is looking at the same horizon.' },
+    { demo: '🌙', bg: 'linear-gradient(135deg,#4A4070,#2C2645)', caption: 'Last night, fado drifting up the street.', why: 'A closing image — quieter than the rest, the way trips actually end.' }
+  ]
+};
+
+function loadDemo() {
+  const d = structuredClone(DEMO);   // clone so editing never mutates the constant
+  slides = d.slides;
+  showChapter(d.title, d.narrative, 'Sample chapter · what AI curation produces', d.locations);
+}
+
+// ── Viewer ────────────────────────────────────
+let chapterMap = null, editing = false;
+
+function showChapter(title, narrative, eyebrow, locations = [], userPins = []) {
+  stopPlay();
+  if (editing) toggleEdit();
+  currentChapter = { title, narrative, eyebrow, locations, userPins, slides };
+  document.getElementById('chapter-setup').style.display = 'none';
+  document.getElementById('chapter-viewer').style.display = 'block';
+  document.getElementById('viewer-eyebrow').textContent = eyebrow;
+  document.getElementById('viewer-title').textContent = title;
+  document.getElementById('viewer-narrative').textContent = '“' + narrative + '”';
+
+  const dots = document.getElementById('viewer-dots');
+  dots.innerHTML = slides.map((_, i) =>
+    `<div class="dot" onclick="goSlide(${i})"></div>`).join('');
+
+  slideIdx = 0;
+  renderSlide();
+  renderMap(locations);
+  window.scrollTo(0, 0);
+}
+
+function mediaTile(item, single) {
+  if (item.video) return `<video src="${item.video}" ${single ? 'controls' : 'muted loop'} style="width:100%;height:100%;object-fit:cover"></video>`;
+  if (item.src)   return `<img src="${item.src}" alt="">`;
+  return `<div class="${single ? 'demo-slide' : ''}" style="background:${item.bg}">${item.demo || ''}</div>`;
+}
+
+// A collage tile inside the bounded side-by-side grid.
+function collageTile(item, idx) {
+  let media;
+  if (item.video)     media = `<video src="${item.video}" muted loop></video>`;
+  else if (item.src)  media = `<img src="${item.src}" alt="">`;
+  else                media = `<div class="demo" style="background:${item.bg}">${item.demo || ''}</div>`;
+  const rm = editing
+    ? `<button class="collage-rm" title="Remove this photo" onclick="removeCollagePhoto(${slideIdx},${idx})">✕</button>`
+    : '';
+  return `<div class="ctile">${media}${rm}</div>`;
+}
+
+function renderSlide() {
+  const s = slides[slideIdx];
+  const stage = document.getElementById('viewer-stage');
+  if (s.collage && s.collage.length) {
+    stage.classList.add('collage-mode');
+    const shown = s.collage.slice(0, 3);           // cap at 3 for a clean, bounded layout
+    stage.innerHTML =
+      `<span class="collage-badge">▦ ${shown.length} photos</span>` +
+      `<div class="collage n${shown.length}">${shown.map(collageTile).join('')}</div>`;
+  } else {
+    stage.classList.remove('collage-mode');
+    stage.innerHTML = mediaTile(s, true);
+  }
+  document.getElementById('viewer-cap').textContent = s.caption;
+  document.getElementById('viewer-why').textContent = '✨ ' + (s.why || '');
+  document.querySelectorAll('#viewer-dots .dot').forEach((d, i) =>
+    d.classList.toggle('on', i === slideIdx));
+  updateReorderBar();
+}
+
+function rebuildDots() {
+  document.getElementById('viewer-dots').innerHTML =
+    slides.map((_, i) => `<div class="dot" onclick="goSlide(${i})"></div>`).join('');
+}
+
+// ── Reorder slides (edit mode) ────────────────
+function updateReorderBar() {
+  const pos = document.getElementById('slide-position');
+  if (pos) pos.textContent = `Slide ${slideIdx + 1} of ${slides.length}`;
+  const earlier = document.getElementById('move-earlier');
+  const later   = document.getElementById('move-later');
+  const intro   = document.getElementById('make-intro');
+  if (earlier) earlier.disabled = slideIdx === 0;
+  if (later)   later.disabled   = slideIdx === slides.length - 1;
+  if (intro)   intro.disabled   = slideIdx === 0;
+}
+
+function moveSlide(dir) {
+  const ni = slideIdx + dir;
+  if (ni < 0 || ni >= slides.length) return;
+  [slides[slideIdx], slides[ni]] = [slides[ni], slides[slideIdx]];
+  slideIdx = ni;
+  if (currentChapter) currentChapter.slides = slides;
+  rebuildDots();
+  renderSlide();
+}
+
+function makeIntro() {
+  if (slideIdx === 0) return;
+  const [s] = slides.splice(slideIdx, 1);
+  slides.unshift(s);
+  slideIdx = 0;
+  if (currentChapter) currentChapter.slides = slides;
+  rebuildDots();
+  renderSlide();
+}
+
+// Remove one photo from a collage (edit mode). Collapses to a single slide
+// when one photo remains; drops the slide entirely if none do.
+function removeCollagePhoto(si, ti) {
+  const s = slides[si];
+  if (!s || !s.collage) return;
+  s.collage.splice(ti, 1);
+  if (s.collage.length === 1) {
+    slides[si] = { ...s.collage[0], caption: s.caption, why: s.why };
+  } else if (s.collage.length === 0) {
+    slides.splice(si, 1);
+    if (slideIdx >= slides.length) slideIdx = Math.max(0, slides.length - 1);
+    rebuildDots();
+  }
+  if (currentChapter) currentChapter.slides = slides;
+  renderSlide();
+}
+
+function goSlide(i)   { slideIdx = i; renderSlide(); }
+function slideStep(d) { slideIdx = (slideIdx + d + slides.length) % slides.length; renderSlide(); }
+
+// ── Interactive map (Leaflet + free OpenStreetMap) ──
+let addPinMode = false;
+let activePinIcon = '📌';
+const userPinMarkers = {};   // pin id → Leaflet marker
+
+function pinIcon(emoji) {
+  return L.divIcon({
+    className: 'user-pin',
+    html: `<div style="font-size:1.6rem;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))">${emoji}</div>`,
+    iconSize: [28, 28], iconAnchor: [14, 26], popupAnchor: [0, -24]
+  });
+}
+
+function renderMap(locations) {
+  const section = document.getElementById('map-section');
+  const pins = (currentChapter && currentChapter.userPins) || [];
+  if (typeof L === 'undefined' || (!locations.length && !pins.length)) {
+    section.classList.add('hidden');
+    return;
+  }
+  section.classList.remove('hidden');
+  if (chapterMap) { chapterMap.remove(); chapterMap = null; }
+  Object.keys(userPinMarkers).forEach(k => delete userPinMarkers[k]);
+  if (addPinMode) toggleAddPin();   // start each chapter with add mode off
+  // Defer so the container has dimensions before Leaflet measures it
+  setTimeout(() => {
+    chapterMap = L.map('chapter-map', { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap', maxZoom: 18
+    }).addTo(chapterMap);
+    const pts = [];
+    locations.forEach(loc => {
+      if (typeof loc.lat !== 'number' || typeof loc.lng !== 'number') return;
+      L.marker([loc.lat, loc.lng]).addTo(chapterMap).bindPopup(loc.name || '');
+      pts.push([loc.lat, loc.lng]);
+    });
+    pins.forEach(p => { drawUserPin(p); pts.push([p.lat, p.lng]); });
+    if (pts.length === 1) chapterMap.setView(pts[0], 12);
+    else if (pts.length > 1) chapterMap.fitBounds(pts, { padding: [40, 40] });
+    chapterMap.on('click', onMapClick);
+    chapterMap.invalidateSize();
+  }, 60);
+}
+
+const PIN_ICONS = ['📌','🍴','🍷','🌳','🏛️','📷','🏨','🛍️','⭐'];
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+    ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+function findPin(id) {
+  return (currentChapter && currentChapter.userPins || []).find(p => p.id === id);
+}
+
+function pinViewPopup(p) {
+  return `<strong>${p.icon || '📌'} ${esc(p.name) || 'A place'}</strong>` +
+    `${p.note ? '<br>' + esc(p.note) : ''}` +
+    `<br><button class="popup-edit" onclick="editPin('${p.id}')">✎ Edit</button>` +
+    ` &nbsp; <button class="popup-delete" onclick="deletePin('${p.id}')">✕ Delete</button>`;
+}
+
+function pinEditPopup(p) {
+  const icons = PIN_ICONS.map(c =>
+    `<button class="pe-ic ${c === (p.icon || '📌') ? 'on' : ''}" onclick="pickEditIcon('${p.id}','${c}',this)">${c}</button>`
+  ).join('');
+  return `<div style="min-width:190px">
+    <input class="pe-input" id="pe-name-${p.id}" value="${esc(p.name)}" placeholder="Name (e.g. the park)">
+    <input class="pe-input" id="pe-note-${p.id}" value="${esc(p.note)}" placeholder="A detail to remember">
+    <div class="pe-icons">${icons}</div>
+    <button class="pe-save" onclick="savePin('${p.id}')">Save</button>
+  </div>`;
+}
+
+function drawUserPin(p) {
+  if (!p.id) p.id = 'pin_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+  const marker = L.marker([p.lat, p.lng], { icon: pinIcon(p.icon || '📌') })
+    .addTo(chapterMap)
+    .bindPopup(pinViewPopup(p));
+  userPinMarkers[p.id] = marker;
+}
+
+function editPin(id) {
+  const p = findPin(id), marker = userPinMarkers[id];
+  if (!p || !marker) return;
+  marker.setPopupContent(pinEditPopup(p));
+}
+
+function pickEditIcon(id, icon, el) {
+  el.parentElement.querySelectorAll('.pe-ic').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  const p = findPin(id);
+  if (p) p._pendingIcon = icon;
+}
+
+function savePin(id) {
+  const p = findPin(id), marker = userPinMarkers[id];
+  if (!p || !marker) return;
+  const nameEl = document.getElementById('pe-name-' + id);
+  const noteEl = document.getElementById('pe-note-' + id);
+  if (nameEl) p.name = nameEl.value.trim();
+  if (noteEl) p.note = noteEl.value.trim();
+  if (p._pendingIcon) { p.icon = p._pendingIcon; delete p._pendingIcon; }
+  marker.setIcon(pinIcon(p.icon || '📌'));
+  marker.setPopupContent(pinViewPopup(p));
+}
+
+function deletePin(id) {
+  const marker = userPinMarkers[id];
+  if (marker) { marker.remove(); delete userPinMarkers[id]; }
+  if (currentChapter && currentChapter.userPins) {
+    currentChapter.userPins = currentChapter.userPins.filter(p => p.id !== id);
+  }
+}
+
+function selectPinCat(el) {
+  document.querySelectorAll('.pin-cat').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  activePinIcon = el.dataset.icon;
+}
+
+function toggleAddPin() {
+  addPinMode = !addPinMode;
+  const btn = document.getElementById('add-pin-btn');
+  btn.textContent = addPinMode ? '✓ Done adding' : '＋ Add a place';
+  document.getElementById('add-pin-hint').classList.toggle('hidden', !addPinMode);
+  document.getElementById('pin-toolbar').classList.toggle('hidden', !addPinMode);
+  const c = document.getElementById('chapter-map');
+  if (c) c.style.cursor = addPinMode ? 'crosshair' : '';
+}
+
+function onMapClick(e) {
+  if (!addPinMode) return;
+  const name = prompt('Name this place (e.g. "Tartine Bakery", "the lookout"):');
+  if (!name) return;
+  const note = prompt('A little detail to remember? (optional)') || '';
+  const pin = { lat: e.latlng.lat, lng: e.latlng.lng, name, note, icon: activePinIcon };
+  if (!currentChapter.userPins) currentChapter.userPins = [];
+  currentChapter.userPins.push(pin);
+  drawUserPin(pin);
+}
+
+// ── Editing: title, narrative, captions ───────
+function toggleEdit() {
+  editing = !editing;
+  const viewer = document.getElementById('chapter-viewer');
+  viewer.classList.toggle('editing', editing);
+  document.querySelectorAll('.edit-toggle-btn').forEach(btn => {
+    btn.textContent = editing ? '✓ Done editing' : '✏️ Edit story';
+  });
+  ['viewer-title', 'viewer-narrative', 'viewer-cap'].forEach(id => {
+    document.getElementById(id).setAttribute('contenteditable', editing);
+  });
+  document.getElementById('reorder-bar').classList.toggle('hidden', !editing);
+  if (editing) stopPlay();
+  renderSlide();   // show/hide the per-photo remove buttons on collages
+}
+
+function commitEdit(field, raw) {
+  if (!currentChapter) return;
+  const text = raw.replace(/^[“"]+|[”"]+$/g, '').trim();
+  if (field === 'title')     { currentChapter.title = text; }
+  if (field === 'narrative') { currentChapter.narrative = text; }
+  if (field === 'caption')   { slides[slideIdx].caption = text; currentChapter.slides = slides; }
+}
+
+// Wire up live editing (captions/title/narrative write back to the chapter)
+['viewer-title', 'viewer-narrative', 'viewer-cap'].forEach(id => {
+  document.addEventListener('input', e => {
+    if (e.target.id === id) commitEdit(e.target.dataset.field, e.target.textContent);
+  });
+});
+
+function togglePlay() {
+  if (playTimer) return stopPlay();
+  playTimer = setInterval(() => slideStep(1), 3500);
+  document.getElementById('play-btn').textContent = '⏸';
+}
+function stopPlay() {
+  clearInterval(playTimer);
+  playTimer = null;
+  const b = document.getElementById('play-btn');
+  if (b) b.textContent = '▶';
+}
+</script>
+</body>
+</html>
