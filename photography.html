@@ -485,24 +485,16 @@
       return m ? m[1] : null;
     }
 
-    // Detect orientation — videos are always landscape, photos preload to check
-    function detectOrientation(photo, section) {
-      if (photo.type === 'video') return Promise.resolve('landscape');
-      return new Promise(resolve => {
-        const img = new Image();
-        img.onload  = () => resolve(img.naturalWidth >= img.naturalHeight ? 'landscape' : 'portrait');
-        img.onerror = () => resolve('landscape');
-        img.src = `images/${section}/${photo.file}`;
-      });
+    // Orientation from stored dimensions (photos.json) — no image download needed
+    function orientationOf(photo) {
+      if (photo.type === 'video') return 'landscape';
+      return (photo.w && photo.h && photo.w < photo.h) ? 'portrait' : 'landscape';
     }
 
-    // Route camera photos to landscape/portrait strips after detecting orientation
-    async function buildSection(photos, section) {
-      const orientations = await Promise.all(
-        photos.map(p => detectOrientation(p, section))
-      );
-      const landscape = photos.filter((_, i) => orientations[i] === 'landscape');
-      const portrait  = photos.filter((_, i) => orientations[i] === 'portrait');
+    // Route camera photos to landscape/portrait strips using stored dimensions
+    function buildSection(photos, section) {
+      const landscape = photos.filter(p => orientationOf(p) === 'landscape');
+      const portrait  = photos.filter(p => orientationOf(p) === 'portrait');
 
       const lBlock = document.getElementById(`${section}-landscape-block`);
       const pBlock = document.getElementById(`${section}-portrait-block`);
@@ -572,17 +564,11 @@
         ...rawVideos.filter(v => v.caption.includes('Monteverde'))
       ];
 
-      // Preload photos to get natural dimensions
-      const dims = await Promise.all(photoItems.map(p => new Promise(resolve => {
-        const img = new Image();
-        img.onload  = () => resolve({ w: img.naturalWidth, h: img.naturalHeight });
-        img.onerror = () => resolve({ w: 16, h: 9 });
-        img.src = `images/drone/${p.file}`;
-      })));
-
-      const tagged = photoItems.map((p, i) => {
-        const r = dims[i].w / dims[i].h;
-        return { ...p, _dims: dims[i], _orient: r < 0.75 ? 'portrait' : r > 2.5 ? 'pano' : 'landscape' };
+      // Use stored dimensions (photos.json) — no image download needed
+      const tagged = photoItems.map(p => {
+        const w = p.w || 16, h = p.h || 9;
+        const r = w / h;
+        return { ...p, _dims: { w, h }, _orient: r < 0.75 ? 'portrait' : r > 2.5 ? 'pano' : 'landscape' };
       });
 
       const portraits  = shuffleWithLocationConstraint(tagged.filter(p => p._orient === 'portrait'));
