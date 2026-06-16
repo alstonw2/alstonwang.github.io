@@ -65,7 +65,10 @@
       justify-content: space-between;
       align-items: center;
       padding: 28px 56px;
-      mix-blend-mode: multiply;
+      background: rgba(247, 245, 242, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
     }
     .nav-logo {
       font-family: var(--serif);
@@ -90,6 +93,8 @@
       transition: color 0.2s;
     }
     .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+    /* Keep anchored sections clear of the fixed header */
+    section { scroll-margin-top: 96px; }
 
     /* ── PAGE HERO ── */
     .page-hero {
