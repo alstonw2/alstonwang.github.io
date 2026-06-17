@@ -924,6 +924,20 @@
       cursor: pointer;
     }
     .adj-val { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
+    .auto-enhance-btn {
+      width: 100%;
+      margin-bottom: .9rem;
+      padding: .6rem;
+      border: 1.5px solid var(--terra);
+      background: rgba(196,113,58,.08);
+      color: var(--terra);
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .auto-enhance-btn:hover { background: var(--terra); color: #fff; }
 
     /* ── Animations ──────────────────────────────── */
     @keyframes fadeUp {
@@ -1659,6 +1673,8 @@
         <span>🎚 Adjust this photo</span>
         <button class="btn-back" onclick="resetAdjust()">Reset</button>
       </div>
+      <button class="auto-enhance-btn" onclick="autoEnhance()">✨ Auto-enhance</button>
+      <div class="adj-row"><span>Exposure</span><input type="range" id="adj-e" min="50" max="150" value="100" oninput="onAdjust()"><span class="adj-val" id="adj-e-val">100</span></div>
       <div class="adj-row"><span>Brightness</span><input type="range" id="adj-b" min="50" max="150" value="100" oninput="onAdjust()"><span class="adj-val" id="adj-b-val">100</span></div>
       <div class="adj-row"><span>Contrast</span><input type="range" id="adj-c" min="50" max="150" value="100" oninput="onAdjust()"><span class="adj-val" id="adj-c-val">100</span></div>
       <div class="adj-row"><span>Saturation</span><input type="range" id="adj-s" min="0" max="200" value="100" oninput="onAdjust()"><span class="adj-val" id="adj-s-val">100</span></div>
@@ -2533,11 +2549,12 @@ function renderSlide() {
 
 // ── Photo adjustments (CSS filters, stored per slide) ──
 let adjusting = false;
-const DEFAULT_ADJ = { b: 100, c: 100, s: 100, w: 0 };
+const DEFAULT_ADJ = { e: 100, b: 100, c: 100, s: 100, w: 0 };
 
 function currentFilter() {
   const a = (slides[slideIdx] && slides[slideIdx].adj) || DEFAULT_ADJ;
-  return `brightness(${a.b}%) contrast(${a.c}%) saturate(${a.s}%) sepia(${(a.w * 0.4).toFixed(1)}%)`;
+  const light = (a.b * (a.e ?? 100) / 100).toFixed(1);   // exposure stacks with brightness
+  return `brightness(${light}%) contrast(${a.c}%) saturate(${a.s}%) sepia(${(a.w * 0.4).toFixed(1)}%)`;
 }
 function applyFilters() {
   const f = currentFilter();
@@ -2552,8 +2569,8 @@ function toggleAdjust() {
   if (adjusting) loadAdjSliders();
 }
 function loadAdjSliders() {
-  const a = (slides[slideIdx] && slides[slideIdx].adj) || DEFAULT_ADJ;
-  [['adj-b', a.b], ['adj-c', a.c], ['adj-s', a.s], ['adj-w', a.w]].forEach(([id, v]) => {
+  const a = { ...DEFAULT_ADJ, ...((slides[slideIdx] && slides[slideIdx].adj) || {}) };
+  [['adj-e', a.e], ['adj-b', a.b], ['adj-c', a.c], ['adj-s', a.s], ['adj-w', a.w]].forEach(([id, v]) => {
     const el = document.getElementById(id); if (el) el.value = v;
     const lbl = document.getElementById(id + '-val'); if (lbl) lbl.textContent = v;
   });
@@ -2561,12 +2578,13 @@ function loadAdjSliders() {
 function onAdjust() {
   const sl = slides[slideIdx]; if (!sl) return;
   sl.adj = {
+    e: +document.getElementById('adj-e').value,
     b: +document.getElementById('adj-b').value,
     c: +document.getElementById('adj-c').value,
     s: +document.getElementById('adj-s').value,
     w: +document.getElementById('adj-w').value
   };
-  ['b', 'c', 's', 'w'].forEach(k =>
+  ['e', 'b', 'c', 's', 'w'].forEach(k =>
     document.getElementById('adj-' + k + '-val').textContent = sl.adj[k]);
   if (currentChapter) currentChapter.slides = slides;
   applyFilters();
@@ -2576,6 +2594,52 @@ function resetAdjust() {
     slides[slideIdx].adj = { ...DEFAULT_ADJ };
     if (currentChapter) currentChapter.slides = slides;
   }
+  loadAdjSliders();
+  applyFilters();
+}
+
+// One-tap auto-enhance — samples the photo's histogram and balances it.
+// Falls back to a tasteful preset for demo placeholders or tainted canvases.
+function analyzeImage(img) {
+  const canvas = document.createElement('canvas');
+  const scale = 80 / Math.max(img.naturalWidth, img.naturalHeight);
+  canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+  canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  let sum = 0, sumSq = 0, satSum = 0, n = 0;
+  for (let i = 0; i < d.length; i += 4) {
+    const r = d[i], g = d[i + 1], b = d[i + 2];
+    const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+    sum += lum; sumSq += lum * lum;
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+    satSum += mx === 0 ? 0 : (mx - mn) / mx;
+    n++;
+  }
+  const mean = sum / n;
+  const std = Math.sqrt(Math.max(0, sumSq / n - mean * mean));
+  return { mean, std, sat: satSum / n };
+}
+function autoEnhance() {
+  const sl = slides[slideIdx]; if (!sl) return;
+  const clamp = (v, lo, hi) => Math.round(Math.min(hi, Math.max(lo, v)));
+  let adj = { e: 100, b: 104, c: 110, s: 115, w: 8 };   // tasteful fallback / demo preset
+  const img = document.querySelector('#viewer-stage img');
+  if (img && img.naturalWidth) {
+    try {
+      const { mean, std, sat } = analyzeImage(img);
+      adj = {
+        e: 100,
+        b: clamp((128 / Math.max(1, mean)) * 100, 88, 122),   // pull midtones toward balanced
+        c: clamp((55 / Math.max(15, std)) * 100, 100, 125),    // add contrast if flat
+        s: clamp(sat < 0.22 ? 122 : 110, 100, 130),            // lift dull color more
+        w: 0
+      };
+    } catch (e) { /* tainted canvas — keep fallback preset */ }
+  }
+  sl.adj = adj;
+  if (currentChapter) currentChapter.slides = slides;
   loadAdjSliders();
   applyFilters();
 }
