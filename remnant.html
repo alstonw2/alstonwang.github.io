@@ -893,6 +893,38 @@
     .pin-cat:hover { border-color: var(--green-lt); }
     .pin-cat.on { border-color: var(--terra); background: rgba(196,113,58,.1); font-weight: 600; }
 
+    /* Photo adjustments */
+    #adjust-panel {
+      max-width: 440px;
+      margin: 1rem auto 0;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 14px;
+      padding: 1.1rem 1.3rem;
+    }
+    .adjust-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: .9rem;
+      font-family: 'Lora', serif;
+      color: var(--green);
+      font-size: 1rem;
+    }
+    .adj-row {
+      display: grid;
+      grid-template-columns: 92px 1fr 38px;
+      align-items: center;
+      gap: .75rem;
+      font-size: .8rem;
+      color: var(--muted);
+      margin: .55rem 0;
+    }
+    .adj-row input[type="range"] {
+      width: 100%;
+      accent-color: var(--terra);
+      cursor: pointer;
+    }
+    .adj-val { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
+
     /* ── Animations ──────────────────────────────── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(18px); }
@@ -1617,8 +1649,20 @@
       <button class="btn-back" id="make-intro" onclick="makeIntro()">⭐ Make intro</button>
     </div>
 
-    <div style="text-align:center;margin-top:1.25rem">
+    <div style="text-align:center;margin-top:1.25rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap">
+      <button class="btn-back adjust-toggle-btn hidden" onclick="toggleAdjust()">🎚 Adjust photo</button>
       <button class="btn-back edit-toggle-btn" onclick="toggleEdit()">✏️ Edit story</button>
+    </div>
+
+    <div id="adjust-panel" class="hidden">
+      <div class="adjust-head">
+        <span>🎚 Adjust this photo</span>
+        <button class="btn-back" onclick="resetAdjust()">Reset</button>
+      </div>
+      <div class="adj-row"><span>Brightness</span><input type="range" id="adj-b" min="50" max="150" value="100" oninput="onAdjust()"><span class="adj-val" id="adj-b-val">100</span></div>
+      <div class="adj-row"><span>Contrast</span><input type="range" id="adj-c" min="50" max="150" value="100" oninput="onAdjust()"><span class="adj-val" id="adj-c-val">100</span></div>
+      <div class="adj-row"><span>Saturation</span><input type="range" id="adj-s" min="0" max="200" value="100" oninput="onAdjust()"><span class="adj-val" id="adj-s-val">100</span></div>
+      <div class="adj-row"><span>Warmth</span><input type="range" id="adj-w" min="0" max="100" value="0" oninput="onAdjust()"><span class="adj-val" id="adj-w-val">0</span></div>
     </div>
 
     <div class="chapter-narrative" id="viewer-narrative" data-field="narrative"></div>
@@ -2429,6 +2473,7 @@ let chapterMap = null, editing = false;
 function showChapter(title, narrative, eyebrow, locations = [], userPins = []) {
   stopPlay();
   if (editing) toggleEdit();
+  if (adjusting) toggleAdjust();
   currentChapter = { title, narrative, eyebrow, locations, userPins, slides };
   document.getElementById('chapter-setup').style.display = 'none';
   document.getElementById('chapter-viewer').style.display = 'block';
@@ -2482,6 +2527,57 @@ function renderSlide() {
   document.querySelectorAll('#viewer-dots .dot').forEach((d, i) =>
     d.classList.toggle('on', i === slideIdx));
   updateReorderBar();
+  applyFilters();
+  if (adjusting) loadAdjSliders();
+}
+
+// ── Photo adjustments (CSS filters, stored per slide) ──
+let adjusting = false;
+const DEFAULT_ADJ = { b: 100, c: 100, s: 100, w: 0 };
+
+function currentFilter() {
+  const a = (slides[slideIdx] && slides[slideIdx].adj) || DEFAULT_ADJ;
+  return `brightness(${a.b}%) contrast(${a.c}%) saturate(${a.s}%) sepia(${(a.w * 0.4).toFixed(1)}%)`;
+}
+function applyFilters() {
+  const f = currentFilter();
+  document.querySelectorAll('#viewer-stage img, #viewer-stage video, #viewer-stage .demo-slide, #viewer-stage .demo')
+    .forEach(el => { el.style.filter = f; });
+}
+function toggleAdjust() {
+  adjusting = !adjusting;
+  document.getElementById('adjust-panel').classList.toggle('hidden', !adjusting);
+  document.querySelectorAll('.adjust-toggle-btn').forEach(b =>
+    b.textContent = adjusting ? '🎚 Hide adjust' : '🎚 Adjust photo');
+  if (adjusting) loadAdjSliders();
+}
+function loadAdjSliders() {
+  const a = (slides[slideIdx] && slides[slideIdx].adj) || DEFAULT_ADJ;
+  [['adj-b', a.b], ['adj-c', a.c], ['adj-s', a.s], ['adj-w', a.w]].forEach(([id, v]) => {
+    const el = document.getElementById(id); if (el) el.value = v;
+    const lbl = document.getElementById(id + '-val'); if (lbl) lbl.textContent = v;
+  });
+}
+function onAdjust() {
+  const sl = slides[slideIdx]; if (!sl) return;
+  sl.adj = {
+    b: +document.getElementById('adj-b').value,
+    c: +document.getElementById('adj-c').value,
+    s: +document.getElementById('adj-s').value,
+    w: +document.getElementById('adj-w').value
+  };
+  ['b', 'c', 's', 'w'].forEach(k =>
+    document.getElementById('adj-' + k + '-val').textContent = sl.adj[k]);
+  if (currentChapter) currentChapter.slides = slides;
+  applyFilters();
+}
+function resetAdjust() {
+  if (slides[slideIdx]) {
+    slides[slideIdx].adj = { ...DEFAULT_ADJ };
+    if (currentChapter) currentChapter.slides = slides;
+  }
+  loadAdjSliders();
+  applyFilters();
 }
 
 function rebuildDots() {
@@ -2695,6 +2791,8 @@ function toggleEdit() {
     document.getElementById(id).setAttribute('contenteditable', editing);
   });
   document.getElementById('reorder-bar').classList.toggle('hidden', !editing);
+  document.querySelectorAll('.adjust-toggle-btn').forEach(b => b.classList.toggle('hidden', !editing));
+  if (!editing && adjusting) toggleAdjust();   // close the adjust panel when leaving edit mode
   if (editing) stopPlay();
   renderSlide();   // show/hide the per-photo remove buttons on collages
 }
