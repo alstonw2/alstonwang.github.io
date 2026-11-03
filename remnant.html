@@ -1296,6 +1296,68 @@
       border: 1px solid rgba(44,44,44,.1);
     }
     .event-media figcaption { margin-top: .5rem; font-size: .8rem; color: var(--muted); }
+  
+    /* Split: timeline left, the entry you clicked pinned beside it */
+    .ex-split {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: 1.8rem; align-items: start; margin-top: 2.2rem;
+    }
+    .ex-split .rail { margin-top: 0; }
+    .ex-split-right { position: sticky; top: 84px; }
+    .ex-split-right .detail { margin-top: 0; max-height: calc(100vh - 120px); overflow-y: auto; }
+
+    .detail-empty {
+      border: 1px dashed rgba(44,44,44,.2); border-radius: 10px;
+      padding: 2.4rem 1.8rem; text-align: center; color: var(--muted);
+      background: rgba(255,255,255,.5);
+    }
+    .detail-empty .big { font-size: 1.6rem; margin-bottom: .6rem; opacity: .5; }
+    .detail-empty p { font-size: .9rem; line-height: 1.65; max-width: 30ch; margin: 0 auto; }
+
+    /* Make it obvious a row opens something */
+    .rail-row { grid-template-columns: 4.5rem 1.6rem 1fr 1rem; }
+    .rail-open {
+      align-self: center; color: rgba(44,44,44,.25); font-size: .9rem;
+      transition: color .15s, transform .15s;
+    }
+    .rail-row:hover .rail-open,
+    .rail-row:focus-visible .rail-open { color: var(--terra); transform: translateX(2px); }
+    .rail-row[aria-expanded="true"] .rail-open { color: var(--terra); }
+    .rail-row[aria-expanded="true"] { box-shadow: inset 2px 0 0 var(--terra); }
+    .rail-hint {
+      font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: .6rem;
+    }
+
+    /* Photographs, at a size you can actually see */
+    .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin-top: 1.1rem; }
+    .photo-cell { position: relative; }
+    .photo-cell img, .photo-cell .ph {
+      width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;
+      border-radius: 7px; border: 1px solid rgba(44,44,44,.1); background: var(--warm);
+    }
+    .photo-cell a.ph-video { display: block; position: relative; }
+    .photo-cell .ph-play {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1.3rem; text-shadow: 0 1px 6px rgba(0,0,0,.7);
+      background: rgba(0,0,0,.2); border-radius: 7px;
+    }
+    .photo-cap { font-size: .76rem; color: var(--muted); margin-top: .35rem; line-height: 1.45; }
+    .photo-more {
+      margin-top: .9rem; font-size: .82rem;
+    }
+    .photo-more a { color: var(--terra); }
+
+    @media (max-width: 900px) {
+      .ex-split { grid-template-columns: 1fr; }
+      .ex-split-right { position: static; }
+      .ex-split-right .detail { max-height: none; }
+    }
+  
+    /* In the side panel the photograph leads; the reasoning sits under it. */
+    .ex-split-right .slide-card { grid-template-columns: 1fr; }
+    .ex-split-right .slide-thumb { height: 210px; }
+    .ex-split-right .slide-thumb.pair { height: 150px; }
   </style>
 </head>
 <body>
@@ -1380,8 +1442,15 @@
       <div id="life-map"></div>
     </section>
 
-    <div class="rail" id="ex-rail"></div>
-    <div id="ex-detail"></div>
+    <div class="ex-split">
+      <div>
+        <div class="rail-hint">Click any entry to open it →</div>
+        <div class="rail" id="ex-rail"></div>
+      </div>
+      <div class="ex-split-right">
+        <div id="ex-detail"></div>
+      </div>
+    </div>
 
     <!-- What survives -->
     <section class="survives">
@@ -3906,10 +3975,12 @@ function renderExplorer() {
         <span class="rail-title">${isPrivate(refOf(ev)) ? 'Kept private' : esc(eventTitle(ev))}</span>${kindLabel ? `<span class="rail-kind">${kindLabel}</span>` : ''}
         ${detail && !isPrivate(refOf(ev)) ? `<span class="rail-detail">${esc(detail)}</span>` : ''}
       </span>
+      <span class="rail-open" aria-hidden="true">›</span>
     </button>`;
   }).join('');
 
   document.getElementById('ex-derive').innerHTML = deriveStatusHtml() + incompleteHtml();
+  document.getElementById('ex-detail').innerHTML = emptyDetailHtml();
   renderCoverage();
   renderLifeMap();
   renderSurvives();
@@ -3934,7 +4005,22 @@ function jumpToEra(id) {
       ${learningHtml(era)}
       ${whyChip(era.why, 'Why these years group')}
     </div>`;
-  document.getElementById('ex-detail').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  revealDetail(document.getElementById('ex-detail'));
+}
+
+// Side by side there is nothing to scroll to — the panel is already in view.
+// Stacked on a narrow screen, bring it up.
+function revealDetail(el) {
+  if (window.matchMedia('(max-width: 900px)').matches) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function emptyDetailHtml() {
+  return `<div class="detail-empty">
+    <div class="big">◷</div>
+    <p>Pick a year on the left — a photograph, a trip, a thing that happened — and it opens here.</p>
+  </div>`;
 }
 
 function openEvent(ref, kind, year, btn) {
@@ -3949,7 +4035,7 @@ function openEvent(ref, kind, year, btn) {
       ? `A letter to someone, written ${rec.written}, ${rec.revisions} revision${rec.revisions === 1 ? '' : 's'}.`
       : `A ${kind} from ${year}.`;
     out.innerHTML = lockedHtml(kind, meta);
-    out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    revealDetail(out);
     return;
   }
   if (kind === 'chapter' && rec)          out.innerHTML = chapterHtml(rec);
@@ -3964,6 +4050,15 @@ function openEvent(ref, kind, year, btn) {
         : (ev && ev.approx ? 'approximately ' : '') + year}</div>
       <h3>${esc(ev && ev.title || '')}</h3>
       ${ev && ev.detail ? `<p class="d-narr">${esc(ev.detail)}</p>` : ''}
+      ${ev && !ev.media && (ev.src || ev.video) ? `<figure class="event-media">
+          ${ev.video
+            ? `<a href="${esc(ev.video)}" target="_blank" rel="noopener" class="ph-video"
+                 style="position:relative;display:block">
+                 <img src="${esc(ev.src)}" alt="${esc(ev.title || '')}" loading="lazy" />
+                 <span class="ph-play">▶</span></a>`
+            : `<img src="${esc(ev.src)}" alt="${esc(ev.title || '')}" loading="lazy" />`}
+          ${ev.detail ? '' : `<figcaption>${esc(ev.title || '')}</figcaption>`}
+        </figure>` : ''}
       ${ev && ev.media ? `<figure class="event-media">
           <img src="${esc(ev.media.src)}" alt="${esc(ev.media.caption || ev.title || '')}" loading="lazy" />
           ${ev.media.caption ? `<figcaption>${esc(ev.media.caption)}</figcaption>` : ''}
@@ -3973,7 +4068,7 @@ function openEvent(ref, kind, year, btn) {
       ${ev && ev.learning ? learningHtml(ev) : ''}
     </div>`;
   }
-  out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  revealDetail(out);
 }
 
 function mediaThumb(m, cls) {
@@ -4017,6 +4112,9 @@ function chapterHtml(ch) {
       ${ch.slides.map((s, i) => slideCardHtml(ch.id, s, i)).join('')}
     </div>
     ${learningHtml(ch)}
+    <p class="photo-more">
+      <a href="photography.html#camera-landscape" target="_blank" rel="noopener">See these in the full gallery ↗</a>
+    </p>
     <p class="cull-note" style="margin-top:1.2rem">
       Disagree with any of it — edit a caption, move a slide, or cut one. The model
       made a case; it does not get the last word.

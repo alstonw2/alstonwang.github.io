@@ -38,6 +38,10 @@
         "name": "Qionghai, Hainan, China",
         "lat": 19.246,
         "lng": 110.4746
+      },
+      "media": {
+        "src": "demo/media/born-1998.jpg",
+        "caption": "Qionghai, on the tricycle."
       }
     },
     {
