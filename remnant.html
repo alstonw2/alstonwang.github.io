@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Remnant — Honor the life you've lived</title>
+  <title>Remnant — A life is more than two dates</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -954,6 +954,348 @@
     .mt-3 { margin-top: 1.5rem; }
 
     .hidden { display: none !important; }
+  
+    /* ── Explorer ────────────────────────────────── */
+    #explore { display: none; }
+    #explore.open { display: block; }
+
+    .ex-wrap { max-width: 1040px; margin: 0 auto; padding: 0 1.5rem 6rem; }
+
+    .ex-topbar {
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(250,247,242,.93);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(44,44,44,.09);
+      display: flex; align-items: center; gap: 1rem;
+      padding: .9rem 1.5rem;
+      flex-wrap: wrap;
+    }
+    .ex-topbar .prog-logo { margin: 0; }
+    .ex-spacer { flex: 1 1 auto; }
+
+    .demo-badge {
+      font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--terra); border: 1px solid rgba(196,113,58,.4);
+      border-radius: 1rem; padding: .2rem .7rem; white-space: nowrap;
+    }
+
+    /* Person header */
+    .ex-person { padding: 3rem 0 1.5rem; }
+    .ex-name { font-size: clamp(2rem,5vw,3.1rem); line-height: 1.1; margin-bottom: .4rem; }
+    .ex-dates { font-size: .95rem; color: var(--muted); letter-spacing: .04em; }
+    .ex-tagline { margin-top: .9rem; font-size: 1.05rem; color: var(--muted); max-width: 46ch; line-height: 1.6; }
+
+    /* Scrubber */
+    .scrub { margin: 1.5rem 0 0; }
+    .scrub-head {
+      display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; margin-bottom: .5rem;
+    }
+    .scrub-year {
+      font-family: 'Lora', serif; font-size: 2.4rem; line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .scrub-era { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--terra); }
+    .scrub-counts { font-size: .85rem; color: var(--muted); }
+    .scrub-counts b { color: var(--ink); font-weight: 600; }
+
+    input[type="range"].scrub-input {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 3px; border-radius: 3px;
+      background: rgba(44,44,44,.15);
+      outline-offset: 6px; margin: .9rem 0 0;
+    }
+    input[type="range"].scrub-input::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--terra); border: 3px solid var(--cream);
+      box-shadow: 0 1px 6px rgba(0,0,0,.25); cursor: grab;
+    }
+    input[type="range"].scrub-input::-moz-range-thumb {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--terra); border: 3px solid var(--cream);
+      box-shadow: 0 1px 6px rgba(0,0,0,.25); cursor: grab; border-width: 3px;
+    }
+
+    /* Era bands */
+    .era-bands { display: flex; gap: 2px; margin-top: .6rem; }
+    .era-band {
+      flex: 1 1 auto; text-align: left; border: none; cursor: pointer;
+      background: rgba(45,74,62,.07); color: var(--muted);
+      padding: .5rem .6rem; font-size: .72rem; line-height: 1.3;
+      border-radius: 3px; transition: background .2s, color .2s;
+      font-family: inherit;
+    }
+    .era-band:hover, .era-band:focus-visible { background: rgba(45,74,62,.14); color: var(--ink); }
+    .era-band.on { background: var(--green); color: #fff; }
+    .era-band .eb-years { display: block; opacity: .65; font-size: .66rem; letter-spacing: .06em; }
+
+    /* Event rail */
+    .rail { margin-top: 2.5rem; display: grid; gap: .5rem; }
+    .rail-row {
+      display: grid; grid-template-columns: 4.5rem 1.6rem 1fr; gap: .8rem;
+      align-items: start; text-align: left;
+      background: none; border: none; font-family: inherit; color: inherit;
+      padding: .7rem .6rem; border-radius: 6px; cursor: pointer;
+      opacity: .22; transition: opacity .35s ease, background .2s;
+    }
+    .rail-row.lit { opacity: 1; }
+    .rail-row:hover, .rail-row:focus-visible { background: rgba(45,74,62,.06); }
+    .rail-row[aria-expanded="true"] { background: rgba(196,113,58,.09); }
+    .rail-year { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; padding-top: .15rem; }
+    .rail-icon { font-size: 1.05rem; line-height: 1.3; }
+    .rail-title { font-weight: 600; font-size: .98rem; }
+    .rail-detail { display: block; color: var(--muted); font-size: .88rem; line-height: 1.55; margin-top: .15rem; }
+    .rail-kind {
+      font-size: .64rem; letter-spacing: .13em; text-transform: uppercase;
+      color: var(--terra); margin-left: .5rem;
+    }
+
+    /* Reasoning chip — the repeated pattern */
+    .why {
+      display: inline-flex; align-items: center; gap: .35rem;
+      margin-top: .55rem;
+      background: none; border: 1px dashed rgba(196,113,58,.45);
+      color: var(--terra); cursor: pointer; font-family: inherit;
+      font-size: .66rem; letter-spacing: .13em; text-transform: uppercase;
+      border-radius: 1rem; padding: .22rem .65rem;
+      transition: background .2s;
+    }
+    .why:hover, .why:focus-visible { background: rgba(196,113,58,.1); }
+    .why::before { content: '◆'; font-size: .5rem; }
+    .why-body {
+      margin-top: .55rem; padding: .85rem 1rem;
+      background: rgba(45,74,62,.05);
+      border-left: 2px solid var(--terra);
+      border-radius: 0 4px 4px 0;
+      font-size: .88rem; line-height: 1.65; color: var(--muted);
+      max-width: 62ch;
+    }
+    .why-body em { color: var(--ink); font-style: normal; font-weight: 600; }
+
+    /* Detail panel */
+    .detail {
+      margin-top: 1.6rem; padding: 1.8rem;
+      background: #fff; border: 1px solid rgba(44,44,44,.08);
+      border-radius: 10px;
+    }
+    .detail h3 { font-size: 1.5rem; margin-bottom: .3rem; }
+    .detail .d-eyebrow {
+      font-size: .7rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--terra); margin-bottom: .6rem;
+    }
+    .detail p.d-narr { font-size: 1.02rem; line-height: 1.75; color: var(--ink); max-width: 62ch; margin-top: .8rem; }
+    .d-body { white-space: pre-wrap; line-height: 1.8; max-width: 58ch; margin-top: .9rem; }
+
+    .slide-list { display: grid; gap: .9rem; margin-top: 1.4rem; }
+    .slide-card {
+      display: grid; grid-template-columns: 92px 1fr; gap: 1rem;
+      align-items: start;
+      border: 1px solid rgba(44,44,44,.08); border-radius: 8px; padding: .8rem;
+      background: var(--cream);
+    }
+    .slide-card.dropped { opacity: .4; }
+    .slide-thumb {
+      height: 72px; border-radius: 5px; display: flex; align-items: center;
+      justify-content: center; font-size: 1.7rem; color: #fff;
+    }
+    .slide-thumb.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; font-size: 1.1rem; }
+    .slide-thumb.pair > span { display: flex; align-items: center; justify-content: center; border-radius: 3px; }
+    .slide-cap { font-weight: 500; line-height: 1.5; }
+    .slide-cap[contenteditable="true"]:focus {
+      outline: 2px solid rgba(196,113,58,.45); outline-offset: 3px; border-radius: 3px;
+    }
+    .slide-acts { display: flex; gap: .4rem; margin-top: .5rem; flex-wrap: wrap; }
+    .mini {
+      background: none; border: 1px solid rgba(44,44,44,.18); color: var(--muted);
+      border-radius: 1rem; padding: .2rem .6rem; font-size: .7rem; cursor: pointer;
+      font-family: inherit; transition: all .18s;
+    }
+    .mini:hover, .mini:focus-visible { border-color: var(--terra); color: var(--terra); }
+
+    .cull-note {
+      font-size: .82rem; color: var(--muted); margin-top: 1rem;
+      display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+    }
+    .cull-bar { height: 5px; border-radius: 3px; background: rgba(44,44,44,.12); flex: 1 1 120px; min-width: 100px; overflow: hidden; }
+    .cull-bar > i { display: block; height: 100%; background: var(--terra); }
+
+    /* What survives */
+    .survives { margin-top: 3.5rem; }
+    .sw-toggle {
+      display: inline-flex; border: 1px solid rgba(44,44,44,.18); border-radius: 2rem; overflow: hidden;
+    }
+    .sw-toggle button {
+      background: none; border: none; font-family: inherit; cursor: pointer;
+      padding: .5rem 1.1rem; font-size: .82rem; color: var(--muted); transition: all .2s;
+    }
+    .sw-toggle button.on { background: var(--green); color: #fff; }
+    .thin-card {
+      margin-top: 1.2rem; padding: 2.2rem; border-radius: 10px;
+      background: #fff; border: 1px solid rgba(44,44,44,.08);
+    }
+    .thin-name { font-family: 'Lora', serif; font-size: 1.6rem; }
+    .thin-list { margin-top: 1.2rem; display: grid; gap: .5rem; }
+    .thin-item { color: var(--muted); font-size: .92rem; display: flex; gap: .6rem; }
+    .thin-item::before { content: '·'; color: rgba(44,44,44,.3); }
+    .thin-count { margin-top: 1.6rem; font-size: .85rem; color: var(--muted); }
+
+    /* Voice */
+    .voice { margin-top: 3.5rem; }
+    .voice-form { display: flex; gap: .6rem; margin-top: 1rem; flex-wrap: wrap; }
+    .voice-form input {
+      flex: 1 1 260px; padding: .75rem 1rem; border-radius: 6px;
+      border: 1px solid rgba(44,44,44,.18); font-family: inherit; font-size: .95rem;
+      background: #fff; color: var(--ink);
+    }
+    .voice-form input:focus { outline: 2px solid rgba(196,113,58,.4); outline-offset: 1px; }
+    .voice-chips { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .8rem; }
+    .quote-card {
+      margin-top: 1.2rem; padding: 1.5rem 1.7rem; background: #fff;
+      border: 1px solid rgba(44,44,44,.08); border-radius: 10px;
+    }
+    .quote-card blockquote {
+      font-family: 'Lora', serif; font-size: 1.22rem; line-height: 1.65; max-width: 54ch;
+    }
+    .quote-src { margin-top: .9rem; font-size: .8rem; color: var(--muted); letter-spacing: .03em; }
+    .quote-card.empty blockquote { font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--muted); }
+
+    /* Hero scrubber (on the green landing) */
+    .hero-scrub { width: min(620px, 100%); margin: 2.4rem auto 0; text-align: left; }
+    .hero-scrub .scrub-year { color: #fff; }
+    .hero-scrub .scrub-era { color: var(--gold); }
+    .hero-scrub .scrub-counts { color: rgba(255,255,255,.6); }
+    .hero-scrub .scrub-counts b { color: #fff; }
+    .hero-scrub input[type="range"].scrub-input { background: rgba(255,255,255,.22); }
+    .hero-scrub input[type="range"].scrub-input::-webkit-slider-thumb { border-color: var(--green); }
+    .hero-scrub input[type="range"].scrub-input::-moz-range-thumb { border-color: var(--green); }
+    .hero-hint {
+      margin-top: .7rem; font-size: .75rem; letter-spacing: .1em;
+      text-transform: uppercase; color: rgba(255,255,255,.42);
+    }
+
+    .tenets { display: grid; gap: .55rem; margin-top: 2.6rem; max-width: 520px; text-align: left; }
+    .tenet { color: rgba(255,255,255,.6); font-size: .88rem; line-height: 1.6; display: flex; gap: .7rem; }
+    .tenet span { color: var(--gold); }
+
+    .ex-section-title {
+      font-family: 'Lora', serif; font-size: 1.7rem; margin-bottom: .4rem;
+    }
+    .ex-section-sub { color: var(--muted); font-size: .95rem; max-width: 56ch; line-height: 1.65; }
+
+    @media (max-width: 640px) {
+      .rail-row { grid-template-columns: 3.4rem 1.4rem 1fr; gap: .5rem; }
+      .slide-card { grid-template-columns: 1fr; }
+      .slide-thumb { height: 56px; }
+      .era-bands { flex-wrap: wrap; }
+      .era-band { flex: 1 1 42%; }
+      .detail { padding: 1.2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rail-row { transition: none; }
+      *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+    }
+
+  
+    .derive-bar {
+      display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
+      margin-top: 1.1rem; padding-top: .9rem;
+      border-top: 1px solid rgba(44,44,44,.08);
+    }
+    .derive-state { font-size: .75rem; color: var(--muted); letter-spacing: .02em; }
+    .derive-state.live { color: var(--green-lt); font-weight: 600; }
+    .derive-note { font-size: .72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  
+    /* Real media */
+    .slide-thumb.media, .rail-thumb.media {
+      background-size: cover; background-position: center;
+      position: relative; text-decoration: none;
+    }
+    a.slide-thumb.media .play {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1.1rem; text-shadow: 0 1px 6px rgba(0,0,0,.6);
+      background: rgba(0,0,0,.22); border-radius: 5px;
+    }
+    a.slide-thumb.media:hover .play { background: rgba(0,0,0,.4); }
+    .slide-thumb.pair > span.media { background-size: cover; background-position: center; }
+    .detail.locked { border-style: dashed; background: rgba(45,74,62,.03); }
+    .detail.locked h3 { color: var(--muted); }
+    .incomplete {
+      margin-top: 1rem; padding: .9rem 1.1rem; border-radius: 6px;
+      background: rgba(184,149,63,.12); border-left: 2px solid var(--gold);
+      font-size: .86rem; line-height: 1.6; color: var(--muted); max-width: 62ch;
+    }
+    .incomplete b { color: var(--ink); font-weight: 600; }
+  
+    /* A learning is the person talking. The why chip is the machine arguing.
+       They must never be mistaken for each other. */
+    .learning {
+      margin-top: 1.1rem; padding: 1.1rem 1.3rem;
+      background: rgba(184,149,63,.09);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 6px 6px 0; max-width: 60ch;
+    }
+    .learning-kind {
+      font-size: .64rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: .5rem;
+    }
+    .learning-text {
+      font-family: 'Lora', serif; font-size: 1.05rem; line-height: 1.7; color: var(--ink);
+    }
+    .learning-at { margin-top: .6rem; font-size: .74rem; color: var(--muted); }
+    .learning.todo { background: rgba(44,44,44,.04); border-left-color: rgba(44,44,44,.18); }
+    .learning.todo .learning-text { font-family: 'Inter', sans-serif; font-size: .9rem; color: var(--muted); }
+  
+    /* Coverage — which years hold anything, and which are still empty */
+    .coverage { margin-top: .9rem; }
+    .cov-strip { display: flex; gap: 2px; align-items: flex-end; height: 34px; }
+    .cov-year {
+      flex: 1 1 0; min-width: 0; border: none; padding: 0; cursor: pointer;
+      background: rgba(45,74,62,.1); border-radius: 2px 2px 0 0;
+      transition: background .15s; position: relative;
+    }
+    .cov-year:hover, .cov-year:focus-visible { background: var(--terra); }
+    .cov-year.empty { background: repeating-linear-gradient(45deg,rgba(44,44,44,.07) 0 3px,transparent 3px 6px); }
+    .cov-year.empty:hover { background: rgba(196,113,58,.35); }
+    .cov-axis {
+      display: flex; justify-content: space-between;
+      font-size: .66rem; color: var(--muted); margin-top: .35rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .cov-legend { font-size: .76rem; color: var(--muted); margin-top: .5rem; }
+    .cov-legend b { color: var(--ink); font-weight: 600; }
+  
+    /* Life map */
+    .lifemap-wrap { margin-top: 1.6rem; }
+    .lifemap-head {
+      display: flex; align-items: baseline; gap: .8rem; flex-wrap: wrap; margin-bottom: .6rem;
+    }
+    .lifemap-head h2 { font-family: 'Lora', serif; font-size: 1.15rem; }
+    .lifemap-count { font-size: .8rem; color: var(--muted); }
+    #life-map {
+      height: 340px; border-radius: 10px; border: 1px solid rgba(44,44,44,.1);
+      background: var(--warm); z-index: 1;
+    }
+    .life-pin div {
+      background: var(--terra); color: #fff; border: 2px solid var(--cream);
+      border-radius: 50%; width: 22px; height: 22px; display: flex;
+      align-items: center; justify-content: center; font-size: .6rem; font-weight: 700;
+      box-shadow: 0 1px 5px rgba(0,0,0,.35);
+    }
+    .life-pin.chapter div { background: var(--green); }
+    .map-pop-title { font-weight: 600; margin-bottom: .2rem; }
+    .map-pop-open {
+      background: none; border: none; color: var(--terra); cursor: pointer;
+      font-family: inherit; font-size: .8rem; padding: 0; text-decoration: underline;
+    }
+    @media (max-width: 640px) { #life-map { height: 260px; } }
+  
+    .event-media { margin-top: 1.1rem; max-width: 420px; }
+    .event-media img {
+      width: 100%; height: auto; display: block; border-radius: 8px;
+      border: 1px solid rgba(44,44,44,.1);
+    }
+    .event-media figcaption { margin-top: .5rem; font-size: .8rem; color: var(--muted); }
   </style>
 </head>
 <body>
@@ -966,25 +1308,117 @@
   <div class="logo-mark">Remnant</div>
 
   <h1 class="landing-headline fade-up">
-    The moments that made you,<br/>kept in chapters.
+    A life is more<br/>than two dates.
   </h1>
   <p class="landing-sub fade-up" style="animation-delay:.1s">
-    A gentle space to gather your photos and memories — and let AI shape
-    them into chapters that tell the story of a life, for the people
-    who'll want to remember it.
+    Remnant holds what a life actually consisted of — the years, the places, the
+    photographs, the things someone meant to say. Drag through one and see.
   </p>
 
-  <div class="fade-up" style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation-delay:.2s">
-    <button class="btn-primary" onclick="openChapters()">✨ Create a Chapter</button>
-    <button class="btn-secondary" onclick="startApp()">Begin Your Remnant</button>
+  <div class="hero-scrub fade-up" style="animation-delay:.15s">
+    <div class="scrub-head">
+      <div class="scrub-year" id="hero-year">1951</div>
+      <div class="scrub-era" id="hero-era">Before the bus</div>
+    </div>
+    <div class="scrub-counts" id="hero-counts">Nothing recorded yet</div>
+    <input type="range" class="scrub-input" id="hero-range"
+           min="1951" max="2026" value="1951" step="1"
+           aria-label="Scrub through the years of this life" />
+    <div class="hero-hint">Drag — or use the arrow keys</div>
   </div>
 
-  <div class="pillars fade-up" style="animation-delay:.3s">
-    <div class="pillar"><div class="pillar-dot"></div>AI-curated chapters</div>
-    <div class="pillar"><div class="pillar-dot"></div>Your best photos, chosen</div>
-    <div class="pillar"><div class="pillar-dot"></div>A living timeline</div>
-    <div class="pillar"><div class="pillar-dot"></div>Stories worth keeping</div>
-    <div class="pillar"><div class="pillar-dot"></div>Your wishes, recorded</div>
+  <div class="fade-up" style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation-delay:.2s;margin-top:2.4rem">
+    <button class="btn-primary" onclick="openExplore()">Explore this life</button>
+    <button class="btn-secondary" onclick="openChapters()">Make a chapter of your own</button>
+  </div>
+
+  <div class="tenets fade-up" style="animation-delay:.3s">
+    <div class="tenet"><span>01</span> See your life laid out, and recognize it.</div>
+    <div class="tenet"><span>02</span> Keep adding to it for as long as you're here.</div>
+    <div class="tenet"><span>03</span> If the worst happens, none of it evaporates.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     EXPLORER — a complete life, driven by demo/life.json
+════════════════════════════════════════════════ -->
+<div id="explore">
+  <div class="ex-topbar">
+    <div class="prog-logo">Remnant</div>
+    <span class="demo-badge" id="ex-demo-badge" hidden>Demo life</span>
+    <div class="ex-spacer"></div>
+    <button class="btn-back" onclick="closeExplore()">← Home</button>
+  </div>
+
+  <div class="ex-wrap">
+    <div class="ex-person">
+      <h1 class="ex-name" id="ex-name">—</h1>
+      <div class="ex-dates" id="ex-dates"></div>
+      <p class="ex-tagline" id="ex-tagline"></p>
+
+      <div class="scrub">
+        <div class="scrub-head">
+          <div class="scrub-year" id="ex-year">1951</div>
+          <div class="scrub-era" id="ex-era"></div>
+          <div class="scrub-counts" id="ex-counts"></div>
+        </div>
+        <input type="range" class="scrub-input" id="ex-range"
+               min="1951" max="2026" value="2026" step="1"
+               aria-label="Scrub through the years of this life" />
+        <div class="coverage" id="ex-coverage"></div>
+        <div class="era-bands" id="ex-bands" role="group" aria-label="Eras"></div>
+        <div id="ex-derive"></div>
+      </div>
+    </div>
+
+    <section class="lifemap-wrap">
+      <div class="lifemap-head">
+        <h2>Where it happened</h2>
+        <span class="lifemap-count" id="lifemap-count"></span>
+      </div>
+      <div id="life-map"></div>
+    </section>
+
+    <div class="rail" id="ex-rail"></div>
+    <div id="ex-detail"></div>
+
+    <!-- What survives -->
+    <section class="survives">
+      <h2 class="ex-section-title">What survives</h2>
+      <p class="ex-section-sub">The same person, held two ways.</p>
+      <div class="sw-toggle" role="group" aria-label="View mode" style="margin-top:1rem">
+        <button id="sw-full" class="on" onclick="setSurvives('full')">With Remnant</button>
+        <button id="sw-thin" onclick="setSurvives('thin')">Without</button>
+      </div>
+      <div id="sw-panel"></div>
+    </section>
+
+    <!-- Voice -->
+    <section class="voice">
+      <h2 class="ex-section-title">Ask what she said</h2>
+      <p class="ex-section-sub">
+        Answers are her own words, with the date she wrote them. Remnant will not
+        generate speech in her voice — if she never wrote about it, you get nothing.
+      </p>
+      <div class="voice-form">
+        <input type="text" id="voice-q" placeholder="e.g. what was she afraid of"
+               aria-label="Ask what she wrote about something"
+               onkeydown="if(event.key==='Enter')askVoice()" />
+        <button class="btn-primary" style="padding:.75rem 1.6rem;font-size:.9rem" onclick="askVoice()">Ask</button>
+      </div>
+      <div class="voice-chips" id="voice-chips"></div>
+      <div id="voice-out"></div>
+    </section>
+
+    <!-- Start your own -->
+    <section style="margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(44,44,44,.1)">
+      <h2 class="ex-section-title">Start yours</h2>
+      <p class="ex-section-sub">One chapter. Pick a trip or a season, and let it choose the photographs that carry it.</p>
+      <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.2rem;align-items:center">
+        <button class="btn-primary" onclick="openChapters()">Make a chapter</button>
+      </div>
+    </section>
   </div>
 </div>
 
@@ -1717,8 +2151,6 @@
 // ═══════════════════════════════════════════════
 let currentStep = 1;
 const TOTAL_STEPS = 4;
-let traditionCount = 0;
-let messageCount = 0;
 
 const stepLabels = ['The Basics', 'Care', 'Traditions', 'Legacy'];
 
@@ -1730,20 +2162,53 @@ const selections = {
   values: []
 };
 
-const traditions = [];
-const messages  = [];
+// ── Entry model ─────────────────────────────────────────────
+// An entry is the atomic unit of Remnant: something you wrote, addressed to
+// someone, with a condition for when it should reach them. Profile fields
+// describe you; an entry is directed at a person. Both keep revision history —
+// what makes this an archive is the sequence of versions, not the latest one.
+//
+//   { id, kind, to, trigger: { type, value }, fields,
+//     createdAt, updatedAt, revisions: [ { at, snapshot } ] }
+//
+//   kind 'letter'    — fields: { body }
+//   kind 'tradition' — fields: { name, when, desc, why, owner }
+//
+// `to` and `trigger` are the two fields that separate an entry from a journal
+// entry, and every downstream feature (coverage maps, drift, delivery) reads
+// one or both of them.
+const entries = [];
+let entryCounter = 0;
+
+function newEntry(kind) {
+  const now = new Date().toISOString();
+  return {
+    id: 'e' + (++entryCounter),
+    kind,
+    to: '',
+    trigger: { type: '', value: '' },
+    fields: {},
+    createdAt: now,
+    updatedAt: now,
+    revisions: []
+  };
+}
+
+function findEntry(id) { return entries.find(e => e.id === id); }
 
 // ═══════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════
 function startApp() {
+  document.getElementById('explore').classList.remove('open');
   document.getElementById('landing').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   buildProgressBar();
   updateUI();
-  addTradition();
-  addMessage();
-  loadFromStorage();
+  loadFromStorage();   // rebuilds any saved entries into the DOM
+  if (!entries.some(e => e.kind === 'tradition')) addTradition();
+  if (!entries.some(e => e.kind === 'letter'))    addMessage();
+  appStarted = true;
 }
 
 function buildProgressBar() {
@@ -1854,37 +2319,47 @@ function selectToggle(el, group, multi = false) {
 // ═══════════════════════════════════════════════
 // TRADITIONS
 // ═══════════════════════════════════════════════
-function addTradition() {
-  traditionCount++;
-  const id = traditionCount;
-  traditions.push({ id });
+// Escape a stored value before it goes back into markup — rehydrated entries
+// carry whatever the user typed, including quotes and angle brackets.
+function esc(v) {
+  return String(v == null ? '' : v)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// Pass an existing entry to re-render it from storage; pass nothing to start a
+// blank one.
+function addTradition(entry) {
+  if (!entry) { entry = newEntry('tradition'); entries.push(entry); }
+  const id = entry.id;
+  const f  = entry.fields || {};
   const list = document.getElementById('traditions-list');
   const div = document.createElement('div');
   div.className = 'tradition-item';
   div.id = `trad-${id}`;
   div.innerHTML = `
-    <button class="tradition-remove" onclick="removeTradition(${id})" title="Remove">✕</button>
+    <button class="tradition-remove" onclick="removeTradition('${id}')" title="Remove">✕</button>
     <div class="two-col" style="margin-bottom:.75rem">
       <div>
         <label>Tradition Name</label>
-        <input type="text" id="trad-name-${id}" placeholder='e.g. "Christmas tamale night"' oninput="autoSave()" />
+        <input type="text" id="trad-name-${id}" value="${esc(f.name)}" placeholder='e.g. "Christmas tamale night"' oninput="autoSave()" />
       </div>
       <div>
         <label>When / How Often</label>
-        <input type="text" id="trad-when-${id}" placeholder="e.g. Every December 24th" oninput="autoSave()" />
+        <input type="text" id="trad-when-${id}" value="${esc(f.when)}" placeholder="e.g. Every December 24th" oninput="autoSave()" />
       </div>
     </div>
     <div class="form-row">
       <label>What happens — describe it as if to someone who's never seen it</label>
-      <textarea id="trad-desc-${id}" placeholder="The smells, the people, the sequence of events…" style="min-height:80px" oninput="autoSave()"></textarea>
+      <textarea id="trad-desc-${id}" placeholder="The smells, the people, the sequence of events…" style="min-height:80px" oninput="autoSave()">${esc(f.desc)}</textarea>
     </div>
     <div class="form-row mt-1">
       <label>Why this tradition matters</label>
-      <input type="text" id="trad-why-${id}" placeholder="What would be lost if it disappeared?" oninput="autoSave()" />
+      <input type="text" id="trad-why-${id}" value="${esc(f.why)}" placeholder="What would be lost if it disappeared?" oninput="autoSave()" />
     </div>
     <div class="form-row mt-1">
       <label>Who should carry it on?</label>
-      <input type="text" id="trad-owner-${id}" placeholder="e.g. My daughter Sofia already knows how" oninput="autoSave()" />
+      <input type="text" id="trad-owner-${id}" value="${esc(entry.to)}" placeholder="e.g. My daughter Sofia already knows how" oninput="autoSave()" />
     </div>
   `;
   list.appendChild(div);
@@ -1893,26 +2368,29 @@ function addTradition() {
 function removeTradition(id) {
   const el = document.getElementById(`trad-${id}`);
   if (el) el.remove();
+  const i = entries.findIndex(e => e.id === id);
+  if (i > -1) entries.splice(i, 1);
+  saveToStorage();
 }
 
 // ═══════════════════════════════════════════════
 // TIME-LOCKED MESSAGES
 // ═══════════════════════════════════════════════
-function addMessage() {
-  messageCount++;
-  const id = messageCount;
-  messages.push({ id });
+function addMessage(entry) {
+  if (!entry) { entry = newEntry('letter'); entries.push(entry); }
+  const id = entry.id;
+  const f  = entry.fields || {};
   const list = document.getElementById('messages-list');
   const div = document.createElement('div');
   div.className = 'message-card';
   div.id = `msg-${id}`;
   div.innerHTML = `
-    <button class="tradition-remove" onclick="removeMessage(${id})" title="Remove">✕</button>
+    <button class="tradition-remove" onclick="removeMessage('${id}')" title="Remove">✕</button>
     <div class="lock-badge">🔒 Time-locked message</div>
     <div class="two-col" style="margin-bottom:.75rem">
       <div>
         <label>To</label>
-        <input type="text" id="msg-to-${id}" placeholder="Who is this for?" oninput="autoSave()" />
+        <input type="text" id="msg-to-${id}" value="${esc(entry.to)}" placeholder="Who is this for?" oninput="autoSave()" />
       </div>
       <div>
         <label>Unlock When</label>
@@ -1934,15 +2412,20 @@ function addMessage() {
     </div>
     <div class="form-row">
       <label>Your message</label>
-      <textarea id="msg-body-${id}" placeholder="Write as if you're in the room with them — because in a way, you will be." style="min-height:120px" oninput="autoSave()"></textarea>
+      <textarea id="msg-body-${id}" placeholder="Write as if you're in the room with them — because in a way, you will be." style="min-height:120px" oninput="autoSave()">${esc(f.body)}</textarea>
     </div>
   `;
   list.appendChild(div);
+  const sel = document.getElementById(`msg-unlock-${id}`);
+  if (sel && entry.trigger && entry.trigger.value) sel.value = entry.trigger.value;
 }
 
 function removeMessage(id) {
   const el = document.getElementById(`msg-${id}`);
   if (el) el.remove();
+  const i = entries.findIndex(e => e.id === id);
+  if (i > -1) entries.splice(i, 1);
+  saveToStorage();
 }
 
 // ═══════════════════════════════════════════════
@@ -2072,46 +2555,218 @@ function formatDob(s) {
 // STORAGE
 // ═══════════════════════════════════════════════
 let saveTimer;
+let appStarted = false;   // the wizard has hydrated and is safe to read back
 function autoSave() {
+  if (!appStarted) return;
   clearTimeout(saveTimer);
   saveTimer = setTimeout(saveToStorage, 800);
 }
 
-function saveToStorage() {
-  const fields = ['firstName','lastName','dob','language','hometown','tagline',
-    'culture','religion','homeLanguage','ecName','ecRelation','ecPhone','ecEmail',
-    'medWishesNotes','mpaName','mpaRelation','mpaPhone','mpaEmail','mpaWhy','mpBackup',
-    'ceremonyNotes','ashesLocation','willLocation','directiveCopies',
-    'heritageLang','culturalPractices','recipes','heirlooms','lifeValues',
-    'traditionKeeper','legacyHope','proudChapter','wishKnown','hardestThing',
-    'mostJoy','songs','mediaShaping','finalSentence','griefNote','finalNote'];
+const STORAGE_KEY = 'remnant_v2';
+const LEGACY_KEY  = 'remnant_v1';
 
-  const data = {};
-  fields.forEach(f => { data[f] = val(f); });
-  data.selections = selections;
-  localStorage.setItem('remnant_v1', JSON.stringify(data));
+// One revision per field per sitting. A new version is recorded only once the
+// previous one is older than this window; inside the window the newest revision
+// is amended in place, so an afternoon of editing leaves one version, not one
+// per keystroke.
+const REVISION_WINDOW_MS = 30 * 60 * 1000;
+
+const PROFILE_FIELDS = ['firstName','lastName','dob','language','hometown','tagline',
+  'culture','religion','homeLanguage','ecName','ecRelation','ecPhone','ecEmail',
+  'medWishesNotes','mpaName','mpaRelation','mpaPhone','mpaEmail','mpaWhy','mpBackup',
+  'ceremonyNotes','ashesLocation','willLocation','directiveCopies',
+  'heritageLang','culturalPractices','recipes','heirlooms','lifeValues',
+  'traditionKeeper','legacyHope','proudChapter','wishKnown','hardestThing',
+  'mostJoy','songs','mediaShaping','finalSentence','griefNote','finalNote'];
+
+// Only the reflective fields are versioned. A phone number changes for boring
+// reasons; how you answer "what brings you the most joy" changing over ten
+// years is the thing worth keeping.
+const VERSIONED_FIELDS = new Set(['tagline','medWishesNotes','mpaWhy','ceremonyNotes',
+  'culturalPractices','recipes','heirlooms','lifeValues','legacyHope','proudChapter',
+  'wishKnown','hardestThing','mostJoy','songs','mediaShaping','finalSentence',
+  'griefNote','finalNote']);
+
+// { fieldName: [ { at, value } ] } — append-only
+let profileHistory = {};
+
+// Classify what the unlock dropdown actually means, so a trigger is machine-
+// readable rather than a sentence. Delivery logic will read `type`.
+function triggerTypeFor(label) {
+  if (!label) return '';
+  if (/passing|I'm gone/i.test(label))    return 'on-death';
+  if (/each year|anniversary/i.test(label)) return 'recurring';
+  if (/^Custom/i.test(label))             return 'custom';
+  return 'milestone';
+}
+
+function pushRevision(revisions, snapshot, nowIso) {
+  const last = revisions[revisions.length - 1];
+  const same = last && JSON.stringify(last.snapshot) === JSON.stringify(snapshot);
+  if (same) return;
+  if (last && (Date.parse(nowIso) - Date.parse(last.at)) < REVISION_WINDOW_MS) {
+    last.at = nowIso;
+    last.snapshot = snapshot;   // same sitting — amend rather than append
+    return;
+  }
+  revisions.push({ at: nowIso, snapshot });
+}
+
+// Read the entry cards back out of the DOM and into `entries`, recording a
+// revision for anything that changed.
+function syncEntriesFromDom(nowIso) {
+  entries.forEach(entry => {
+    let fields, to, trigger;
+
+    if (entry.kind === 'tradition') {
+      fields = {
+        name: val(`trad-name-${entry.id}`),
+        when: val(`trad-when-${entry.id}`),
+        desc: val(`trad-desc-${entry.id}`),
+        why:  val(`trad-why-${entry.id}`)
+      };
+      to = val(`trad-owner-${entry.id}`);
+      trigger = { type: 'none', value: '' };
+    } else {
+      fields = { body: val(`msg-body-${entry.id}`) };
+      to = val(`msg-to-${entry.id}`);
+      const label = val(`msg-unlock-${entry.id}`);
+      trigger = { type: triggerTypeFor(label), value: label };
+    }
+
+    // A card the user opened but never typed into is not a version of anything.
+    const empty = !to && !trigger.value &&
+                  Object.values(fields).every(v => !v);
+
+    const changed = JSON.stringify([entry.fields, entry.to, entry.trigger]) !==
+                    JSON.stringify([fields, to, trigger]);
+
+    entry.fields  = fields;
+    entry.to      = to;
+    entry.trigger = trigger;
+    if (changed) entry.updatedAt = nowIso;
+    if (!empty)  pushRevision(entry.revisions, { fields, to, trigger }, nowIso);
+  });
+}
+
+function saveToStorage() {
+  const nowIso = new Date().toISOString();
+
+  const profile = {};
+  PROFILE_FIELDS.forEach(f => {
+    const v = val(f);
+    profile[f] = v;
+    if (v && VERSIONED_FIELDS.has(f)) {
+      if (!profileHistory[f]) profileHistory[f] = [];
+      pushRevision(profileHistory[f], v, nowIso);
+    }
+  });
+
+  syncEntriesFromDom(nowIso);
+
+  persist({
+    schema: 2,
+    savedAt: nowIso,
+    profile,
+    selections,
+    entries,
+    profileHistory,
+    entryCounter
+  });
+}
+
+// localStorage is a few megabytes and history only grows. If we run out, shed
+// the oldest revisions — never the current answers, which live in `profile`
+// and `entries` and are what the user would actually notice losing.
+function persist(data) {
+  for (let attempt = 0; attempt < 40; attempt++) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      return true;
+    } catch (e) {
+      if (!dropOldestRevision(data)) break;
+    }
+  }
+  console.warn('Remnant: could not save — browser storage is full.');
+  return false;
+}
+
+function dropOldestRevision(data) {
+  let oldest = null;
+  const consider = list => {
+    if (!list || list.length < 2) return;   // keep at least one version
+    const at = Date.parse(list[0].at);
+    if (!oldest || at < oldest.at) oldest = { at, list };
+  };
+  Object.values(data.profileHistory).forEach(consider);
+  data.entries.forEach(e => consider(e.revisions));
+  if (!oldest) return false;
+  oldest.list.shift();
+  return true;
 }
 
 function loadFromStorage() {
+  let data, migrated = false;
   try {
-    const raw = localStorage.getItem('remnant_v1');
-    if (!raw) return;
-    const data = JSON.parse(raw);
-    Object.entries(data).forEach(([k, v]) => {
-      if (k === 'selections') return;
-      const el = document.getElementById(k);
-      if (el) el.value = v;
-    });
-    if (data.selections) {
-      Object.assign(selections, data.selections);
-      // Re-apply radio pills
-      Object.entries(data.selections).forEach(([group, val]) => {
-        if (group === 'values') return;
-        const pills = document.querySelectorAll(`[data-group="${group}"] .radio-pill`);
-        pills.forEach(p => { if (p.dataset.val === val) p.classList.add('selected'); });
-      });
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      data = JSON.parse(raw);
+    } else {
+      const legacy = localStorage.getItem(LEGACY_KEY);
+      if (!legacy) return;
+      data = migrateV1(JSON.parse(legacy));
+      migrated = true;
     }
-  } catch(e) { /* ignore */ }
+  } catch (e) { return; }
+  if (!data) return;
+
+  profileHistory = data.profileHistory || {};
+  entryCounter   = data.entryCounter || 0;
+
+  const profile = data.profile || {};
+  Object.entries(profile).forEach(([k, v]) => {
+    const el = document.getElementById(k);
+    if (el) el.value = v;
+  });
+
+  if (data.selections) {
+    Object.assign(selections, data.selections);
+    // Re-apply radio pills
+    Object.entries(data.selections).forEach(([group, value]) => {
+      if (group === 'values') return;
+      const pills = document.querySelectorAll(`[data-group="${group}"] .radio-pill`);
+      pills.forEach(pl => { if (pl.dataset.val === value) pl.classList.add('selected'); });
+    });
+  }
+
+  (data.entries || []).forEach(entry => {
+    entry.revisions = entry.revisions || [];
+    entry.fields    = entry.fields || {};
+    entry.trigger   = entry.trigger || { type: '', value: '' };
+    entries.push(entry);
+    if (entry.kind === 'tradition') addTradition(entry); else addMessage(entry);
+  });
+
+  // Write v2 straight away so the migration survives even if the visitor
+  // opens the page and never types anything.
+  if (migrated) saveToStorage();
+}
+
+// v1 stored a flat snapshot with no entries and no history. Everything it holds
+// is a profile field, so it becomes the first recorded version of each.
+function migrateV1(old) {
+  const nowIso = new Date().toISOString();
+  const profile = {}, history = {};
+  Object.entries(old).forEach(([k, v]) => {
+    if (k === 'selections') return;
+    profile[k] = v;
+    if (v && VERSIONED_FIELDS.has(k)) history[k] = [{ at: nowIso, snapshot: v }];
+  });
+  return {
+    schema: 2, savedAt: nowIso, profile,
+    selections: old.selections || {},
+    entries: [], profileHistory: history, entryCounter: 0
+  };
 }
 
 // ═══════════════════════════════════════════════
@@ -2213,6 +2868,7 @@ let playTimer = null;
 let currentChapter = null; // last chapter shown, for export
 
 function openChapters() {
+  document.getElementById('explore').classList.remove('open');
   document.getElementById('landing').style.display = 'none';
   document.getElementById('app').style.display = 'none';
   document.getElementById('chapters').style.display = 'block';
@@ -2271,6 +2927,7 @@ function exportChapter() {
 }
 
 function closeChapters() {
+  document.getElementById('explore').classList.remove('open');
   stopPlay();
   document.getElementById('chapters').style.display = 'none';
   document.getElementById('landing').style.display = 'flex';
@@ -2887,6 +3544,898 @@ function stopPlay() {
   const b = document.getElementById('play-btn');
   if (b) b.textContent = '▶';
 }
+
+// ═══════════════════════════════════════════════
+// EXPLORER
+//
+// Everything below renders from demo/life.json. Nothing is hardcoded to the
+// demo person — swap that file for your own record and this all re-renders.
+// ═══════════════════════════════════════════════
+// Point this at your own record. ?life=<name> overrides it for a quick look
+// without editing the file.
+const LIFE_FILE = 'demo/alston.json';
+let LIFE = null;
+let surviveMode = 'full';
+// Words too common to mean anything on their own. Without this, "whether she
+// was happy" matches any passage containing "was".
+const VOICE_STOP = new Set(('a an and are as at be been about all am any by can could did do does ' +
+  'for from had has have he her hers him his how i if in into is it its just like me my no not of ' +
+  'on or our she should so than that the their them then there these they this those to too very ' +
+  'was we were what when where whether which who whom why will with would you your say said tell told')
+  .split(/\s+/));
+const KIND_ICON = {
+  milestone: '◦', photo: '▣', chapter: '❖', achievement: '★',
+  letter: '✉', tradition: '♾'
+};
+const KIND_LABEL = {
+  milestone: '', photo: 'photograph', chapter: 'chapter',
+  achievement: 'defining moment', letter: 'letter', tradition: 'tradition'
+};
+
+async function loadLife() {
+  if (LIFE) return LIFE;
+  const q = new URLSearchParams(location.search).get('life');
+  const file = q ? 'demo/' + q.replace(/[^a-z0-9_-]/gi, '') + '.json' : LIFE_FILE;
+  // Revalidate rather than trust the heuristic cache — the record changes and
+  // a stale life is worse than an extra round trip.
+  const res = await fetch(file, { cache: 'no-cache' });
+  if (!res.ok) throw new Error(file + ' ' + res.status);
+  LIFE = await res.json();
+  LIFE._span = lifeSpan(LIFE);
+  return LIFE;
+}
+
+function lifeSpan(life) {
+  const years = life.events.map(e => e.year);
+  const born = Number(life.person.born);
+  return {
+    from: Math.min(...(born ? [born, ...years] : years)),
+    to: Math.max(...years)
+  };
+}
+
+// Resolve an event to the record it points at.
+function refOf(ev) {
+  if (!ev.ref) return null;
+  return (LIFE.chapters || []).find(c => c.id === ev.ref)
+      || (LIFE.achievements || []).find(a => a.id === ev.ref)
+      || (LIFE.letters || []).find(l => l.id === ev.ref)
+      || (LIFE.traditions || []).find(t => t.id === ev.ref)
+      || null;
+}
+
+function eventTitle(ev) {
+  const r = refOf(ev);
+  if (!r) return ev.title || '';
+  if (ev.kind === 'letter')    return 'Letter to ' + r.to;
+  if (ev.kind === 'tradition') return r.name;
+  return r.title;
+}
+
+function eventDetail(ev) {
+  const r = refOf(ev);
+  if (!r) return ev.detail || '';
+  if (ev.kind === 'letter')    return r.trigger && r.trigger.value ? r.trigger.value : 'No delivery condition set';
+  if (ev.kind === 'tradition') return r.when;
+  if (ev.kind === 'chapter')   return r.slides.length + ' of ' + r.candidates + ' photographs kept';
+  return r.detail || '';
+}
+
+// Achievements the model chose not to promote stay out of the rail but remain
+// in the archive — surfaced in the detail panel instead.
+function railEvents() {
+  return LIFE.events.filter(ev => {
+    const r = refOf(ev);
+    return !(ev.kind === 'achievement' && r && r.included === false);
+  }).slice().sort((a, b) => a.year - b.year || a.kind.localeCompare(b.kind));
+}
+
+// Anything marked private keeps its shape in the timeline and withholds its
+// content. The record is still complete; the page just isn't the audience.
+function isPrivate(x) { return x && x.visibility === 'private'; }
+
+function lockedHtml(kind, meta) {
+  return `<div class="detail locked">
+    <div class="d-eyebrow">${esc(kind)} · withheld</div>
+    <h3>Kept private</h3>
+    <p class="d-narr">${esc(meta)}</p>
+    <div class="cull-note" style="margin-top:1rem"><span>Present in the record, not on this page.</span></div>
+  </div>`;
+}
+
+const LEARNING_LABEL = {
+  advice:     'What I\'d tell myself',
+  reflection: 'Looking back',
+  forward:    'For whoever comes after'
+};
+
+// Every experience carries what it taught. Missing ones say so rather than
+// quietly rendering nothing — an empty learning is a gap, not a design.
+function learningHtml(x) {
+  const l = x && x.learning;
+  if (!l || !l.text) {
+    return `<div class="learning todo"><div class="learning-kind">No learning yet</div>
+      <div class="learning-text">What did this teach you? Advice to a younger self, a reflection,
+      or something for whoever comes after.</div></div>`;
+  }
+  return `<div class="learning">
+    <div class="learning-kind">${esc(LEARNING_LABEL[l.kind] || 'What it taught')}</div>
+    <div class="learning-text">${esc(l.text)}</div>
+    ${l.at ? `<div class="learning-at">Written ${esc(l.at)}</div>` : ''}
+  </div>`;
+}
+
+// ── The repeated pattern: every AI decision shows its work ──
+let whySeq = 0;
+function whyChip(reasoning, label) {
+  if (!reasoning) return '';
+  const id = 'why' + (++whySeq);
+  return `<div>
+    <button class="why" aria-expanded="false" aria-controls="${id}"
+            onclick="toggleWhy(this,'${id}')">${esc(label || 'Why this')}</button>
+    <div class="why-body" id="${id}" hidden>${esc(reasoning)}</div>
+  </div>`;
+}
+
+function toggleWhy(btn, id) {
+  const body = document.getElementById(id);
+  const open = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', String(!open));
+  body.hidden = open;
+}
+
+// ── Scrubbing ───────────────────────────────────
+function tallyThrough(year) {
+  const t = { chapter: 0, photo: 0, letter: 0, achievement: 0, milestone: 0, tradition: 0 };
+  railEvents().forEach(ev => { if (ev.year <= year) t[ev.kind] = (t[ev.kind] || 0) + 1; });
+  return t;
+}
+
+function eraAt(year) {
+  return (LIFE.eras || []).find(e => year >= e.from && (e.to == null || year <= e.to)) || null;
+}
+
+function countsLine(year) {
+  const t = tallyThrough(year);
+  const moments = t.milestone + t.photo;
+  const bits = [];
+  if (t.chapter)     bits.push(`<b>${t.chapter}</b> chapter${t.chapter > 1 ? 's' : ''}`);
+  if (moments)       bits.push(`<b>${moments}</b> moment${moments > 1 ? 's' : ''}`);
+  if (t.achievement) bits.push(`<b>${t.achievement}</b> defining`);
+  if (t.letter)      bits.push(`<b>${t.letter}</b> letter${t.letter > 1 ? 's' : ''}`);
+  if (t.tradition)   bits.push(`<b>${t.tradition}</b> tradition`);
+  return bits.length ? bits.join(' · ') : 'Nothing recorded yet';
+}
+
+function paintScrub(year, prefix) {
+  const era = eraAt(year);
+  const y = document.getElementById(prefix + '-year');
+  const e = document.getElementById(prefix + '-era');
+  const c = document.getElementById(prefix + '-counts');
+  if (y) y.textContent = year;
+  if (e) e.textContent = era ? era.label : '';
+  if (c) c.innerHTML = countsLine(year);
+}
+
+function onHeroScrub(year) { paintScrub(year, 'hero'); }
+
+function onExScrub(year) {
+  paintScrub(year, 'ex');
+  document.querySelectorAll('#ex-rail .rail-row').forEach(row => {
+    row.classList.toggle('lit', Number(row.dataset.year) <= year);
+  });
+  document.querySelectorAll('#ex-bands .era-band').forEach(b => {
+    b.classList.toggle('on', Number(b.dataset.from) <= year);
+  });
+  paintLifeMap(year, false);
+}
+
+// Which years hold something and which are still blank. Doubles as the
+// authoring view: the gaps are the to-do list.
+function yearCounts() {
+  const counts = {};
+  for (let y = LIFE._span.from; y <= LIFE._span.to; y++) counts[y] = 0;
+  railEvents().forEach(ev => { if (counts[ev.year] !== undefined) counts[ev.year]++; });
+  return counts;
+}
+
+function emptyRuns() {
+  const counts = yearCounts(), runs = [];
+  let start = null;
+  for (let y = LIFE._span.from; y <= LIFE._span.to; y++) {
+    if (!counts[y] && start === null) start = y;
+    if (counts[y] && start !== null) { runs.push([start, y - 1]); start = null; }
+  }
+  if (start !== null) runs.push([start, LIFE._span.to]);
+  return runs;
+}
+
+function renderCoverage() {
+  const counts = yearCounts();
+  const max = Math.max(1, ...Object.values(counts));
+  const years = Object.keys(counts).map(Number);
+  const filled = years.filter(y => counts[y]).length;
+
+  const bars = years.map(y => {
+    const n = counts[y];
+    const h = n ? Math.max(22, Math.round(n / max * 100)) : 14;
+    return `<button class="cov-year ${n ? '' : 'empty'}" style="height:${h}%"
+      data-year="${y}" onclick="scrubTo(${y})"
+      title="${y} — ${n ? n + ' recorded' : 'nothing recorded'}"
+      aria-label="${y}, ${n ? n + ' entries' : 'empty'}"></button>`;
+  }).join('');
+
+  const runs = emptyRuns().filter(([a, b]) => b - a >= 1);
+  const biggest = runs.sort((p, q) => (q[1] - q[0]) - (p[1] - p[0]))[0];
+
+  document.getElementById('ex-coverage').innerHTML = `
+    <div class="cov-strip">${bars}</div>
+    <div class="cov-axis"><span>${LIFE._span.from}</span><span>${LIFE._span.to}</span></div>
+    <div class="cov-legend"><b>${filled}</b> of <b>${years.length}</b> years hold something${
+      biggest ? ` · longest gap <b>${biggest[0]}–${biggest[1]}</b>` : ''}</div>`;
+}
+
+function scrubTo(year) {
+  const r = document.getElementById('ex-range');
+  r.value = year;
+  onExScrub(year);
+}
+
+// ── Life map ────────────────────────────────────
+// Every place in the record on one map, filtered by the scrubber. Chapters are
+// green, single moments terra. Clicking a pin opens that entry.
+let lifeMap = null;
+let lifeMarkers = [];
+
+function allPlaces() {
+  const out = [];
+  LIFE.events.forEach(ev => {
+    if (ev.place && typeof ev.place.lat === 'number') {
+      out.push({ year: ev.year, name: ev.place.name, lat: ev.place.lat, lng: ev.place.lng,
+                 title: eventTitle(ev), kind: ev.kind, ref: ev.ref || '' });
+    }
+    const r = refOf(ev);
+    if (ev.kind === 'chapter' && r) {
+      (r.locations || []).forEach(loc => {
+        if (typeof loc.lat !== 'number') return;
+        out.push({ year: ev.year, name: loc.name, lat: loc.lat, lng: loc.lng,
+                   title: r.title, kind: 'chapter', ref: r.id });
+      });
+    }
+  });
+  return out;
+}
+
+function lifePinIcon(kind) {
+  return L.divIcon({
+    className: 'life-pin ' + (kind === 'chapter' ? 'chapter' : ''),
+    html: `<div>${kind === 'chapter' ? '❖' : '•'}</div>`,
+    iconSize: [22, 22], iconAnchor: [11, 11], popupAnchor: [0, -12]
+  });
+}
+
+function renderLifeMap() {
+  if (typeof L === 'undefined') return;
+  const places = allPlaces();
+  if (!places.length) {
+    document.querySelector('.lifemap-wrap').hidden = true;
+    return;
+  }
+  document.querySelector('.lifemap-wrap').hidden = false;
+
+  setTimeout(() => {
+    if (!lifeMap) {
+      lifeMap = L.map('life-map', { scrollWheelZoom: false });
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap', maxZoom: 18
+      }).addTo(lifeMap);
+    }
+    lifeMap.invalidateSize();
+    paintLifeMap(Number(document.getElementById('ex-range').value), true);
+  }, 80);
+}
+
+function paintLifeMap(year, fit) {
+  if (!lifeMap) return;
+  lifeMarkers.forEach(m => lifeMap.removeLayer(m));
+  lifeMarkers = [];
+
+  const shown = allPlaces().filter(p => p.year <= year);
+  const pts = [];
+  shown.forEach(p => {
+    const m = L.marker([p.lat, p.lng], { icon: lifePinIcon(p.kind) }).addTo(lifeMap);
+    m.bindPopup(`<div class="map-pop-title">${esc(p.title)}</div>
+      <div style="color:#7A6E62;font-size:.8rem">${esc(p.name)} · ${p.year}</div>
+      <button class="map-pop-open" onclick="openFromMap('${esc(p.ref)}','${p.kind}',${p.year})">Open this ↓</button>`);
+    lifeMarkers.push(m);
+    pts.push([p.lat, p.lng]);
+  });
+
+  document.getElementById('lifemap-count').textContent =
+    shown.length ? `${shown.length} place${shown.length > 1 ? 's' : ''} by ${year}` : 'nowhere yet';
+
+  if (fit && pts.length > 1) lifeMap.fitBounds(pts, { padding: [36, 36] });
+  else if (fit && pts.length === 1) lifeMap.setView(pts[0], 9);
+}
+
+function openFromMap(ref, kind, year) {
+  const row = [...document.querySelectorAll('#ex-rail .rail-row')]
+    .find(r => Number(r.dataset.year) === year && r.dataset.id === (ref || (kind + year)));
+  openEvent(ref, kind, year, row || null);
+}
+
+// ── Rendering ───────────────────────────────────
+function renderExplorer() {
+  const p = LIFE.person;
+  document.getElementById('ex-name').textContent = p.name;
+  document.getElementById('ex-dates').textContent =
+    [p.born ? String(p.born) : null,
+     p.living ? 'still here, still adding' : p.died,
+     p.hometown].filter(Boolean).join(' · ');
+  document.getElementById('ex-tagline').textContent = p.tagline || '';
+  document.getElementById('ex-demo-badge').hidden = !LIFE.demo;
+
+  const span = LIFE._span;
+  ['hero-range', 'ex-range'].forEach(id => {
+    const r = document.getElementById(id);
+    if (r) { r.min = span.from; r.max = span.to; }
+  });
+
+  // Era bands — empty until the model groups the years.
+  const eras = LIFE.eras || [];
+  document.getElementById('ex-bands').innerHTML = !eras.length
+    ? `<div class="era-band" style="cursor:default;flex:1 1 100%">No eras yet — press “Re-derive with AI” and the model groups these years itself.</div>`
+    : eras.map(era => `
+    <button class="era-band" data-from="${era.from}"
+            onclick="jumpToEra('${era.id}')"
+            title="${esc(era.note || '')}">
+      ${esc(era.label)}
+      <span class="eb-years">${era.from}–${era.to || ''}</span>
+    </button>`).join('');
+
+  // Rail
+  document.getElementById('ex-rail').innerHTML = railEvents().map(ev => {
+    const kindLabel = KIND_LABEL[ev.kind];
+    const detail = eventDetail(ev);
+    return `<button class="rail-row" data-year="${ev.year}" data-id="${esc(ev.ref || (ev.kind + ev.year))}"
+              aria-expanded="false"
+              onclick="openEvent('${esc(ev.ref || '')}','${ev.kind}',${ev.year},this)">
+      <span class="rail-year">${ev.approx ? 'c.&thinsp;' : ''}${ev.year}</span>
+      <span class="rail-icon" aria-hidden="true">${KIND_ICON[ev.kind] || '◦'}</span>
+      <span>
+        <span class="rail-title">${isPrivate(refOf(ev)) ? 'Kept private' : esc(eventTitle(ev))}</span>${kindLabel ? `<span class="rail-kind">${kindLabel}</span>` : ''}
+        ${detail && !isPrivate(refOf(ev)) ? `<span class="rail-detail">${esc(detail)}</span>` : ''}
+      </span>
+    </button>`;
+  }).join('');
+
+  document.getElementById('ex-derive').innerHTML = deriveStatusHtml() + incompleteHtml();
+  renderCoverage();
+  renderLifeMap();
+  renderSurvives();
+  renderVoiceChips();
+
+  const r = document.getElementById('ex-range');
+  r.value = span.to;
+  onExScrub(span.to);
+}
+
+function jumpToEra(id) {
+  const era = (LIFE.eras || []).find(e => e.id === id);
+  if (!era) return;
+  const end = era.to || LIFE._span.to;
+  document.getElementById('ex-range').value = end;
+  onExScrub(end);
+  document.getElementById('ex-detail').innerHTML = `
+    <div class="detail">
+      <div class="d-eyebrow">Era · ${era.from}–${era.to || 'now'}</div>
+      <h3>${esc(era.label)}</h3>
+      <p class="d-narr">${esc(era.note || '')}</p>
+      ${learningHtml(era)}
+      ${whyChip(era.why, 'Why these years group')}
+    </div>`;
+  document.getElementById('ex-detail').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function openEvent(ref, kind, year, btn) {
+  document.querySelectorAll('#ex-rail .rail-row').forEach(r => r.setAttribute('aria-expanded', 'false'));
+  if (btn) btn.setAttribute('aria-expanded', 'true');
+
+  const rec = ref ? refOf({ ref }) : null;
+  const out = document.getElementById('ex-detail');
+
+  if (isPrivate(rec)) {
+    const meta = kind === 'letter'
+      ? `A letter to someone, written ${rec.written}, ${rec.revisions} revision${rec.revisions === 1 ? '' : 's'}.`
+      : `A ${kind} from ${year}.`;
+    out.innerHTML = lockedHtml(kind, meta);
+    out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return;
+  }
+  if (kind === 'chapter' && rec)          out.innerHTML = chapterHtml(rec);
+  else if (kind === 'letter' && rec)      out.innerHTML = letterHtml(rec);
+  else if (kind === 'achievement' && rec) out.innerHTML = achievementHtml(rec);
+  else if (kind === 'tradition' && rec)   out.innerHTML = traditionHtml(rec);
+  else {
+    const ev = LIFE.events.find(e => e.year === year && e.kind === kind &&
+                                     (!btn || eventTitle(e) === btn.querySelector('.rail-title').textContent));
+    out.innerHTML = `<div class="detail">
+      <div class="d-eyebrow">${ev && ev.date ? esc(ev.date)
+        : (ev && ev.approx ? 'approximately ' : '') + year}</div>
+      <h3>${esc(ev && ev.title || '')}</h3>
+      ${ev && ev.detail ? `<p class="d-narr">${esc(ev.detail)}</p>` : ''}
+      ${ev && ev.media ? `<figure class="event-media">
+          <img src="${esc(ev.media.src)}" alt="${esc(ev.media.caption || ev.title || '')}" loading="lazy" />
+          ${ev.media.caption ? `<figcaption>${esc(ev.media.caption)}</figcaption>` : ''}
+        </figure>` : ''}
+      ${ev && ev.link ? `<div class="cull-note" style="margin-top:.9rem"><a href="${esc(ev.link)}"
+          target="_blank" rel="noopener" style="color:var(--terra)">${esc(ev.linkLabel || 'Read it')} ↗</a></div>` : ''}
+      ${ev && ev.learning ? learningHtml(ev) : ''}
+    </div>`;
+  }
+  out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function mediaThumb(m, cls) {
+  const k = cls || 'slide-thumb';
+  if (m.video) {
+    return `<a class="${k} media" href="${esc(m.video)}" target="_blank" rel="noopener"
+              style="background-image:url('${esc(m.src)}')" title="Play on YouTube"
+              aria-label="Play video"><span class="play">▶</span></a>`;
+  }
+  if (m.src) {
+    return `<div class="${k} media" style="background-image:url('${esc(m.src)}')" role="img"
+              aria-label="${esc(m.caption || '')}"></div>`;
+  }
+  return `<div class="${k}" style="background:${esc(m.bg)}">${esc(m.demo)}</div>`;
+}
+
+function slideThumb(s) {
+  if (s.collage) {
+    return `<div class="slide-thumb pair">${s.collage.map(c => c.src
+      ? `<span class="media" style="background-image:url('${esc(c.src)}')"></span>`
+      : `<span style="background:${esc(c.bg)}">${esc(c.demo)}</span>`).join('')}</div>`;
+  }
+  return mediaThumb(s);
+}
+
+function chapterHtml(ch) {
+  const kept = ch.slides.length, total = ch.candidates || kept;
+  const pct = Math.round(kept / total * 100);
+  return `<div class="detail" id="ch-${esc(ch.id)}">
+    <div class="d-eyebrow">${esc(ch.eyebrow || 'Chapter')}</div>
+    <h3>${esc(ch.title)}</h3>
+    ${ch.narrative ? `<p class="d-narr">${esc(ch.narrative)}</p>` : ''}
+
+    <div class="cull-note">
+      <span><b>${kept}</b> of <b>${total}</b> photographs kept</span>
+      <span class="cull-bar"><i style="width:${pct}%"></i></span>
+    </div>
+    ${whyChip(ch.curationWhy, 'Why these, and not the others')}
+
+    <div class="slide-list" id="slides-${esc(ch.id)}">
+      ${ch.slides.map((s, i) => slideCardHtml(ch.id, s, i)).join('')}
+    </div>
+    ${learningHtml(ch)}
+    <p class="cull-note" style="margin-top:1.2rem">
+      Disagree with any of it — edit a caption, move a slide, or cut one. The model
+      made a case; it does not get the last word.
+    </p>
+  </div>`;
+}
+
+function slideCardHtml(chId, s, i) {
+  return `<div class="slide-card" id="sl-${esc(chId)}-${i}">
+    ${slideThumb(s)}
+    <div>
+      <div class="slide-cap" contenteditable="true" spellcheck="false"
+           aria-label="Caption, editable">${esc(s.caption)}</div>
+      ${whyChip(s.why, 'Why this frame')}
+      <div class="slide-acts">
+        <button class="mini" onclick="moveSlide('${esc(chId)}',${i},-1)" ${i === 0 ? 'disabled' : ''}>↑ Earlier</button>
+        <button class="mini" onclick="moveSlide('${esc(chId)}',${i},1)">↓ Later</button>
+        <button class="mini" onclick="cutSlide('${esc(chId)}',${i})">Cut this</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function captureCaptions(ch) {
+  ch.slides.forEach((s, i) => {
+    const el = document.querySelector(`#sl-${CSS.escape(ch.id)}-${i} .slide-cap`);
+    if (el) s.caption = el.textContent.trim();
+  });
+}
+
+function moveSlide(chId, i, dir) {
+  const ch = LIFE.chapters.find(c => c.id === chId);
+  const j = i + dir;
+  if (!ch || j < 0 || j >= ch.slides.length) return;
+  captureCaptions(ch);
+  const [s] = ch.slides.splice(i, 1);
+  ch.slides.splice(j, 0, s);
+  document.getElementById('ex-detail').innerHTML = chapterHtml(ch);
+}
+
+function cutSlide(chId, i) {
+  const ch = LIFE.chapters.find(c => c.id === chId);
+  if (!ch || ch.slides.length <= 1) return;
+  captureCaptions(ch);
+  ch.slides.splice(i, 1);
+  document.getElementById('ex-detail').innerHTML = chapterHtml(ch);
+}
+
+function letterHtml(l) {
+  const trig = l.trigger && l.trigger.value ? esc(l.trigger.value) : 'No delivery condition set';
+  return `<div class="detail">
+    <div class="d-eyebrow">Letter · written ${l.written} · ${l.revisions} revision${l.revisions === 1 ? '' : 's'}</div>
+    <h3>To ${esc(l.to)}<span style="color:var(--muted);font-size:1rem">, ${esc(l.relation)}</span></h3>
+    <div class="cull-note" style="margin-top:.6rem"><span>${trig}</span></div>
+    <div class="d-body">${esc(l.body)}</div>
+    ${l.learning ? learningHtml(l) : ''}
+    <div class="cull-note" style="margin-top:1.3rem"><span>${esc(l.nudge)}</span></div>
+    ${whyChip(l.nudgeWhy, 'Why it surfaced this one')}
+  </div>`;
+}
+
+function achievementHtml(a) {
+  return `<div class="detail">
+    <div class="d-eyebrow">${a.year} · ${a.included === undefined
+      ? 'Not yet ranked' : a.included ? 'Surfaced' : 'In the archive, not promoted'}</div>
+    <h3>${esc(a.title)}</h3>
+    <p class="d-narr">${esc(a.detail)}</p>
+    ${learningHtml(a)}
+    ${whyChip(a.why, a.included ? 'Why this counts' : 'Why this was left out')}
+    ${a.why ? '' : `<div class="incomplete">No reasoning yet — this candidate has not been ranked.
+      Press <b>Re-derive with AI</b> above and the model decides whether it is a defining moment
+      or a résumé line, and argues the call.</div>`}
+    ${a.included ? heldBackHtml() : ''}
+  </div>`;
+}
+
+// The judgment worth showing is the thing it declined to promote.
+function heldBackHtml() {
+  const out = (LIFE.achievements || []).filter(a => a.included === false);
+  if (!out.length) return '';
+  return `<div style="margin-top:1.8rem;padding-top:1.2rem;border-top:1px solid rgba(44,44,44,.1)">
+    <div class="d-eyebrow">Also in the archive, deliberately not surfaced</div>
+    ${out.map(a => `<div style="margin-top:.8rem">
+      <div class="rail-title">${esc(a.title)} <span class="rail-kind">${a.year}</span></div>
+      <div class="rail-detail">${esc(a.detail)}</div>
+      ${whyChip(a.why, 'Why it was held back')}
+    </div>`).join('')}
+  </div>`;
+}
+
+function traditionHtml(t) {
+  return `<div class="detail">
+    <div class="d-eyebrow">Tradition · ${esc(t.when)}</div>
+    <h3>${esc(t.name)}</h3>
+    <p class="d-narr">${esc(t.desc)}</p>
+    <div class="cull-note" style="margin-top:1.1rem"><span>Carried on by ${esc(t.keeper)}</span></div>
+    ${learningHtml(t)}
+    ${whyChip(t.why, 'What would have been lost')}
+  </div>`;
+}
+
+// ── What survives ───────────────────────────────
+function setSurvives(mode) {
+  surviveMode = mode;
+  document.getElementById('sw-full').classList.toggle('on', mode === 'full');
+  document.getElementById('sw-thin').classList.toggle('on', mode === 'thin');
+  renderSurvives();
+}
+
+function renderSurvives() {
+  const p = LIFE.person, panel = document.getElementById('sw-panel');
+  if (surviveMode === 'thin') {
+    const t = p.thin || { line: p.name, artifacts: [] };
+    panel.innerHTML = `<div class="thin-card">
+      <div class="thin-name">${esc(t.line)}</div>
+      <div class="thin-list">${t.artifacts.map(a => `<div class="thin-item">${esc(a)}</div>`).join('')}</div>
+      <div class="thin-count">That is the whole record.</div>
+    </div>`;
+    return;
+  }
+  const t = tallyThrough(LIFE._span.to);
+  const quotes = (LIFE.voice && LIFE.voice.quotes || []).length;
+  panel.innerHTML = `<div class="thin-card">
+    <div class="thin-name">${esc(p.name)} · ${p.born}–</div>
+    <div class="thin-list">
+      <div class="thin-item">${t.chapter} chapters, ${LIFE.chapters.reduce((n, c) => n + c.slides.length, 0)} photographs chosen from ${LIFE.chapters.reduce((n, c) => n + (c.candidates || 0), 0)}</div>
+      <div class="thin-item">${t.milestone + t.photo} dated moments across ${LIFE.eras.length} eras</div>
+      <div class="thin-item">${t.achievement} defining moments, one of them a coffee jar</div>
+      <div class="thin-item">${t.letter} letters, addressed, two of them scheduled</div>
+      <div class="thin-item">${t.tradition} tradition, with the part nobody knew written down</div>
+      <div class="thin-item">${quotes} passages in her own words, each with a date</div>
+    </div>
+    <div class="thin-count">Everything above is hers. None of it is reconstructed.</div>
+  </div>`;
+}
+
+// ── Voice: retrieval, never generation ──────────
+function renderVoiceChips() {
+  const qs = (LIFE.voice && LIFE.voice.prompts) || [];
+  document.getElementById('voice-chips').innerHTML = qs.map(t =>
+    `<button class="mini" onclick="askVoice('${esc(t)}')">${esc(t)}</button>`).join('');
+}
+
+// Learnings are first-class passages in their own words — the lookup searches
+// them alongside anything explicitly recorded as a quote.
+function voiceCorpus() {
+  const out = (LIFE.voice && LIFE.voice.quotes || []).slice();
+  const add = (holder, label) => {
+    const l = holder && holder.learning;
+    if (!l || !l.text) return;
+    const title = holder.title || holder.name || holder.label || holder.to || '';
+    out.push({
+      at: l.at || '',
+      source: label + (title ? ' — ' + title : ''),
+      topics: (title + ' ' + (holder.detail || holder.note || holder.desc || '')).toLowerCase().match(/[a-z']{3,}/g) || [],
+      text: l.text
+    });
+  };
+  (LIFE.chapters || []).forEach(c => add(c, 'Chapter'));
+  (LIFE.achievements || []).forEach(a => add(a, 'Defining moment'));
+  (LIFE.eras || []).forEach(e => add(e, 'Era'));
+  (LIFE.traditions || []).forEach(t => add(t, 'Tradition'));
+  (LIFE.letters || []).forEach(l => add(l, 'Letter'));
+  (LIFE.events || []).forEach(e => add(e, String(e.year)));
+  return out;
+}
+
+function askVoice(preset) {
+  const input = document.getElementById('voice-q');
+  if (preset) input.value = preset;
+  const q = input.value.trim();
+  const out = document.getElementById('voice-out');
+  if (!q) { out.innerHTML = ''; return; }
+
+  const corpus = voiceCorpus();
+  if (!corpus.length) {
+    out.innerHTML = `<div class="quote-card empty">
+      <blockquote>Nothing written down yet.</blockquote>
+      <div class="quote-src">This record has no passages in their own words — the part of a life
+        that only the person can supply.</div></div>`;
+    return;
+  }
+  const words = (q.toLowerCase().match(/[a-z']+/g) || [])
+    .filter(w => w.length > 2 && !VOICE_STOP.has(w));
+
+  // A topic hit is worth more than an incidental word appearing in the prose.
+  // The threshold matters: matching loosely here is how a system starts
+  // answering questions the person never actually addressed.
+  let best = null, bestScore = 0;
+  corpus.forEach(qt => {
+    const topics = (qt.topics || []).map(t => t.toLowerCase());
+    const text = qt.text.toLowerCase();
+    let score = 0;
+    words.forEach(w => {
+      // An exact topic hit has to beat a partial one, or "Stuyvesant" loses a
+      // tie to "teacher" merely containing "teach".
+      if (topics.some(t => t === w))          score += 4;
+      else if (topics.some(t => t.includes(w))) score += 2;
+      else if (text.includes(w))               score += 1;
+    });
+    if (score > bestScore) { bestScore = score; best = qt; }
+  });
+  if (bestScore < 2) best = null;
+
+  if (!best) {
+    out.innerHTML = `<div class="quote-card empty">
+      <blockquote>She never wrote about this.</blockquote>
+      <div class="quote-src">No passage in the archive addresses “${esc(q)}”.</div>
+      ${whyChip(LIFE.voice.noAnswer.why, 'Why there is no answer here')}
+    </div>`;
+    return;
+  }
+
+  out.innerHTML = `<div class="quote-card">
+    <blockquote>“${esc(best.text)}”</blockquote>
+    <div class="quote-src">${esc(best.source)}${best.at ? ' · ' + esc(best.at) : ''}</div>
+    ${whyChip('Matched on her own wording, not on meaning. This passage is returned because the words in it overlap the question — the system is not interpreting what she meant, and it will return nothing rather than reach for the nearest thing.', 'How this was found')}
+  </div>`;
+}
+
+// ── Entry / exit ────────────────────────────────
+async function openExplore() {
+  try { await loadLife(); } catch (e) {
+    alert('Could not load ' + LIFE_FILE + ' — serve the page over http rather than opening the file directly.');
+    return;
+  }
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('explore').classList.add('open');
+  renderExplorer();
+  window.scrollTo({ top: 0 });
+}
+
+function closeExplore() {
+  document.getElementById('explore').classList.remove('open');
+  document.getElementById('landing').style.display = 'flex';
+  window.scrollTo({ top: 0 });
+}
+
+// The wizard is no longer part of the demo flow — it is a depth layer, kept
+// out of the way at #plan so the page stays a demonstration rather than a form.
+if (location.hash === '#plan') window.addEventListener('DOMContentLoaded', startApp);
+
+// Hero scrubber is live before anything else loads.
+(async function initHero() {
+  const hero = document.getElementById('hero-range');
+  const ex   = document.getElementById('ex-range');
+  if (!hero) return;
+  try { await loadLife(); } catch (e) { return; }
+  hero.min = ex.min = LIFE._span.from;
+  hero.max = ex.max = LIFE._span.to;
+  hero.addEventListener('input', () => onHeroScrub(Number(hero.value)));
+  ex.addEventListener('input',   () => onExScrub(Number(ex.value)));
+  onHeroScrub(Number(hero.value));
+})();
+
+
+// ═══════════════════════════════════════════════
+// DERIVING STRUCTURE
+//
+// Era grouping and achievement ranking are real inference, not authored copy.
+// The demo ships with cached reasoning so the page works with no key; pressing
+// "re-derive" runs it live and replaces it, and the provenance line says which
+// you are looking at.
+//
+// Vision curation uses Haiku because it is cheap and the task is perceptual.
+// This call is the opposite: no images, little text, and the entire point is
+// the quality of the judgment — so it gets the stronger model.
+// ═══════════════════════════════════════════════
+const REASONER = 'claude-sonnet-5-5';
+
+function derivePrompt() {
+  const events = LIFE.events.map(e => {
+    const r = refOf(e);
+    const title = eventTitle(e);
+    const detail = (e.detail || (r && r.detail) || '').slice(0, 160);
+    return `${e.year} [${e.kind}] ${title}${detail ? ' — ' + detail : ''}`;
+  }).join('\n');
+
+  const cands = (LIFE.achievements || []).map(a =>
+    `id:${a.id} | ${a.year} | ${a.title} — ${a.detail}`).join('\n');
+
+  const voice = voiceCorpus().map(q =>
+    `${q.at || 'undated'} (${q.source}): "${q.text}"`).join('\n');
+
+  return `You are organizing one person's life record. Here is everything in it.
+
+TIMELINE
+${events}
+
+CANDIDATE DEFINING MOMENTS
+${cands}
+
+WHAT THEY WROTE IN THEIR OWN WORDS
+${voice}
+
+Do two things.
+
+1. ERAS. Group the timeline into 3–5 consecutive, non-overlapping eras covering every
+year from ${LIFE._span.from} to ${LIFE._span.to}. Name each one in the person's own
+register — concrete, not "Early Years". For each, write a "why" of 1–2 sentences
+explaining what in the data above makes these years cluster: density of events, a change
+in what kind of record exists, where the emotional center sits. Cite specifics. Do not
+describe the era's content; explain the grouping decision.
+
+2. DEFINING MOMENTS. For each candidate, decide "included" true or false.
+Judge by what the record itself emphasizes, not by what sounds impressive from outside.
+A thing the person returns to in their own words outweighs a credential nobody mentions
+twice. Weigh the learnings heavily: an entry the person drew a lesson from matters more
+than one they only listed, whatever its outward size. Expect to exclude at least one. For each, write a "why" of 1–2 sentences arguing
+the call — and for exclusions, say plainly what is being left out and on what grounds.
+
+Be willing to disagree with the obvious reading. Respond with ONLY valid JSON, no
+markdown fences:
+{"eras":[{"id":"short-slug","label":"...","from":1951,"to":1969,"place":"...","note":"one sentence of content","why":"..."}],
+ "achievements":[{"id":"a-xxx","included":true,"why":"..."}]}`;
+}
+
+// A record being filled in should say so rather than render thin and look broken.
+function incompleteHtml() {
+  const gaps = [];
+  if (!LIFE.person.born)                        gaps.push('a birth year');
+  const runs = emptyRuns().filter(([a, b]) => b - a >= 2);
+  if (runs.length) gaps.push(`anything at all in ${runs.map(([a, b]) => a + '–' + b).join(', ')}`);
+  if (!(LIFE.eras || []).length)                gaps.push('eras (press re-derive)');
+  if (!(LIFE.letters || []).length)             gaps.push('letters');
+  if (!(LIFE.traditions || []).length)          gaps.push('a tradition');
+  const needLearning = [...(LIFE.chapters || []), ...(LIFE.achievements || [])];
+  const without = needLearning.filter(x => !(x.learning && x.learning.text)).length;
+  if (without) gaps.push(`a learning on ${without} of ${needLearning.length} experiences`);
+  if (!gaps.length) return '';
+  return `<div class="incomplete">This record is still being filled in — missing <b>${gaps.join('</b>, <b>')}</b>.
+    Everything above is real; the rest is the part only the person can supply.</div>`;
+}
+
+function deriveStatusHtml() {
+  const p = LIFE._provenance;
+  const live = p && p.model;
+  return `<div class="derive-bar">
+    <span class="derive-state ${live ? 'live' : ''}">${live
+      ? `Derived live · ${esc(p.model)} · ${esc(p.at)}`
+      : 'Reasoning below is cached from an earlier run'}</span>
+    <button class="mini" id="derive-btn" onclick="deriveStructure()">Re-derive with AI</button>
+    <span class="derive-note" id="derive-note"></span>
+  </div>`;
+}
+
+async function deriveStructure() {
+  const btn  = document.getElementById('derive-btn');
+  const note = document.getElementById('derive-note');
+
+  let key = localStorage.getItem('remnant_api_key') || '';
+  if (!key) {
+    key = (prompt('Anthropic API key — stays in your browser, never sent anywhere but api.anthropic.com') || '').trim();
+    if (!key) return;
+    localStorage.setItem('remnant_api_key', key);
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Thinking…';
+  note.textContent = '';
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: REASONER,
+        max_tokens: 2000,
+        messages: [{ role: 'user', content: derivePrompt() }]
+      })
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body?.error?.message || `API error ${res.status}`);
+    }
+    const data = await res.json();
+    const text = data.content.map(b => b.text || '').join('');
+    const parsed = JSON.parse(text.replace(/^```json?\s*|\s*```$/g, ''));
+
+    applyDerived(parsed);
+    LIFE._provenance = { model: REASONER, at: new Date().toLocaleTimeString() };
+    renderExplorer();
+    const u = data.usage || {};
+    document.getElementById('derive-note').textContent =
+      `${u.input_tokens || '?'} in / ${u.output_tokens || '?'} out`;
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = 'Re-derive with AI';
+    note.textContent = e.message;
+  }
+}
+
+// Only overwrite what the model is responsible for. Events, chapters, letters
+// and quotes are the person's record and are never rewritten by a derivation.
+function applyDerived(parsed) {
+  if (Array.isArray(parsed.eras) && parsed.eras.length) {
+    LIFE.eras = parsed.eras.map(e => ({
+      id: e.id || ('era-' + e.from), label: e.label, from: e.from, to: e.to,
+      place: e.place || '', note: e.note || '', why: e.why || ''
+    }));
+    // Re-stamp each event with the era that now contains it.
+    LIFE.events.forEach(ev => {
+      const era = LIFE.eras.find(e => ev.year >= e.from && (e.to == null || ev.year <= e.to));
+      if (era) ev.era = era.id;
+    });
+  }
+  (parsed.achievements || []).forEach(d => {
+    const a = (LIFE.achievements || []).find(x => x.id === d.id);
+    if (!a) return;
+    if (typeof d.included === 'boolean') a.included = d.included;
+    if (d.why) a.why = d.why;
+  });
+}
+
 </script>
 </body>
 </html>

@@ -1,0 +1,1055 @@
+{
+  "_generated": "demo/build-life.py — chapters and photo moments from photos.json",
+  "chapters": [
+    {
+      "id": "guatemala",
+      "year": 2025,
+      "title": "Guatemala",
+      "eyebrow": "Chapter · 2025",
+      "narrative": "",
+      "curationWhy": "",
+      "candidates": 13,
+      "locations": [
+        {
+          "name": "Santa Cruz, Guatemala",
+          "lat": 14.7333,
+          "lng": -91.2
+        },
+        {
+          "name": "San Pedro, Guatemala",
+          "lat": 14.6919,
+          "lng": -91.2722
+        },
+        {
+          "name": "Volcan de Fuego, Guatemala",
+          "lat": 14.4747,
+          "lng": -90.8806
+        },
+        {
+          "name": "Acatenango, Guatemala",
+          "lat": 14.5008,
+          "lng": -90.8761
+        },
+        {
+          "name": "Antigua, Guatemala",
+          "lat": 14.5586,
+          "lng": -90.7295
+        }
+      ],
+      "slides": [
+        {
+          "src": "https://alstonwang.com/images/camera/Acatenango1.jpg",
+          "caption": "Acatenango, Guatemala",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Acatenango2.jpeg",
+          "caption": "Acatenango, Guatemala",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Acatenango3.jpeg",
+          "caption": "Acatenango, Guatemala",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Acatenango4.jpeg",
+          "caption": "Acatenango, Guatemala",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Antigua.jpeg",
+          "caption": "Antigua, Guatemala",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Santa%20Cruz%201.jpeg",
+          "caption": "Santa Cruz, Guatemala",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Santa%20Cruz2.jpeg",
+          "caption": "Santa Cruz, Guatemala",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Santa%20Cruz%203.jpeg",
+          "caption": "Santa Cruz, Guatemala",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Santa%20Cruz%204.jpeg",
+          "caption": "Santa Cruz, Guatemala",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Santa%20Cruz5.jpeg",
+          "caption": "Santa Cruz, Guatemala",
+          "why": ""
+        },
+        {
+          "video": "https://youtu.be/Nl-vJRuLz0k",
+          "src": "https://img.youtube.com/vi/Nl-vJRuLz0k/hqdefault.jpg",
+          "caption": "Santa Cruz, Guatemala",
+          "why": ""
+        },
+        {
+          "video": "https://youtu.be/q5FjjyQM17c",
+          "src": "https://img.youtube.com/vi/q5FjjyQM17c/hqdefault.jpg",
+          "caption": "San Pedro, Guatemala",
+          "why": ""
+        },
+        {
+          "video": "https://youtu.be/APTed2nsYuE",
+          "src": "https://img.youtube.com/vi/APTed2nsYuE/hqdefault.jpg",
+          "caption": "Volcan de Fuego, Guatemala",
+          "why": ""
+        }
+      ]
+    },
+    {
+      "id": "oregon-coast",
+      "year": 2026,
+      "title": "The Oregon Coast",
+      "eyebrow": "Chapter · 2026",
+      "narrative": "",
+      "curationWhy": "",
+      "candidates": 19,
+      "locations": [
+        {
+          "name": "Pistol River",
+          "lat": 42.2787,
+          "lng": -124.3976
+        },
+        {
+          "name": "Secret Beach",
+          "lat": 42.183,
+          "lng": -124.373
+        },
+        {
+          "name": "Samuel H. Boardman",
+          "lat": 42.15,
+          "lng": -124.35
+        },
+        {
+          "name": "Samuel H. Boardman Scenic",
+          "lat": 42.15,
+          "lng": -124.35
+        },
+        {
+          "name": "Devil's Punchbowl",
+          "lat": 44.7457,
+          "lng": -124.0618
+        },
+        {
+          "name": "Thor's Well, Oregon Coast",
+          "lat": 44.278,
+          "lng": -124.113
+        },
+        {
+          "name": "Shingle Mills, Oregon Coast",
+          "lat": 42.2,
+          "lng": -124.35
+        },
+        {
+          "name": "Cannon Beach",
+          "lat": 45.8918,
+          "lng": -123.9615
+        },
+        {
+          "name": "Crater Lake",
+          "lat": 42.9446,
+          "lng": -122.109
+        }
+      ],
+      "slides": [
+        {
+          "src": "https://alstonwang.com/images/camera/crater%20lake.jpeg",
+          "caption": "Crater Lake",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/pistol%20river1.jpeg",
+          "caption": "Pistol River",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/pistol%20river2%20.jpg",
+          "caption": "Pistol River",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/pistol%20river%203.jpg",
+          "caption": "Pistol River",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/pistol%20river%204.jpg",
+          "caption": "Pistol River",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/pistol%20river%205.jpg",
+          "caption": "Pistol River",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/secret%20beach%201.jpg",
+          "caption": "Secret Beach",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/secret%20beach%202.jpg",
+          "caption": "Secret Beach",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Samuel%20H.%20Boardman%201.jpg",
+          "caption": "Samuel H. Boardman",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Samuel%20H.%20Boardman%202.jpg",
+          "caption": "Samuel H. Boardman",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/devil%27s%20punchbowl%201.jpg",
+          "caption": "Devil's Punchbowl",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/devil%27s%20punchbowl%202.jpeg",
+          "caption": "Devil's Punchbowl",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/devil%27s%20punchbowl%203.jpg",
+          "caption": "Devil's Punchbowl",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/devil%27s%20punchbowl%204.jpeg",
+          "caption": "Devil's Punchbowl",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/cannon%20beach%201.jpg",
+          "caption": "Cannon Beach",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/cannon%20beach%202.jpg",
+          "caption": "Cannon Beach",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/moonlight1.jpeg",
+          "caption": "Moonlight",
+          "why": ""
+        },
+        {
+          "video": "https://youtu.be/pe4iGaTIvzo",
+          "src": "https://img.youtube.com/vi/pe4iGaTIvzo/hqdefault.jpg",
+          "caption": "Thor's Well, Oregon Coast",
+          "why": ""
+        },
+        {
+          "video": "https://www.youtube.com/watch?v=Mk-JG3_Wp4c",
+          "src": "https://img.youtube.com/vi/Mk-JG3_Wp4c/hqdefault.jpg",
+          "caption": "Shingle Mills, Oregon Coast",
+          "why": ""
+        }
+      ]
+    },
+    {
+      "id": "glacier",
+      "year": 2024,
+      "title": "Glacier National Park",
+      "eyebrow": "Chapter · 2024",
+      "narrative": "",
+      "curationWhy": "",
+      "candidates": 6,
+      "locations": [
+        {
+          "name": "Glacier National Park",
+          "lat": 48.7596,
+          "lng": -113.787
+        },
+        {
+          "name": "Grinnell Glacier, Glacier",
+          "lat": 48.7563,
+          "lng": -113.7236
+        }
+      ],
+      "slides": [
+        {
+          "src": "https://alstonwang.com/images/camera/Glacier%20National%20Park%20.jpg",
+          "caption": "Glacier National Park",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Glacier%20National%20Park.jpeg",
+          "caption": "Glacier National Park",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Glacier%20national%20park3.jpeg",
+          "caption": "Glacier National Park",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Glacier%20national%20park4.jpeg",
+          "caption": "Glacier National Park",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Glacier%20national%20park5.jpeg",
+          "caption": "Glacier National Park",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Glacier%20national%20park6.jpeg",
+          "caption": "Glacier National Park",
+          "why": ""
+        }
+      ]
+    },
+    {
+      "id": "asia",
+      "year": 2025,
+      "title": "Japan and Taiwan",
+      "eyebrow": "Chapter · 2025",
+      "narrative": "",
+      "curationWhy": "",
+      "candidates": 11,
+      "locations": [
+        {
+          "name": "Japan",
+          "lat": 35.6762,
+          "lng": 139.6503
+        },
+        {
+          "name": "Taipei",
+          "lat": 25.033,
+          "lng": 121.5654
+        }
+      ],
+      "slides": [
+        {
+          "src": "https://alstonwang.com/images/camera/Japan1.jpg",
+          "caption": "Japan",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Japan2.jpg",
+          "caption": "Japan",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Japan3.jpg",
+          "caption": "Japan",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Japan4.jpg",
+          "caption": "Japan",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Japan5.jpg",
+          "caption": "Japan",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Taipei1.jpg",
+          "caption": "Taipei",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Taipei2.jpg",
+          "caption": "Taipei",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Taipei3.jpg",
+          "caption": "Taipei",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Taipei4.jpg",
+          "caption": "Taipei",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Taipei5.jpg",
+          "caption": "Taipei",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Taipie6.jpg",
+          "caption": "Taipei",
+          "why": ""
+        }
+      ]
+    },
+    {
+      "id": "costa-rica",
+      "year": 2025,
+      "title": "Costa Rica",
+      "eyebrow": "Chapter · 2025",
+      "narrative": "",
+      "curationWhy": "",
+      "candidates": 7,
+      "locations": [
+        {
+          "name": "Costa Rica",
+          "lat": 9.7489,
+          "lng": -83.7534
+        },
+        {
+          "name": "Arenal Volcano, Costa Rica",
+          "lat": 10.463,
+          "lng": -84.7033
+        },
+        {
+          "name": "La Fortuna, Costa Rica",
+          "lat": 10.4678,
+          "lng": -84.6427
+        },
+        {
+          "name": "La Paz Waterfall, Costa Rica",
+          "lat": 10.2167,
+          "lng": -84.1667
+        }
+      ],
+      "slides": [
+        {
+          "src": "https://alstonwang.com/images/camera/Costa%20rica.jpeg",
+          "caption": "Costa Rica",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/La%20paz%20waterfall%2C%20costa%20rica.jpeg",
+          "caption": "La Paz Waterfall, Costa Rica",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Arenal%20.jpeg",
+          "caption": "Arenal Volcano, Costa Rica",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/La%20Fortuna%20waterfall%2C%20costa%20rica.jpeg",
+          "caption": "La Fortuna, Costa Rica",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Arenal%20Volcano.jpeg",
+          "caption": "Arenal Volcano, Costa Rica",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Areanl%20Volcano%202.jpeg",
+          "caption": "Arenal Volcano, Costa Rica",
+          "why": ""
+        },
+        {
+          "video": "https://youtu.be/M3Lvgr04tIQ",
+          "src": "https://img.youtube.com/vi/M3Lvgr04tIQ/hqdefault.jpg",
+          "caption": "Arenal Volcano, Costa Rica",
+          "why": ""
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "year": 1998,
+      "kind": "milestone",
+      "title": "Born in Qionghai",
+      "detail": "Hainan, China. An island province in the South China Sea.",
+      "place": {
+        "name": "Qionghai, Hainan, China",
+        "lat": 19.246,
+        "lng": 110.4746
+      }
+    },
+    {
+      "year": 2004,
+      "approx": true,
+      "kind": "milestone",
+      "title": "Won the elementary school speech competition",
+      "detail": "First time standing in front of a room and having it go well."
+    },
+    {
+      "year": 2005,
+      "approx": true,
+      "kind": "milestone",
+      "title": "Learned chess, started competing",
+      "detail": "Tournament play as a kid."
+    },
+    {
+      "year": 2005,
+      "approx": true,
+      "kind": "milestone",
+      "title": "A teacher told me I couldn't sing",
+      "detail": "I still cannot sing. Possibly tone deaf.",
+      "learning": {
+        "kind": "reflection",
+        "at": "2026",
+        "text": "A teacher told me I couldn't sing, and I think I still might be tone deaf to this day. I have remembered that sentence for twenty years, which probably says more about how long an offhand remark from a teacher lasts than it does about my voice."
+      }
+    },
+    {
+      "year": 2005,
+      "approx": true,
+      "kind": "milestone",
+      "title": "Told my first-grade teacher I was going to America",
+      "detail": "In first grade I told my teacher I was going to America — a decision I couldn't quite understand at the time.",
+      "link": "poem.html",
+      "linkLabel": "A New Place — read the poem"
+    },
+    {
+      "year": 2006,
+      "kind": "milestone",
+      "title": "The family moved to New York",
+      "detail": "We had family in New York already.",
+      "link": "poem.html",
+      "linkLabel": "A New Place — read the poem",
+      "learning": {
+        "kind": "forward",
+        "at": "2026",
+        "text": "That was the first time I saw my dad let down a tear. I knew he was worried about me — but in that moment I also knew he was scared of this place, just like I was. Whoever reads this: the adults moving you are frightened too. They just do it anyway."
+      },
+      "place": {
+        "name": "New York City",
+        "lat": 40.7128,
+        "lng": -74.006
+      },
+      "date": "25 August 2006"
+    },
+    {
+      "year": 2009,
+      "kind": "milestone",
+      "title": "Discovered ping pong",
+      "detail": "Became a top-3 under-12 junior prospect in the United States, and was featured in the Wii Sports campaign in Times Square.",
+      "place": {
+        "name": "Times Square, New York",
+        "lat": 40.758,
+        "lng": -73.9855
+      },
+      "media": {
+        "src": "demo/media/ping-pong-2009.jpg",
+        "caption": "Mid-forehand, age eleven."
+      },
+      "link": "https://nintendoeverything.com/photos-and-captions-from-the-wii-sports-resort-launch-event-in-new-york-city/",
+      "linkLabel": "Wii Sports Resort launch, Times Square — I'm in the third photo"
+    },
+    {
+      "year": 2013,
+      "kind": "milestone",
+      "title": "Started at Stuyvesant",
+      "detail": "September 2013. There was a NASCAR driver in my graduating class who had been training since he was a kid.",
+      "learning": {
+        "kind": "advice",
+        "at": "2026",
+        "text": "Being surrounded by people who are genuinely exceptional at one thing is humbling, and the wrong lesson to take from it is to go find your one thing and grind. The right one — the one it took me years to act on — is that you need to be good at more than one thing to excel. The overlap is where you're actually rare."
+      },
+      "place": {
+        "name": "Stuyvesant High School, Manhattan",
+        "lat": 40.7179,
+        "lng": -74.0135
+      }
+    },
+    {
+      "year": 2017,
+      "kind": "milestone",
+      "title": "Graduated Stuyvesant",
+      "detail": "Four years at Stuyvesant, then a year at Stony Brook to earn the transfer.",
+      "place": {
+        "name": "Stuyvesant High School, Manhattan",
+        "lat": 40.7179,
+        "lng": -74.0135
+      }
+    },
+    {
+      "year": 2017,
+      "kind": "milestone",
+      "title": "Stony Brook University",
+      "detail": "The year between. Head down on the requirement classes and the GPA needed to secure the guaranteed transfer to Cornell.",
+      "place": {
+        "name": "Stony Brook University, Long Island",
+        "lat": 40.9257,
+        "lng": -73.1409
+      }
+    },
+    {
+      "year": 2018,
+      "kind": "milestone",
+      "title": "Cornell, on a guaranteed transfer",
+      "detail": "September 2018. B.S. Information Science. Joined clubs and organizations; made lifelong connections.",
+      "learning": {
+        "kind": "reflection",
+        "at": "2026",
+        "text": "Stuyvesant taught me there were more talented people than I'd assumed. Cornell taught me the same lesson one level up — more intelligent, harder-working, and no end to it. At some point you stop measuring yourself against the room and start looking for the people you want to keep."
+      },
+      "place": {
+        "name": "Ithaca, New York",
+        "lat": 42.4534,
+        "lng": -76.4735
+      }
+    },
+    {
+      "year": 2018,
+      "kind": "milestone",
+      "title": "Collegiate table tennis",
+      "detail": "Played on the team. If only college pickleball had been a thing back then.",
+      "place": {
+        "name": "Ithaca, New York",
+        "lat": 42.4534,
+        "lng": -76.4735
+      }
+    },
+    {
+      "year": 2020,
+      "kind": "milestone",
+      "title": "Lockdown, alone on campus",
+      "detail": "The lockdown came out of nowhere. I stayed at Cornell because it was safer than home in NYC, and had the whole campus to myself.",
+      "learning": {
+        "kind": "advice",
+        "at": "2026",
+        "text": "I had an empty Cornell campus to myself for months and almost no record of it. I wish I had taken the photos and flown the drone. What I did find was running, which I still have — so the year wasn't empty, it just left less behind than it should have. Document the strange stretches while you are inside them."
+      },
+      "place": {
+        "name": "Cornell campus, Ithaca",
+        "lat": 42.448,
+        "lng": -76.4819
+      }
+    },
+    {
+      "year": 2021,
+      "kind": "milestone",
+      "title": "Moved to Seattle",
+      "detail": "June 2021, for a job at Amazon. Started in inbound sales.",
+      "learning": {
+        "kind": "reflection",
+        "at": "2026",
+        "text": "Moving across the country to a city where I knew almost no one is the thing I would have called the risky choice at the time. It is where I got comfortable in my own skin, professionally and otherwise. The confidence did not come from the job — it came from having to build a life from nothing in particular."
+      },
+      "place": {
+        "name": "Seattle, Washington",
+        "lat": 47.6062,
+        "lng": -122.3321
+      }
+    },
+    {
+      "year": 2021,
+      "kind": "achievement",
+      "ref": "a-aws"
+    },
+    {
+      "year": 2023,
+      "kind": "photo",
+      "title": "Paris, Las Vegas",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Paris%2C%20Las%20Vegas.jpg"
+    },
+    {
+      "year": 2024,
+      "kind": "photo",
+      "title": "Panama",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Panama2.jpeg"
+    },
+    {
+      "year": 2024,
+      "kind": "photo",
+      "title": "St. Patrick's Day, Chicago",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/St.Patrick%27s%20Day%2C%20Chicago.jpeg"
+    },
+    {
+      "year": 2024,
+      "kind": "photo",
+      "title": "Deep Sea Fishing",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Deep%20Sea%20fishing.jpeg"
+    },
+    {
+      "year": 2024,
+      "kind": "photo",
+      "title": "Sailing",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/sail.jpeg"
+    },
+    {
+      "year": 2024,
+      "kind": "photo",
+      "title": "Grinnell Glacier, Glacier National Park",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Grinnell%20Glacier%2C%20Glacier%20national%20park.jpeg"
+    },
+    {
+      "year": 2024,
+      "kind": "photo",
+      "title": "Clouds",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/clouds.jpeg"
+    },
+    {
+      "year": 2024,
+      "kind": "photo",
+      "title": "Angkor Wat, Cambodia",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Angkor%20Wat%2C%20Cambodia.jpeg"
+    },
+    {
+      "year": 2024,
+      "kind": "chapter",
+      "ref": "glacier"
+    },
+    {
+      "year": 2024,
+      "kind": "achievement",
+      "ref": "a-ab"
+    },
+    {
+      "year": 2025,
+      "kind": "photo",
+      "title": "Shedd Aquarium, Chicago",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Shedd%20Aquarium.jpeg"
+    },
+    {
+      "year": 2025,
+      "kind": "photo",
+      "title": "Blue Angels",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Blue%20Angels1.jpg"
+    },
+    {
+      "year": 2025,
+      "kind": "photo",
+      "title": "Olympic Coast",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Olympic%20Coast.jpeg"
+    },
+    {
+      "year": 2025,
+      "kind": "photo",
+      "title": "Port Angeles",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Port%20Angeles.jpeg"
+    },
+    {
+      "year": 2025,
+      "kind": "photo",
+      "title": "Mount Rainier",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Rainier1.jpeg"
+    },
+    {
+      "year": 2025,
+      "kind": "photo",
+      "title": "Barclay Lake",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Barclay%20Lake.jpeg"
+    },
+    {
+      "year": 2025,
+      "kind": "photo",
+      "title": "Cascade Pass",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Cascade%20Pass%201.jpeg"
+    },
+    {
+      "year": 2025,
+      "kind": "photo",
+      "title": "Kauai",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Kauai1.jpeg"
+    },
+    {
+      "year": 2025,
+      "kind": "photo",
+      "title": "Maple Pass",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Maple%20Pass%202.jpg"
+    },
+    {
+      "year": 2025,
+      "kind": "photo",
+      "title": "Stars",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Stars.jpeg"
+    },
+    {
+      "year": 2025,
+      "kind": "chapter",
+      "ref": "guatemala"
+    },
+    {
+      "year": 2025,
+      "kind": "chapter",
+      "ref": "asia"
+    },
+    {
+      "year": 2025,
+      "kind": "chapter",
+      "ref": "costa-rica"
+    },
+    {
+      "year": 2025,
+      "kind": "achievement",
+      "ref": "a-pickleball"
+    },
+    {
+      "year": 2025,
+      "kind": "achievement",
+      "ref": "a-stacked"
+    },
+    {
+      "year": 2026,
+      "kind": "photo",
+      "title": "Whistler",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Whistler1.jpeg"
+    },
+    {
+      "year": 2026,
+      "kind": "photo",
+      "title": "Deception Pass",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Deception%20Pass%20Bridge%201.jpg"
+    },
+    {
+      "year": 2026,
+      "kind": "video",
+      "title": "Deception Pass Bridge State Park, Whidbey Island, Washington",
+      "detail": "",
+      "video": "https://youtu.be/PVebPzdNJxg",
+      "src": "https://img.youtube.com/vi/PVebPzdNJxg/hqdefault.jpg"
+    },
+    {
+      "year": 2026,
+      "kind": "photo",
+      "title": "San Francisco",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/San%20Francisco%201.jpg"
+    },
+    {
+      "year": 2026,
+      "kind": "photo",
+      "title": "Seahawks Parade",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/seahawk_parade_%21.jpg"
+    },
+    {
+      "year": 2026,
+      "kind": "photo",
+      "title": "Space Needle",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/seattle2.jpeg"
+    },
+    {
+      "year": 2026,
+      "kind": "photo",
+      "title": "Las Vegas",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/vegas1.jpg"
+    },
+    {
+      "year": 2026,
+      "kind": "photo",
+      "title": "Red Rock Canyon",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/redrock1.jpg"
+    },
+    {
+      "year": 2026,
+      "kind": "photo",
+      "title": "Monorail",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/seattle1.jpg"
+    },
+    {
+      "year": 2026,
+      "kind": "photo",
+      "title": "Brooklyn",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Brooklyn1.jpg"
+    },
+    {
+      "year": 2026,
+      "kind": "photo",
+      "title": "University of Washington",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/University%20of%20Washington%201.jpg"
+    },
+    {
+      "year": 2026,
+      "kind": "video",
+      "title": "Samuel H. Boardman Scenic State Park, Oregon Coast",
+      "detail": "",
+      "video": "https://youtu.be/vLBDJSs_OkY",
+      "src": "https://img.youtube.com/vi/vLBDJSs_OkY/hqdefault.jpg"
+    },
+    {
+      "year": 2026,
+      "kind": "photo",
+      "title": "Amtrak",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/AMTRAK.jpeg"
+    },
+    {
+      "year": 2026,
+      "kind": "photo",
+      "title": "Elysian Park, Los Angeles",
+      "detail": "",
+      "src": "https://alstonwang.com/images/camera/Elysian%20Park%2C%20LA.jpg"
+    },
+    {
+      "year": 2026,
+      "kind": "chapter",
+      "ref": "oregon-coast"
+    },
+    {
+      "year": 2026,
+      "kind": "achievement",
+      "ref": "a-remnant"
+    }
+  ],
+  "_HOW_TO_ADD": [
+    "Add entries to scaffoldEvents below, in any order — they get sorted by year.",
+    "Then re-run: ./demo/build-life.py photos.json demo/alston.json demo/alston.scaffold.json",
+    "The coverage strip on the page shows which years are still empty.",
+    "Nothing needs to be momentous. A dated, specific, ordinary thing beats a vague big one.",
+    "\"approx\": true renders the year as 'c. 2005' instead of claiming precision we don't have.",
+    "_CHECK and _YOUR_WORDS mark the places that still need you."
+  ],
+  "person": {
+    "name": "Alston Wang",
+    "shortName": "Alston",
+    "born": 1998,
+    "bornPlace": "Qionghai, Hainan, China",
+    "living": true,
+    "hometown": "Qionghai, Hainan → New York City",
+    "tagline": "Product thinker, photographer, community builder. Born in Hainan, raised in New York, living in the Pacific Northwest.",
+    "thin": {
+      "line": "Alston Wang · 1998–",
+      "artifacts": [
+        "A LinkedIn profile",
+        "Photos spread across a phone, a drive, and Instagram",
+        "A GitHub account",
+        "A poem in a Google Doc nobody would think to look for",
+        "Whatever anyone happens to remember"
+      ]
+    }
+  },
+  "eras": [],
+  "_eras_note": "Deliberately empty. Press 'Re-derive with AI' and the model groups the years itself.",
+  "achievements": [
+    {
+      "id": "a-aws",
+      "year": 2021,
+      "title": "Inbound sales → AWS, games and betting",
+      "detail": "Started in inbound sales at Amazon, moved to AWS selling into the games industry, then into betting and gaming specifically. Through 2024."
+    },
+    {
+      "id": "a-ab",
+      "year": 2024,
+      "title": "Program Manager — Amazon Business",
+      "detail": "March 2024. A new role, a new foundation, a different skillset from sales.",
+      "learning": {
+        "kind": "advice",
+        "at": "2026",
+        "text": "Changing discipline three years in means being a beginner again on purpose, in front of people who watched you be competent at something else. That trade is almost always worth it, and it never once feels like it in the first six months."
+      }
+    },
+    {
+      "id": "a-pickleball",
+      "year": 2025,
+      "title": "Competing at 5.0",
+      "detail": "January 2025 — started playing pickleball tournaments competitively. Won a few local ones. Met a lot of people along the way and built a community.",
+      "learning": {
+        "kind": "forward",
+        "at": "2026",
+        "text": "I went in for the competition and what I actually got was a community. The tournaments are the excuse; the people you keep showing up with are the thing. If you are deciding whether to enter — enter, and not for the result."
+      }
+    },
+    {
+      "id": "a-stacked",
+      "year": 2025,
+      "title": "Stacked",
+      "detail": "A doubles-matching system built on complementary fit rather than similarity."
+    },
+    {
+      "id": "a-remnant",
+      "year": 2026,
+      "title": "Remnant",
+      "detail": "This."
+    }
+  ],
+  "_achievements_note": "No 'included' or 'why' set — the model decides which are defining moments and which are résumé lines, and argues each call.",
+  "letters": [],
+  "_letters_NEEDS_YOU": "Who would you write to, and when should it reach them? Even one real letter carries the whole product.",
+  "traditions": [],
+  "_traditions_NEEDS_YOU": "One thing your family always does, described as if to someone who has never seen it — plus the part nobody else knows. Something that survived the move from Hainan is the obvious place to look.",
+  "voice": {
+    "prompts": [
+      "what was the move like",
+      "what did Stuyvesant teach you",
+      "the lockdown year",
+      "why pickleball",
+      "can you sing"
+    ],
+    "quotes": [
+      {
+        "at": "2016",
+        "source": "A New Place (poem)",
+        "topics": [
+          "move",
+          "america",
+          "china",
+          "first",
+          "grade",
+          "teacher",
+          "leaving"
+        ],
+        "text": "In first grade I told my teacher I was going to America, a decision I couldn't quite understand."
+      },
+      {
+        "at": "2016",
+        "source": "A New Place (poem)",
+        "topics": [
+          "plane",
+          "afraid",
+          "fear",
+          "mom",
+          "move",
+          "flight"
+        ],
+        "text": "Forty thousand feet above ground, I pondered on the cold seat as I leaned on mom's shoulder. I knew she was excited. But I was afraid."
+      },
+      {
+        "at": "2016",
+        "source": "A New Place (poem)",
+        "topics": [
+          "dad",
+          "father",
+          "tear",
+          "scared",
+          "arrival",
+          "fever",
+          "move"
+        ],
+        "text": "That was the first time I saw dad let down a tear. I knew he was worried about me. But in that moment, I also knew that he was scared of this place just like I was."
+      }
+    ],
+    "noAnswer": {
+      "why": "He never wrote about this. The archive returns nothing rather than inferring an answer — a plausible reconstruction of what someone would have said is the one output this product will not produce."
+    }
+  },
+  "_learnings_NEEDS_YOU": "Five trip chapters still have none. kind is 'advice', 'reflection', or 'forward'."
+}
