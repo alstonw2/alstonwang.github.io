@@ -1036,9 +1036,10 @@
       align-items: start; text-align: left;
       background: none; border: none; font-family: inherit; color: inherit;
       padding: .7rem .6rem; border-radius: 6px; cursor: pointer;
-      opacity: .22; transition: opacity .35s ease, background .2s;
+      transition: background .2s;
     }
-    .rail-row.lit { opacity: 1; }
+    .rail-item { opacity: .22; transition: opacity .35s ease; }
+    .rail-item.lit { opacity: 1; }
     .rail-row:hover, .rail-row:focus-visible { background: rgba(45,74,62,.06); }
     .rail-row[aria-expanded="true"] { background: rgba(196,113,58,.09); }
     .rail-year { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; padding-top: .15rem; }
@@ -1365,6 +1366,28 @@
       color: var(--terra); font-style: italic;
       font-family: 'Lora', serif; font-size: .92rem;
     }
+  
+    /* Does this entry have a place, and take me to it */
+    .rail-geo {
+      display: inline-flex; align-items: center; gap: .4rem;
+      margin: -.3rem 0 .5rem calc(4.5rem + 1.6rem + 1.6rem);
+      background: none; border: 1px solid rgba(44,44,44,.15);
+      border-radius: 1rem; padding: .18rem .65rem;
+      font-family: inherit; font-size: .7rem; color: var(--muted);
+      cursor: pointer; transition: all .18s; text-align: left;
+    }
+    .rail-geo.has:hover, .rail-geo.has:focus-visible {
+      border-color: var(--terra); color: var(--terra); background: rgba(196,113,58,.07);
+    }
+    .rail-geo.none { cursor: default; opacity: .55; border-style: dashed; }
+    .rail-geo .geo-dot { font-size: .62rem; color: var(--terra); }
+    .rail-geo.none .geo-dot { color: rgba(44,44,44,.3); }
+    .life-pin.flash div { animation: pinflash 1.4s ease-out 2; }
+    @keyframes pinflash {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.5); box-shadow: 0 0 0 7px rgba(196,113,58,.25); }
+    }
+    @media (max-width: 640px) { .rail-geo { margin-left: calc(3.4rem + 1.4rem + 1rem); } }
   </style>
 </head>
 <body>
@@ -3797,8 +3820,8 @@ function onHeroScrub(year) { paintScrub(year, 'hero'); }
 
 function onExScrub(year) {
   paintScrub(year, 'ex');
-  document.querySelectorAll('#ex-rail .rail-row').forEach(row => {
-    row.classList.toggle('lit', Number(row.dataset.year) <= year);
+  document.querySelectorAll('#ex-rail .rail-item').forEach(item => {
+    item.classList.toggle('lit', Number(item.dataset.year) <= year);
   });
   document.querySelectorAll('#ex-bands .era-band').forEach(b => {
     b.classList.toggle('on', Number(b.dataset.from) <= year);
@@ -3855,6 +3878,31 @@ function scrubTo(year) {
   const r = document.getElementById('ex-range');
   r.value = year;
   onExScrub(year);
+}
+
+// An entry's place, whether it carries one directly or through a chapter.
+function placesFor(ev) {
+  if (ev.place && typeof ev.place.lat === 'number') return [ev.place];
+  const r = refOf(ev);
+  if (ev.kind === 'chapter' && r) {
+    return (r.locations || []).filter(l => typeof l.lat === 'number');
+  }
+  return [];
+}
+
+function geoButtonHtml(ev) {
+  const places = placesFor(ev);
+  if (!places.length) {
+    return `<button class="rail-geo none" disabled aria-label="No location tagged">
+      <span class="geo-dot" aria-hidden="true">○</span> No location</button>`;
+  }
+  const first = places[0];
+  const label = places.length > 1
+    ? `${first.name} + ${places.length - 1} more`
+    : first.name;
+  return `<button class="rail-geo has" onclick="focusPlace(${first.lat},${first.lng},${ev.year})"
+    title="Show on the map">
+    <span class="geo-dot" aria-hidden="true">●</span> ${esc(label)}</button>`;
 }
 
 // ── Life map ────────────────────────────────────
@@ -3920,6 +3968,7 @@ function paintLifeMap(year, fit) {
   const pts = [];
   shown.forEach(p => {
     const m = L.marker([p.lat, p.lng], { icon: lifePinIcon(p.kind) }).addTo(lifeMap);
+    m._place = p;
     m.bindPopup(`<div class="map-pop-title">${esc(p.title)}</div>
       <div style="color:#7A6E62;font-size:.8rem">${esc(p.name)} · ${p.year}</div>
       <button class="map-pop-open" onclick="openFromMap('${esc(p.ref)}','${p.kind}',${p.year})">Open this ↓</button>`);
@@ -3932,6 +3981,27 @@ function paintLifeMap(year, fit) {
 
   if (fit && pts.length > 1) lifeMap.fitBounds(pts, { padding: [36, 36] });
   else if (fit && pts.length === 1) lifeMap.setView(pts[0], 9);
+}
+
+// Take me to that place. If the scrubber is parked before the year the place
+// belongs to, move it forward first — otherwise the pin does not exist yet.
+function focusPlace(lat, lng, year) {
+  const range = document.getElementById('ex-range');
+  if (Number(range.value) < year) scrubTo(year);
+  const wrap = document.querySelector('.lifemap-wrap');
+  wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  if (!lifeMap) return;
+  setTimeout(() => {
+    lifeMap.invalidateSize();
+    lifeMap.setView([lat, lng], 11, { animate: true });
+    const hit = lifeMarkers.find(m => m._place
+      && Math.abs(m._place.lat - lat) < 1e-6 && Math.abs(m._place.lng - lng) < 1e-6);
+    if (hit) {
+      hit.openPopup();
+      const el = hit.getElement();
+      if (el) { el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 3000); }
+    }
+  }, 320);
 }
 
 function openFromMap(ref, kind, year) {
@@ -3973,7 +4043,8 @@ function renderExplorer() {
   document.getElementById('ex-rail').innerHTML = railEvents().map(ev => {
     const kindLabel = KIND_LABEL[ev.kind];
     const detail = eventDetail(ev);
-    return `<button class="rail-row" data-year="${ev.year}" data-id="${esc(ev.ref || (ev.kind + ev.year))}"
+    return `<div class="rail-item" data-year="${ev.year}">
+    <button class="rail-row" data-year="${ev.year}" data-id="${esc(ev.ref || (ev.kind + ev.year))}"
               aria-expanded="false"
               onclick="openEvent('${esc(ev.ref || '')}','${ev.kind}',${ev.year},this)">
       <span class="rail-year">${ev.approx ? 'c.&thinsp;' : ''}${ev.year}</span>
@@ -3988,7 +4059,9 @@ function renderExplorer() {
         })()}
       </span>
       <span class="rail-open" aria-hidden="true">›</span>
-    </button>`;
+    </button>
+    ${geoButtonHtml(ev)}
+    </div>`;
   }).join('');
 
   document.getElementById('ex-derive').innerHTML = deriveStatusHtml() + incompleteHtml();
