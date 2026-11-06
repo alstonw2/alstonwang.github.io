@@ -1,0 +1,32 @@
+You are organizing one person's life record. Here is everything in it.
+
+TIMELINE
+{TIMELINE}
+
+CANDIDATE DEFINING MOMENTS
+{CANDIDATES}
+
+WHAT THEY WROTE IN THEIR OWN WORDS
+{VOICE}
+
+Do two things.
+
+1. ERAS. Group the timeline into 3–5 consecutive, non-overlapping eras covering every
+year from {FROM} to {TO}. Name each one in the person's own register — concrete, not
+"Early Years". For each, write a "why" of 1–2 sentences explaining what in the data above
+makes these years cluster: density of events, a change in what kind of record exists,
+where the emotional center sits. Cite specifics. Do not describe the era's content;
+explain the grouping decision.
+
+2. DEFINING MOMENTS. For each candidate, decide "included" true or false.
+Judge by what the record itself emphasizes, not by what sounds impressive from outside.
+A thing the person returns to in their own words outweighs a credential nobody mentions
+twice. Weigh the learnings heavily: an entry the person drew a lesson from matters more
+than one they only listed, whatever its outward size. Expect to exclude at least one.
+For each, write a "why" of 1–2 sentences arguing the call — and for exclusions, say
+plainly what is being left out and on what grounds.
+
+Be willing to disagree with the obvious reading. Respond with ONLY valid JSON, no
+markdown fences:
+{"eras":[{"id":"short-slug","label":"...","from":1951,"to":1969,"place":"...","note":"one sentence of content","why":"..."}],
+ "achievements":[{"id":"a-xxx","included":true,"why":"..."}]}

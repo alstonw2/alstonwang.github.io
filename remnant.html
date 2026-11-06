@@ -4385,7 +4385,17 @@ if (location.hash === '#plan') window.addEventListener('DOMContentLoaded', start
 // ═══════════════════════════════════════════════
 const REASONER = 'claude-sonnet-5-5';
 
-function derivePrompt() {
+// The prompt lives in demo/derive-prompt.txt, which build-life.py --derive also
+// reads. One source of truth, so the button and the CLI cannot drift apart.
+let PROMPT_TEMPLATE = null;
+
+async function derivePrompt() {
+  if (!PROMPT_TEMPLATE) {
+    const r = await fetch('demo/derive-prompt.txt', { cache: 'no-cache' });
+    if (!r.ok) throw new Error('derive-prompt.txt ' + r.status);
+    PROMPT_TEMPLATE = await r.text();
+  }
+
   const events = LIFE.events.map(e => {
     const r = refOf(e);
     const title = eventTitle(e);
@@ -4399,37 +4409,12 @@ function derivePrompt() {
   const voice = voiceCorpus().map(q =>
     `${q.at || 'undated'} (${q.source}): "${q.text}"`).join('\n');
 
-  return `You are organizing one person's life record. Here is everything in it.
-
-TIMELINE
-${events}
-
-CANDIDATE DEFINING MOMENTS
-${cands}
-
-WHAT THEY WROTE IN THEIR OWN WORDS
-${voice}
-
-Do two things.
-
-1. ERAS. Group the timeline into 3–5 consecutive, non-overlapping eras covering every
-year from ${LIFE._span.from} to ${LIFE._span.to}. Name each one in the person's own
-register — concrete, not "Early Years". For each, write a "why" of 1–2 sentences
-explaining what in the data above makes these years cluster: density of events, a change
-in what kind of record exists, where the emotional center sits. Cite specifics. Do not
-describe the era's content; explain the grouping decision.
-
-2. DEFINING MOMENTS. For each candidate, decide "included" true or false.
-Judge by what the record itself emphasizes, not by what sounds impressive from outside.
-A thing the person returns to in their own words outweighs a credential nobody mentions
-twice. Weigh the learnings heavily: an entry the person drew a lesson from matters more
-than one they only listed, whatever its outward size. Expect to exclude at least one. For each, write a "why" of 1–2 sentences arguing
-the call — and for exclusions, say plainly what is being left out and on what grounds.
-
-Be willing to disagree with the obvious reading. Respond with ONLY valid JSON, no
-markdown fences:
-{"eras":[{"id":"short-slug","label":"...","from":1951,"to":1969,"place":"...","note":"one sentence of content","why":"..."}],
- "achievements":[{"id":"a-xxx","included":true,"why":"..."}]}`;
+  return PROMPT_TEMPLATE
+    .replace('{TIMELINE}', events)
+    .replace('{CANDIDATES}', cands)
+    .replace('{VOICE}', voice || '(nothing written down yet)')
+    .replace('{FROM}', String(LIFE._span.from))
+    .replace('{TO}', String(LIFE._span.to));
 }
 
 // A record being filled in should say so rather than render thin and look broken.
@@ -4450,12 +4435,12 @@ function incompleteHtml() {
 }
 
 function deriveStatusHtml() {
-  const p = LIFE._provenance;
+  const p = LIFE._provenance;   // set by build-life.py --derive, or by a live run
   const live = p && p.model;
   return `<div class="derive-bar">
     <span class="derive-state ${live ? 'live' : ''}">${live
-      ? `Derived live · ${esc(p.model)} · ${esc(p.at)}`
-      : 'Reasoning below is cached from an earlier run'}</span>
+      ? `Derived · ${esc(p.model)} · ${esc(String(p.at).slice(0, 16).replace('T', ' '))}`
+      : 'No reasoning derived yet'}</span>
     <button class="mini" id="derive-btn" onclick="deriveStructure()">Re-derive with AI</button>
     <span class="derive-note" id="derive-note"></span>
   </div>`;
@@ -4488,7 +4473,7 @@ async function deriveStructure() {
       body: JSON.stringify({
         model: REASONER,
         max_tokens: 2000,
-        messages: [{ role: 'user', content: derivePrompt() }]
+        messages: [{ role: 'user', content: await derivePrompt() }]
       })
     });
     if (!res.ok) {

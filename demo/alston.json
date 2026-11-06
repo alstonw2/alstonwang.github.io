@@ -11,6 +11,16 @@
       "candidates": 13,
       "locations": [
         {
+          "name": "Acatenango, Guatemala",
+          "lat": 14.5008,
+          "lng": -90.8761
+        },
+        {
+          "name": "Antigua, Guatemala",
+          "lat": 14.5586,
+          "lng": -90.7295
+        },
+        {
           "name": "Santa Cruz, Guatemala",
           "lat": 14.7333,
           "lng": -91.2
@@ -24,16 +34,6 @@
           "name": "Volcan de Fuego, Guatemala",
           "lat": 14.4747,
           "lng": -90.8806
-        },
-        {
-          "name": "Acatenango, Guatemala",
-          "lat": 14.5008,
-          "lng": -90.8761
-        },
-        {
-          "name": "Antigua, Guatemala",
-          "lat": 14.5586,
-          "lng": -90.7295
         }
       ],
       "slides": [
@@ -114,8 +114,13 @@
       "eyebrow": "Chapter · 2026",
       "narrative": "",
       "curationWhy": "",
-      "candidates": 19,
+      "candidates": 20,
       "locations": [
+        {
+          "name": "Crater Lake",
+          "lat": 42.9446,
+          "lng": -122.109
+        },
         {
           "name": "Pistol River",
           "lat": 42.2787,
@@ -132,14 +137,19 @@
           "lng": -124.35
         },
         {
-          "name": "Samuel H. Boardman Scenic",
-          "lat": 42.15,
-          "lng": -124.35
-        },
-        {
           "name": "Devil's Punchbowl",
           "lat": 44.7457,
           "lng": -124.0618
+        },
+        {
+          "name": "Cannon Beach",
+          "lat": 45.8918,
+          "lng": -123.9615
+        },
+        {
+          "name": "Samuel H. Boardman Scenic State Park, Oregon Coast",
+          "lat": 42.15,
+          "lng": -124.35
         },
         {
           "name": "Thor's Well, Oregon Coast",
@@ -150,16 +160,6 @@
           "name": "Shingle Mills, Oregon Coast",
           "lat": 42.2,
           "lng": -124.35
-        },
-        {
-          "name": "Cannon Beach",
-          "lat": 45.8918,
-          "lng": -123.9615
-        },
-        {
-          "name": "Crater Lake",
-          "lat": 42.9446,
-          "lng": -122.109
         }
       ],
       "slides": [
@@ -249,6 +249,12 @@
           "why": ""
         },
         {
+          "video": "https://youtu.be/vLBDJSs_OkY",
+          "src": "https://img.youtube.com/vi/vLBDJSs_OkY/hqdefault.jpg",
+          "caption": "Samuel H. Boardman Scenic State Park, Oregon Coast",
+          "why": ""
+        },
+        {
           "video": "https://youtu.be/pe4iGaTIvzo",
           "src": "https://img.youtube.com/vi/pe4iGaTIvzo/hqdefault.jpg",
           "caption": "Thor's Well, Oregon Coast",
@@ -269,7 +275,7 @@
       "eyebrow": "Chapter · 2024",
       "narrative": "",
       "curationWhy": "",
-      "candidates": 6,
+      "candidates": 7,
       "locations": [
         {
           "name": "Glacier National Park",
@@ -277,7 +283,7 @@
           "lng": -113.787
         },
         {
-          "name": "Grinnell Glacier, Glacier",
+          "name": "Grinnell Glacier, Glacier National Park",
           "lat": 48.7563,
           "lng": -113.7236
         }
@@ -311,6 +317,11 @@
         {
           "src": "https://alstonwang.com/images/camera/Glacier%20national%20park6.jpeg",
           "caption": "Glacier National Park",
+          "why": ""
+        },
+        {
+          "src": "https://alstonwang.com/images/camera/Grinnell%20Glacier%2C%20Glacier%20national%20park.jpeg",
+          "caption": "Grinnell Glacier, Glacier National Park",
           "why": ""
         }
       ]
@@ -408,6 +419,11 @@
           "lng": -83.7534
         },
         {
+          "name": "La Paz Waterfall, Costa Rica",
+          "lat": 10.2167,
+          "lng": -84.1667
+        },
+        {
           "name": "Arenal Volcano, Costa Rica",
           "lat": 10.463,
           "lng": -84.7033
@@ -416,11 +432,6 @@
           "name": "La Fortuna, Costa Rica",
           "lat": 10.4678,
           "lng": -84.6427
-        },
-        {
-          "name": "La Paz Waterfall, Costa Rica",
-          "lat": 10.2167,
-          "lng": -84.1667
         }
       ],
       "slides": [
@@ -477,14 +488,37 @@
       "media": {
         "src": "demo/media/born-1998.jpg",
         "caption": "Qionghai, on the tricycle."
+      },
+      "date": "October 1998"
+    },
+    {
+      "year": 2002,
+      "kind": "milestone",
+      "date": "August 2002",
+      "title": "Kindergarten",
+      "detail": "Announcing the weather, and occasional updates, on the radio.",
+      "place": {
+        "name": "Luxury Kindergarten, Qionghai",
+        "lat": 19.227275,
+        "lng": 110.472438
       }
     },
     {
       "year": 2004,
-      "approx": true,
       "kind": "milestone",
-      "title": "Won the elementary school speech competition",
-      "detail": "First time standing in front of a room and having it go well."
+      "title": "Participated in the elementary school speech competition",
+      "detail": "A teacher advised me not to sing. That was the first time I learned I was probably tone-deaf.",
+      "date": "May 2004",
+      "learning": {
+        "kind": "reflection",
+        "at": "2026",
+        "text": "A teacher told me I couldn't sing, and I think I still might be tone deaf to this day. I have remembered that sentence for twenty years, which probably says more about how long an offhand remark from a teacher lasts than it does about my voice."
+      },
+      "place": {
+        "name": "Qionghai No.1 Elementary School",
+        "lat": 19.235812,
+        "lng": 110.464744
+      }
     },
     {
       "year": 2005,
@@ -494,25 +528,13 @@
       "detail": "Tournament play as a kid."
     },
     {
-      "year": 2005,
-      "approx": true,
-      "kind": "milestone",
-      "title": "A teacher told me I couldn't sing",
-      "detail": "I still cannot sing. Possibly tone deaf.",
-      "learning": {
-        "kind": "reflection",
-        "at": "2026",
-        "text": "A teacher told me I couldn't sing, and I think I still might be tone deaf to this day. I have remembered that sentence for twenty years, which probably says more about how long an offhand remark from a teacher lasts than it does about my voice."
-      }
-    },
-    {
-      "year": 2005,
-      "approx": true,
+      "year": 2006,
       "kind": "milestone",
       "title": "Told my first-grade teacher I was going to America",
       "detail": "In first grade I told my teacher I was going to America — a decision I couldn't quite understand at the time.",
       "link": "poem.html",
-      "linkLabel": "A New Place — read the poem"
+      "linkLabel": "A New Place — read the poem",
+      "date": "August 2006"
     },
     {
       "year": 2006,
@@ -686,13 +708,6 @@
       "title": "Sailing",
       "detail": "",
       "src": "https://alstonwang.com/images/camera/sail.jpeg"
-    },
-    {
-      "year": 2024,
-      "kind": "photo",
-      "title": "Grinnell Glacier, Glacier National Park",
-      "detail": "",
-      "src": "https://alstonwang.com/images/camera/Grinnell%20Glacier%2C%20Glacier%20national%20park.jpeg"
     },
     {
       "year": 2024,
@@ -893,14 +908,6 @@
     },
     {
       "year": 2026,
-      "kind": "video",
-      "title": "Samuel H. Boardman Scenic State Park, Oregon Coast",
-      "detail": "",
-      "video": "https://youtu.be/vLBDJSs_OkY",
-      "src": "https://img.youtube.com/vi/vLBDJSs_OkY/hqdefault.jpg"
-    },
-    {
-      "year": 2026,
       "kind": "photo",
       "title": "Amtrak",
       "detail": "",
@@ -925,12 +932,21 @@
     }
   ],
   "_HOW_TO_ADD": [
-    "Add entries to scaffoldEvents below, in any order — they get sorted by year.",
-    "Then re-run: ./demo/build-life.py photos.json demo/alston.json demo/alston.scaffold.json",
-    "The coverage strip on the page shows which years are still empty.",
-    "Nothing needs to be momentous. A dated, specific, ordinary thing beats a vague big one.",
-    "\"approx\": true renders the year as 'c. 2005' instead of claiming precision we don't have.",
-    "_CHECK and _YOUR_WORDS mark the places that still need you."
+    "EVENTS — add to scaffoldEvents, any order; they sort by year.",
+    "CHAPTERS — add/edit/delete entries in chapterDefs below. Each needs an id,",
+    "  title, year, and either \"captions\" (exact caption strings from photos.json)",
+    "  or \"dates\": {\"from\":\"2025-09-29\",\"to\":\"2025-10-07\"} to sweep a range,",
+    "  or both. Delete a chapter by removing its entry — its curated output is",
+    "  pruned automatically on the next build.",
+    "PLACES — \"places\" maps a caption to [lat, lng] for the map. A caption with",
+    "  no entry here simply gets no pin.",
+    "LEARNINGS — \"learnings\" is keyed by chapter or achievement id, so it survives",
+    "  regenerating the photo half.",
+    "",
+    "See what captions exist:   ./demo/build-life.py photos.json --list-photos",
+    "Rebuild:                   ./demo/build-life.py photos.json demo/alston.json demo/alston.scaffold.json",
+    "",
+    "\"approx\": true renders a year as 'c. 2005' instead of claiming precision."
   ],
   "person": {
     "name": "Alston Wang",
