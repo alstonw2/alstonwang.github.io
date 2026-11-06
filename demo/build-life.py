@@ -347,6 +347,26 @@ def apply_curated(record, curated):
     return stale
 
 
+MONTHS = ["january", "february", "march", "april", "may", "june", "july",
+          "august", "september", "october", "november", "december"]
+
+
+def event_sort_key(e, seq):
+    """Order by real date, not by the display string — "25 August 2006" sorts
+    before "August 2006" alphabetically, which puts the move before the
+    conversation that preceded it. Events with no month keep their year and
+    fall after dated ones, in the order they were written."""
+    year = e.get("year", 0)
+    text = (e.get("date") or "").lower()
+    month = next((i + 1 for i, m in enumerate(MONTHS) if m in text), 13)
+    day = 0
+    for token in text.replace(",", " ").split():
+        if token.isdigit() and len(token) <= 2:
+            day = int(token)
+            break
+    return (year, month, day, seq)
+
+
 def list_photos(photos):
     """Print every caption with its count and date span, so chapter definitions
     can be written against what actually exists."""
@@ -503,7 +523,9 @@ def main():
                 a["learning"] = learnings[a["id"]]
         out["events"] = events
 
-    out["events"] = sorted(out["events"], key=lambda e: e["year"])
+    out["events"] = [e for _, e in sorted(
+        ((event_sort_key(e, i), e) for i, e in enumerate(out["events"])),
+        key=lambda pair: pair[0])]
 
     # Reasoning persists across rebuilds: regenerate the photo half as often as
     # you like without losing what the model concluded.

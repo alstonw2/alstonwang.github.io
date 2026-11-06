@@ -1358,6 +1358,13 @@
     .ex-split-right .slide-card { grid-template-columns: 1fr; }
     .ex-split-right .slide-thumb { height: 210px; }
     .ex-split-right .slide-thumb.pair { height: 150px; }
+  
+    /* A rail line can differ from the panel text, and can be set in the accent
+       colour when it is a quotation rather than a description. */
+    .rail-detail.accent {
+      color: var(--terra); font-style: italic;
+      font-family: 'Lora', serif; font-size: .92rem;
+    }
   </style>
 </head>
 <body>
@@ -3973,7 +3980,12 @@ function renderExplorer() {
       <span class="rail-icon" aria-hidden="true">${KIND_ICON[ev.kind] || '◦'}</span>
       <span>
         <span class="rail-title">${isPrivate(refOf(ev)) ? 'Kept private' : esc(eventTitle(ev))}</span>${kindLabel ? `<span class="rail-kind">${kindLabel}</span>` : ''}
-        ${detail && !isPrivate(refOf(ev)) ? `<span class="rail-detail">${esc(detail)}</span>` : ''}
+        ${(() => {
+          if (isPrivate(refOf(ev))) return '';
+          const line = ev.railText || detail;
+          if (!line) return '';
+          return `<span class="rail-detail${ev.railText && ev.railAccent ? ' accent' : ''}">${esc(line)}</span>`;
+        })()}
       </span>
       <span class="rail-open" aria-hidden="true">›</span>
     </button>`;

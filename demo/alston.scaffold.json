@@ -85,25 +85,16 @@
     },
     {
       "year": 2005,
-      "approx": true,
       "kind": "milestone",
       "title": "Learned chess, started competing",
-      "detail": "Tournament play as a kid."
-    },
-    {
-      "year": 2006,
-      "kind": "milestone",
-      "title": "Told my first-grade teacher I was going to America",
-      "detail": "In first grade I told my teacher I was going to America — a decision I couldn't quite understand at the time.",
-      "link": "poem.html",
-      "linkLabel": "A New Place — read the poem",
-      "date": "August 2006"
+      "detail": "Tournament play as a kid.",
+      "date": "June 2005"
     },
     {
       "year": 2006,
       "kind": "milestone",
       "title": "The family moved to New York",
-      "detail": "We had family in New York already.",
+      "detail": "Moved down from 3rd grade to 2nd grade because I could not speak English.",
       "link": "poem.html",
       "linkLabel": "A New Place — read the poem",
       "learning": {
@@ -119,27 +110,51 @@
       "date": "25 August 2006"
     },
     {
+      "year": 2006,
+      "kind": "milestone",
+      "title": "Told my first-grade teacher I was going to America",
+      "detail": "In first grade I told my teacher I was going to America — a decision I couldn't quite understand at the time.",
+      "link": "poem.html",
+      "linkLabel": "A New Place — read the poem",
+      "date": "August 2006",
+      "railText": "In first grade I told my teacher I was going to America, a decision I couldn't quite understand.",
+      "railAccent": true
+    },
+    {
       "year": 2009,
       "kind": "milestone",
       "title": "Discovered ping pong",
-      "detail": "Became a top-3 under-12 junior prospect in the United States, and was featured in the Wii Sports campaign in Times Square.",
+      "detail": "Became a top-3 under-12 junior prospect in the United States.",
+      "media": {
+        "src": "demo/media/ping-pong-2009.jpg",
+        "caption": "Mid-forehand, age eleven."
+      },
+      "date": "January 2009"
+    },
+    {
+      "year": 2009,
+      "kind": "milestone",
+      "date": "July 2009",
+      "title": "Wii Sports Resort launch",
+      "detail": "Featured in the Wii Sports campaign in Times Square.",
+      "railText": "First time being paid to do something I love.",
+      "media": {
+        "src": "demo/media/wii-times-square-2009.png",
+        "caption": "Times Square, the Wii Sports Resort launch."
+      },
       "place": {
         "name": "Times Square, New York",
         "lat": 40.758,
         "lng": -73.9855
       },
-      "media": {
-        "src": "demo/media/ping-pong-2009.jpg",
-        "caption": "Mid-forehand, age eleven."
-      },
       "link": "https://nintendoeverything.com/photos-and-captions-from-the-wii-sports-resort-launch-event-in-new-york-city/",
-      "linkLabel": "Wii Sports Resort launch, Times Square — I'm in the third photo"
+      "linkLabel": "Launch coverage — I'm in the third photo"
     },
     {
       "year": 2013,
       "kind": "milestone",
       "title": "Started at Stuyvesant",
-      "detail": "September 2013. There was a NASCAR driver in my graduating class who had been training since he was a kid.",
+      "detail": "Surrounded by the brightest of NYC.",
       "learning": {
         "kind": "advice",
         "at": "2026",
@@ -149,7 +164,8 @@
         "name": "Stuyvesant High School, Manhattan",
         "lat": 40.7179,
         "lng": -74.0135
-      }
+      },
+      "date": "September 2013"
     },
     {
       "year": 2017,
