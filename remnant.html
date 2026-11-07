@@ -3880,8 +3880,25 @@ function scrubTo(year) {
   onExScrub(year);
 }
 
+// One photograph gets a figure; several get a grid.
+function mediaHtml(media) {
+  const items = Array.isArray(media) ? media : [media];
+  if (items.length === 1) {
+    const m = items[0];
+    return `<figure class="event-media">
+      <img src="${esc(m.src)}" alt="${esc(m.caption || '')}" loading="lazy" />
+      ${m.caption ? `<figcaption>${esc(m.caption)}</figcaption>` : ''}
+    </figure>`;
+  }
+  return `<div class="photo-grid">${items.map(m => `<div class="photo-cell">
+    <img src="${esc(m.src)}" alt="${esc(m.caption || '')}" loading="lazy" />
+    ${m.caption ? `<div class="photo-cap">${esc(m.caption)}</div>` : ''}
+  </div>`).join('')}</div>`;
+}
+
 // An entry's place, whether it carries one directly or through a chapter.
 function placesFor(ev) {
+  if (Array.isArray(ev.places)) return ev.places.filter(p => typeof p.lat === 'number');
   if (ev.place && typeof ev.place.lat === 'number') return [ev.place];
   const r = refOf(ev);
   if (ev.kind === 'chapter' && r) {
@@ -3914,10 +3931,11 @@ let lifeMarkers = [];
 function allPlaces() {
   const out = [];
   LIFE.events.forEach(ev => {
-    if (ev.place && typeof ev.place.lat === 'number') {
-      out.push({ year: ev.year, name: ev.place.name, lat: ev.place.lat, lng: ev.place.lng,
+    placesFor(ev).forEach(pl => {
+      if (ev.kind === 'chapter') return;   // chapter pins are added below
+      out.push({ year: ev.year, name: pl.name, lat: pl.lat, lng: pl.lng,
                  title: eventTitle(ev), kind: ev.kind, ref: ev.ref || '' });
-    }
+    });
     const r = refOf(ev);
     if (ev.kind === 'chapter' && r) {
       (r.locations || []).forEach(loc => {
@@ -4144,10 +4162,7 @@ function openEvent(ref, kind, year, btn) {
             : `<img src="${esc(ev.src)}" alt="${esc(ev.title || '')}" loading="lazy" />`}
           ${ev.detail ? '' : `<figcaption>${esc(ev.title || '')}</figcaption>`}
         </figure>` : ''}
-      ${ev && ev.media ? `<figure class="event-media">
-          <img src="${esc(ev.media.src)}" alt="${esc(ev.media.caption || ev.title || '')}" loading="lazy" />
-          ${ev.media.caption ? `<figcaption>${esc(ev.media.caption)}</figcaption>` : ''}
-        </figure>` : ''}
+      ${ev && ev.media ? mediaHtml(ev.media) : ''}
       ${ev && ev.link ? `<div class="cull-note" style="margin-top:.9rem"><a href="${esc(ev.link)}"
           target="_blank" rel="noopener" style="color:var(--terra)">${esc(ev.linkLabel || 'Read it')} ↗</a></div>` : ''}
       ${ev && ev.learning ? learningHtml(ev) : ''}

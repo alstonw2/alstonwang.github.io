@@ -613,7 +613,22 @@
         "name": "Stuyvesant High School, Manhattan",
         "lat": 40.7179,
         "lng": -74.0135
-      }
+      },
+      "date": "June 2017",
+      "media": [
+        {
+          "src": "demo/media/graduation-2017.webp",
+          "caption": "Outside the Wellington, 57th Street."
+        },
+        {
+          "src": "demo/media/prom-2017-group.webp",
+          "caption": "Prom, on the Brooklyn waterfront."
+        },
+        {
+          "src": "demo/media/prom-2017-car.webp",
+          "caption": "Prom, the ride there."
+        }
+      ]
     },
     {
       "year": 2017,
@@ -624,7 +639,59 @@
         "name": "Stony Brook University, Long Island",
         "lat": 40.9257,
         "lng": -73.1409
+      },
+      "date": "September 2017",
+      "media": {
+        "src": "demo/media/stony-brook-2017.webp",
+        "caption": "The academic mall, in autumn."
       }
+    },
+    {
+      "year": 2018,
+      "kind": "milestone",
+      "date": "July 2018",
+      "title": "Family trip to visit home, Taiwan, Hong Kong and Thailand",
+      "detail": "First family trip — learned to tolerate each other more, and began to enjoy travelling the world.",
+      "places": [
+        {
+          "name": "Qionghai, Hainan — home",
+          "lat": 19.246,
+          "lng": 110.4746
+        },
+        {
+          "name": "Jiufen, Taiwan",
+          "lat": 25.1097,
+          "lng": 121.8445
+        },
+        {
+          "name": "Hong Kong",
+          "lat": 22.3193,
+          "lng": 114.1694
+        },
+        {
+          "name": "Pattaya, Thailand",
+          "lat": 12.9236,
+          "lng": 100.8825
+        }
+      ],
+      "media": [
+        {
+          "src": "demo/media/trip-2018-tea.webp",
+          "caption": "Pouring tea at home."
+        },
+        {
+          "src": "demo/media/trip-2018-jiufen.webp",
+          "caption": "Lanterns at Jiufen, Taiwan."
+        },
+        {
+          "src": "demo/media/trip-2018-floating-market.webp",
+          "caption": "The floating market, Thailand."
+        },
+        {
+          "src": "demo/media/trip-2018-mural.webp",
+          "caption": "A painted wall."
+        }
+      ]
     },
     {
       "year": 2018,
