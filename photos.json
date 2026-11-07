@@ -36,8 +36,8 @@
     "section": "camera",
     "caption": "Space Needle",
     "date": "2026-02-05",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Brooklyn1.jpg",
@@ -132,8 +132,8 @@
     "section": "camera",
     "caption": "Whistler",
     "date": "2026-01-09",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "whistler 2.jpg",
@@ -148,8 +148,8 @@
     "section": "camera",
     "caption": "Amtrak",
     "date": "2026-04-09",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "cannon beach 1.jpg",
@@ -172,24 +172,24 @@
     "section": "camera",
     "caption": "Moonlight",
     "date": "2026-03-25",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "devil's punchbowl 1.jpg",
     "section": "camera",
     "caption": "Devil's Punchbowl",
     "date": "2026-03-25",
-    "w": 6240,
-    "h": 4160
+    "w": 3200,
+    "h": 2133
   },
   {
     "file": "devil's punchbowl 2.jpeg",
     "section": "camera",
     "caption": "Devil's Punchbowl",
     "date": "2026-03-25",
-    "w": 5712,
-    "h": 4284
+    "w": 3200,
+    "h": 2400
   },
   {
     "file": "devil's punchbowl 3.jpg",
@@ -204,16 +204,16 @@
     "section": "camera",
     "caption": "Devil's Punchbowl",
     "date": "2026-03-25",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "pistol river1.jpeg",
     "section": "camera",
     "caption": "Pistol River",
     "date": "2026-03-25",
-    "w": 3024,
-    "h": 4032
+    "w": 2400,
+    "h": 3200
   },
   {
     "file": "pistol river2 .jpg",
@@ -252,8 +252,8 @@
     "section": "camera",
     "caption": "Secret Beach",
     "date": "2026-03-25",
-    "w": 4160,
-    "h": 6240
+    "w": 2133,
+    "h": 3200
   },
   {
     "file": "secret beach 2.jpg",
@@ -284,8 +284,8 @@
     "section": "camera",
     "caption": "Crater Lake",
     "date": "2026-03-24",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "University of Washington 1.jpg",
@@ -316,24 +316,24 @@
     "section": "camera",
     "caption": "Acatenango, Guatemala",
     "date": "2025-10-05",
-    "w": 3213,
-    "h": 5712
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Acatenango3.jpeg",
     "section": "camera",
     "caption": "Acatenango, Guatemala",
     "date": "2025-10-05",
-    "w": 8364,
-    "h": 3718
+    "w": 4800,
+    "h": 2133
   },
   {
     "file": "Acatenango4.jpeg",
     "section": "camera",
     "caption": "Acatenango, Guatemala",
     "date": "2025-10-05",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Antigua.jpeg",
@@ -348,32 +348,32 @@
     "section": "camera",
     "caption": "Barclay Lake",
     "date": "2025-09-15",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Cascade Pass 1.jpeg",
     "section": "camera",
     "caption": "Cascade Pass",
     "date": "2025-09-23",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Cascade Pass 2.jpeg",
     "section": "camera",
     "caption": "Cascade Pass",
     "date": "2025-09-23",
-    "w": 4032,
-    "h": 2268
+    "w": 3200,
+    "h": 1800
   },
   {
     "file": "Cascade Pass 3.jpeg",
     "section": "camera",
     "caption": "Cascade Pass",
     "date": "2025-09-23",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Cascade Pass 4.jpg",
@@ -444,40 +444,40 @@
     "section": "camera",
     "caption": "Kauai",
     "date": "2025-10-13",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Kauai2.jpeg",
     "section": "camera",
     "caption": "Kauai",
     "date": "2025-10-13",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Kauai3.jpeg",
     "section": "camera",
     "caption": "Kauai",
     "date": "2025-10-13",
-    "w": 3213,
-    "h": 5712
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Kauai4.jpeg",
     "section": "camera",
     "caption": "Kauai",
     "date": "2025-10-13",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Kauai5.jpeg",
     "section": "camera",
     "caption": "Kauai",
     "date": "2025-10-13",
-    "w": 3768,
-    "h": 9366
+    "w": 1931,
+    "h": 4800
   },
   {
     "file": "Maple Pass 2.jpg",
@@ -492,72 +492,72 @@
     "section": "camera",
     "caption": "Arenal Volcano, Costa Rica",
     "date": "2025-09-27",
-    "w": 5712,
-    "h": 3213
+    "w": 3200,
+    "h": 1800
   },
   {
     "file": "Areanl Volcano 2.jpeg",
     "section": "camera",
     "caption": "Arenal Volcano, Costa Rica",
     "date": "2025-09-27",
-    "w": 2208,
-    "h": 3926
+    "w": 1799,
+    "h": 3200
   },
   {
     "file": "Rainier1.jpeg",
     "section": "camera",
     "caption": "Mount Rainier",
     "date": "2025-08-20",
-    "w": 3213,
-    "h": 5712
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Santa Cruz 1.jpeg",
     "section": "camera",
     "caption": "Santa Cruz, Guatemala",
     "date": "2025-10-07",
-    "w": 5712,
-    "h": 3213
+    "w": 3200,
+    "h": 1800
   },
   {
     "file": "Santa Cruz2.jpeg",
     "section": "camera",
     "caption": "Santa Cruz, Guatemala",
     "date": "2025-10-07",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Santa Cruz 3.jpeg",
     "section": "camera",
     "caption": "Santa Cruz, Guatemala",
     "date": "2025-10-07",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Santa Cruz 4.jpeg",
     "section": "camera",
     "caption": "Santa Cruz, Guatemala",
     "date": "2025-10-07",
-    "w": 3867,
-    "h": 2175
+    "w": 3200,
+    "h": 1800
   },
   {
     "file": "Santa Cruz5.jpeg",
     "section": "camera",
     "caption": "Santa Cruz, Guatemala",
     "date": "2025-10-07",
-    "w": 3213,
-    "h": 5712
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Stars.jpeg",
     "section": "camera",
     "caption": "Stars",
     "date": "2025-11-15",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Taipei1.jpg",
@@ -612,32 +612,32 @@
     "section": "camera",
     "caption": "Angkor Wat, Cambodia",
     "date": "2024-11-25",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Angkor wat 2.jpeg",
     "section": "camera",
     "caption": "Angkor Wat, Cambodia",
     "date": "2024-11-25",
-    "w": 3916,
-    "h": 6196
+    "w": 2022,
+    "h": 3200
   },
   {
     "file": "angkor wat 3.jpeg",
     "section": "camera",
     "caption": "Angkor Wat, Cambodia",
     "date": "2024-11-25",
-    "w": 3213,
-    "h": 5712
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Arenal .jpeg",
     "section": "camera",
     "caption": "Arenal Volcano, Costa Rica",
     "date": "2025-04-25",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Blue Angels1.jpg",
@@ -652,144 +652,144 @@
     "section": "camera",
     "caption": "Blue Angels",
     "date": "2025-04-25",
-    "w": 3024,
-    "h": 4032
+    "w": 2400,
+    "h": 3200
   },
   {
     "file": "clouds.jpeg",
     "section": "camera",
     "caption": "Clouds",
     "date": "2024-10-25",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Costa rica.jpeg",
     "section": "camera",
     "caption": "Costa Rica",
     "date": "2025-01-25",
-    "w": 3214,
-    "h": 5712
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Deep Sea fishing.jpeg",
     "section": "camera",
     "caption": "Deep Sea Fishing",
     "date": "2024-07-25",
-    "w": 3856,
-    "h": 2168
+    "w": 3200,
+    "h": 1799
   },
   {
     "file": "deep sea fishing2.jpeg",
     "section": "camera",
     "caption": "Deep Sea Fishing",
     "date": "2025-07-25",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Glacier National Park .jpg",
     "section": "camera",
     "caption": "Glacier National Park",
     "date": "2024-09-25",
-    "w": 3213,
-    "h": 4016
+    "w": 2560,
+    "h": 3200
   },
   {
     "file": "Glacier National Park.jpeg",
     "section": "camera",
     "caption": "Glacier National Park",
     "date": "2024-09-25",
-    "w": 3213,
-    "h": 5712
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Glacier national park3.jpeg",
     "section": "camera",
     "caption": "Glacier National Park",
     "date": "2024-09-25",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Glacier national park4.jpeg",
     "section": "camera",
     "caption": "Glacier National Park",
     "date": "2024-09-25",
-    "w": 3213,
-    "h": 5712
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Glacier national park5.jpeg",
     "section": "camera",
     "caption": "Glacier National Park",
     "date": "2024-09-25",
-    "w": 3213,
-    "h": 5712
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Glacier national park6.jpeg",
     "section": "camera",
     "caption": "Glacier National Park",
     "date": "2024-09-25",
-    "w": 3213,
-    "h": 5712
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Grinnell Glacier, Glacier national park.jpeg",
     "section": "camera",
     "caption": "Grinnell Glacier, Glacier National Park",
     "date": "2024-09-25",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "La Fortuna waterfall, costa rica.jpeg",
     "section": "camera",
     "caption": "La Fortuna, Costa Rica",
     "date": "2025-04-25",
-    "w": 3213,
-    "h": 5712
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "La paz waterfall, costa rica.jpeg",
     "section": "camera",
     "caption": "La Paz Waterfall, Costa Rica",
     "date": "2025-01-25",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Lenticular Clouds on Mount rainier.jpeg",
     "section": "camera",
     "caption": "Mount Rainier",
     "date": "2025-08-25",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Olympic Coast.jpeg",
     "section": "camera",
     "caption": "Olympic Coast",
     "date": "2025-07-04",
-    "w": 4032,
-    "h": 2268
+    "w": 3200,
+    "h": 1800
   },
   {
     "file": "Panama1.jpeg",
     "section": "camera",
     "caption": "Panama",
     "date": "2025-01-25",
-    "w": 5712,
-    "h": 3213
+    "w": 3200,
+    "h": 1800
   },
   {
     "file": "Panama2.jpeg",
     "section": "camera",
     "caption": "Panama",
     "date": "2024-01-25",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Paris, Las Vegas.jpg",
@@ -804,40 +804,40 @@
     "section": "camera",
     "caption": "Port Angeles",
     "date": "2025-07-04",
-    "w": 3046,
-    "h": 5416
+    "w": 1799,
+    "h": 3200
   },
   {
     "file": "sail.jpeg",
     "section": "camera",
     "caption": "Sailing",
     "date": "2024-08-25",
-    "w": 3213,
-    "h": 5712
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Shedd Aquarium.jpeg",
     "section": "camera",
     "caption": "Shedd Aquarium, Chicago",
     "date": "2025-03-25",
-    "w": 3213,
-    "h": 5712
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "Shedd Aquarium 2.jpeg",
     "section": "camera",
     "caption": "Shedd Aquarium, Chicago",
     "date": "2025-03-25",
-    "w": 2268,
-    "h": 4032
+    "w": 1800,
+    "h": 3200
   },
   {
     "file": "St.Patrick's Day, Chicago.jpeg",
     "section": "camera",
     "caption": "St. Patrick's Day, Chicago",
     "date": "2024-03-25",
-    "w": 2711,
-    "h": 4820
+    "w": 1800,
+    "h": 3200
   },
   {
     "type": "video",
@@ -900,175 +900,175 @@
     "section": "drone",
     "caption": "Santa Cruz, Guatemala",
     "date": null,
-    "w": 4032,
-    "h": 3024
+    "w": 3200,
+    "h": 2400
   },
   {
     "file": "Volcan de Fuego.jpg",
     "section": "drone",
     "caption": "Volcan de Fuego, Guatemala",
     "date": null,
-    "w": 3024,
-    "h": 4032
+    "w": 2400,
+    "h": 3200
   },
   {
     "file": "barclay_lake_11.jpg",
     "section": "drone",
     "caption": "Barclay Lake",
     "date": null,
-    "w": 3024,
-    "h": 4032
+    "w": 2400,
+    "h": 3200
   },
   {
     "file": "barclay_lake_13.jpg",
     "section": "drone",
     "caption": "Barclay Lake",
     "date": null,
-    "w": 3024,
-    "h": 4032
+    "w": 2400,
+    "h": 3200
   },
   {
     "file": "barclay_panarama.jpg",
     "section": "drone",
     "caption": "Barclay Lake",
     "date": null,
-    "w": 8192,
-    "h": 4096
+    "w": 4800,
+    "h": 2400
   },
   {
     "file": "Arenal Volcano.jpg",
     "section": "drone",
     "caption": "Arenal Volcano, Costa Rica",
     "date": null,
-    "w": 8192,
-    "h": 3300
+    "w": 4800,
+    "h": 1933
   },
   {
     "file": "Arenal Volcano2.jpg",
     "section": "drone",
     "caption": "Arenal Volcano, Costa Rica",
     "date": null,
-    "w": 4032,
-    "h": 3024
+    "w": 3200,
+    "h": 2400
   },
   {
     "file": "Cap hill.jpg",
     "section": "drone",
     "caption": "Capitol Hill",
     "date": null,
-    "w": 8192,
-    "h": 3310
+    "w": 4800,
+    "h": 1939
   },
   {
     "file": "Fuego 2.jpg",
     "section": "drone",
     "caption": "Volcan de Fuego, Guatemala",
     "date": null,
-    "w": 3024,
-    "h": 4032
+    "w": 2400,
+    "h": 3200
   },
   {
     "file": "Fuego 3.jpg",
     "section": "drone",
     "caption": "Volcan de Fuego, Guatemala",
     "date": null,
-    "w": 7200,
-    "h": 5184
+    "w": 3200,
+    "h": 2304
   },
   {
     "file": "Gold creek pond.jpg",
     "section": "drone",
     "caption": "Gold Creek Pond",
     "date": null,
-    "w": 4032,
-    "h": 3024
+    "w": 3200,
+    "h": 2400
   },
   {
     "file": "San Pedro.jpg",
     "section": "drone",
     "caption": "San Pedro, Guatemala",
     "date": null,
-    "w": 4032,
-    "h": 3024
+    "w": 3200,
+    "h": 2400
   },
   {
     "file": "Santa cruz.jpg",
     "section": "drone",
     "caption": "Santa Cruz, Guatemala",
     "date": null,
-    "w": 3024,
-    "h": 4032
+    "w": 2400,
+    "h": 3200
   },
   {
     "file": "St.Lucia.jpg",
     "section": "drone",
     "caption": "St. Lucia",
     "date": null,
-    "w": 8192,
-    "h": 3310
+    "w": 4800,
+    "h": 1939
   },
   {
     "file": "brooklyn.jpg",
     "section": "drone",
     "caption": "Brooklyn",
     "date": null,
-    "w": 8192,
-    "h": 3290
+    "w": 4800,
+    "h": 1927
   },
   {
     "file": "deception pass bridge.jpg",
     "section": "drone",
     "caption": "Deception Pass",
     "date": null,
-    "w": 4032,
-    "h": 3024
+    "w": 3200,
+    "h": 2400
   },
   {
     "file": "shingle mills.jpg",
     "section": "drone",
     "caption": "Shingle Mills, Oregon Coast",
     "date": null,
-    "w": 3024,
-    "h": 4032
+    "w": 2400,
+    "h": 3200
   },
   {
     "file": "shingle mills2.jpg",
     "section": "drone",
     "caption": "Shingle Mills, Oregon Coast",
     "date": null,
-    "w": 4032,
-    "h": 3024
+    "w": 3200,
+    "h": 2400
   },
   {
     "file": "snoqualmie falls.jpg",
     "section": "drone",
     "caption": "Snoqualmie Falls",
     "date": null,
-    "w": 3024,
-    "h": 4032
+    "w": 2400,
+    "h": 3200
   },
   {
     "file": "snoqualmie falls 2.jpg",
     "section": "drone",
     "caption": "Snoqualmie Falls",
     "date": null,
-    "w": 4032,
-    "h": 3024
+    "w": 3200,
+    "h": 2400
   },
   {
     "file": "snoqualmie falls 3.jpg",
     "section": "drone",
     "caption": "Snoqualmie Falls",
     "date": null,
-    "w": 8192,
-    "h": 3316
+    "w": 4800,
+    "h": 1943
   },
   {
     "file": "space needle.jpg",
     "section": "drone",
     "caption": "Space Needle",
     "date": null,
-    "w": 4032,
-    "h": 3024
+    "w": 3200,
+    "h": 2400
   }
 ]
