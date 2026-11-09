@@ -135,33 +135,12 @@ def derive(record, here, out_path):
     if not key:
         sys.exit("--derive needs ANTHROPIC_API_KEY in the environment.")
 
-    body = json.dumps({
-        "model": REASONER,
-        "max_tokens": 2000,
-        "messages": [{"role": "user", "content": build_prompt(record, here)}],
-    }).encode()
-
-    req = urllib.request.Request(API_URL, data=body, headers={
-        "content-type": "application/json",
-        "x-api-key": key,
-        "anthropic-version": "2023-06-01",
-    })
     print("  asking %s ..." % REASONER)
-    try:
-        with urllib.request.urlopen(req, timeout=120) as r:
-            data = json.load(r)
-    except urllib.error.HTTPError as e:
-        detail = e.read().decode("utf-8", "replace")[:300]
-        sys.exit("API error %s: %s" % (e.code, detail))
-
-    text = "".join(b.get("text", "") for b in data.get("content", []))
-    text = text.strip().removeprefix("```json").removeprefix("```").removesuffix("```")
-    try:
-        parsed = json.loads(text)
-    except json.JSONDecodeError:
-        sys.exit("Model did not return valid JSON:\n" + text[:400])
-
-    usage = data.get("usage", {})
+    # Through the shared helper so the truncation check applies here too. The
+    # ceiling is generous because the answer grows with the record: one era
+    # object and one ranked achievement per entry, each carrying a sentence or
+    # two of reasoning.
+    parsed, usage = call_claude(REASONER, build_prompt(record, here), 16000, key)
     parsed["_provenance"] = {
         "model": REASONER,
         "at": __import__("datetime").datetime.now().isoformat(timespec="seconds"),
@@ -217,6 +196,11 @@ def call_claude(model, content, max_tokens, key):
     try:
         return json.loads(text), data.get("usage", {})
     except json.JSONDecodeError:
+        if data.get("stop_reason") == "max_tokens":
+            raise SystemExit(
+                "The answer was cut off at the %d-token ceiling, so the JSON is "
+                "incomplete.\nThe record has grown — raise max_tokens for this call."
+                % max_tokens)
         raise SystemExit("Model did not return valid JSON:\n" + text[:400])
 
 
@@ -283,7 +267,7 @@ def curate(record, here, out_path, only_ids):
                 "data": fetch_downscaled(s["src"], cache_dir)}})
 
         print("  %s: asking %s ..." % (ch["id"], CURATOR))
-        parsed, usage = call_claude(CURATOR, content, 2000, key)
+        parsed, usage = call_claude(CURATOR, content, 8000, key)
 
         def at(i):
             return stills[i] if 0 <= i < len(stills) else None

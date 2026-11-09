@@ -1,0 +1,82 @@
+{
+  "eras": [
+    {
+      "id": "hainan-before-america",
+      "label": "Island kid, radio voice, chess board",
+      "from": 1998,
+      "to": 2005,
+      "place": "Qionghai, Hainan, China",
+      "note": "Born on the island, announced the weather on kindergarten radio, got told not to sing, and started playing chess in tournaments.",
+      "why": "These years are the only ones lived entirely in Hainan, and the record is a handful of small, scattered milestones (2002 radio, 2004 speech competition, 2005 chess) with no photos or video. The era ends where the 2006 entries begin, when the person tells a teacher they are going to America."
+    },
+    {
+      "id": "new-york-learning-english",
+      "label": "Dropped a grade, found the ping pong table",
+      "from": 2006,
+      "to": 2012,
+      "place": "New York City",
+      "note": "The family moved to New York, he was put back a grade for lack of English, then became a top junior ping pong prospect and appeared in a Times Square Wii campaign.",
+      "why": "The 2006 move is the emotional center. It is the only event he wrote about twice, in the 2016 poem and again in 2026, with the line about his dad's tear. Everything through 2012 (the grade drop, ping pong in 2009, Wii Sports in Times Square) is the aftermath of arriving and finding a footing, before Stuyvesant changes the setting."
+    },
+    {
+      "id": "rooms-full-of-better-people",
+      "label": "Stuyvesant to Cornell: always the room above me",
+      "from": 2013,
+      "to": 2020,
+      "place": "New York City, Stony Brook, Ithaca",
+      "note": "Stuyvesant, a transfer-securing year at Stony Brook, Cornell in Information Science, collegiate table tennis, and the empty-campus lockdown.",
+      "why": "His own reflections on Stuyvesant and Cornell make the same point (more talented people than he'd assumed, then the same lesson one level up), so these years read as one long stretch of measuring himself against stronger rooms. The 2020 lockdown, which he says left almost no record, closes it as a visible gap in what was documented, just before the Seattle move."
+    },
+    {
+      "id": "seattle-from-nothing",
+      "label": "Seattle, building a life from nothing in particular",
+      "from": 2021,
+      "to": 2024,
+      "place": "Seattle, Washington",
+      "note": "Moved across the country for Amazon, worked in inbound sales and then AWS games and betting, switched to Program Manager in March 2024, and began traveling.",
+      "why": "The June 2021 move is where he places his confidence ('came from having to build a life from nothing'). The career change in 2024 is the other event he reflects on. Photos first appear in 2023 and thicken in 2024 (Panama, Angkor Wat, Chicago, sailing), so the record changes here from milestones to lived texture."
+    },
+    {
+      "id": "pickleball-and-everywhere",
+      "label": "Competing at 5.0, and out the door every weekend",
+      "from": 2025,
+      "to": 2026,
+      "place": "Pacific Northwest and beyond",
+      "note": "Entered pickleball tournaments, built a community, built Stacked, traveled (Guatemala, Japan and Taiwan, Costa Rica, Kauai), explored the Cascades and Oregon Coast, and made Remnant.",
+      "why": "This is by far the densest stretch in the record: a dozen photos in 2025, a dozen more plus a video in 2026, and four chapters. It starts in January 2025 with competitive pickleball, which he credits with giving him a community, and it runs through the present, where the record is being made."
+    }
+  ],
+  "achievements": [
+    {
+      "id": "a-aws",
+      "included": false,
+      "why": "This leaves out the sales career: three years in inbound sales and AWS games and betting, which looks impressive from outside. He never draws a lesson from it. When he talks about those years, he credits the Seattle move and not the job for his confidence."
+    },
+    {
+      "id": "a-ab",
+      "included": true,
+      "why": "He wrote a real lesson on this one: changing discipline means being a beginner on purpose, and the trade is worth it even though it doesn't feel that way at first. A pivot he reflects on this honestly counts for more than the longer sales stretch he only lists."
+    },
+    {
+      "id": "a-pickleball",
+      "included": true,
+      "why": "He returns to it in his own words with a clear point: the tournaments are the excuse and the community is the thing, so enter and don't do it for the result. That is a lesson aimed at the reader, and it anchors his most recent and most documented era."
+    },
+    {
+      "id": "a-stacked",
+      "included": false,
+      "why": "This leaves out Stacked, the doubles-matching system, as a defining moment. The record gives only a one-line description and no reflection or lesson from him. Its link to the pickleball community is plausible, but that link is already carried by the pickleball entry."
+    },
+    {
+      "id": "a-remnant",
+      "included": false,
+      "why": "Remnant is described only as 'This.' It is the frame holding the record and not an event in his life. The lessons that matter were written into it and are attached to other moments, so counting it would double-count them. It is left out because he gives no learning of his own about the project itself."
+    }
+  ],
+  "_provenance": {
+    "model": "claude-sonnet-5-5",
+    "at": "2026-11-09T12:05:35",
+    "input_tokens": 3295,
+    "output_tokens": 2897
+  }
+}

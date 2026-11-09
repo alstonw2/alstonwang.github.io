@@ -4,11 +4,11 @@
     {
       "id": "guatemala",
       "year": 2025,
-      "title": "Guatemala",
+      "title": "Among the Volcanoes",
       "eyebrow": "Chapter · 2025",
-      "narrative": "",
-      "curationWhy": "",
-      "candidates": 13,
+      "narrative": "Guatemala revealed itself in layers—first the raw power of its living mountains, then the quiet life nestled in their shadow. We climbed toward fire and light, slept under stars that felt close enough to touch, and learned that beauty here runs deeper than any photograph can hold.",
+      "curationWhy": "9 of 10 photographs kept. Chosen for narrative value over technical quality, near-duplicates dropped.",
+      "candidates": 10,
       "locations": [
         {
           "name": "Acatenango, Guatemala",
@@ -39,53 +39,47 @@
       "slides": [
         {
           "src": "https://alstonwang.com/images/camera/Acatenango1.jpg",
-          "caption": "Acatenango, Guatemala",
-          "why": ""
+          "caption": "The sun rose over Acatenango and the valley below, a moment of stillness before everything changed.",
+          "why": "Iconic panoramic opener; sets the scale and wonder of the landscape"
         },
         {
-          "src": "https://alstonwang.com/images/camera/Acatenango2.jpeg",
-          "caption": "Acatenango, Guatemala",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/Acatenango3.jpeg",
-          "caption": "Acatenango, Guatemala",
-          "why": ""
+          "collage": [
+            {
+              "src": "https://alstonwang.com/images/camera/Acatenango2.jpeg"
+            },
+            {
+              "src": "https://alstonwang.com/images/camera/Acatenango3.jpeg"
+            }
+          ],
+          "caption": "The volcano breathed and shifted before us—smoke curling from its peak in daylight, ash and fire visible at night.",
+          "why": "Two different perspectives of the same living mountain show the full experience of being near it"
         },
         {
           "src": "https://alstonwang.com/images/camera/Acatenango4.jpeg",
-          "caption": "Acatenango, Guatemala",
-          "why": ""
+          "caption": "At night, the mountain glowed red against the dark—a reminder that we were standing on restless earth.",
+          "why": "Haunting, rare moment of volcanic activity; most powerful emotional image"
         },
         {
           "src": "https://alstonwang.com/images/camera/Antigua.jpeg",
-          "caption": "Antigua, Guatemala",
-          "why": ""
+          "caption": "Antigua's colonial heart framed the volcano in the distance—centuries of stone watching over centuries more.",
+          "why": "Shifts narrative to human settlement; landscape-wide shot shows context and connection"
         },
         {
-          "src": "https://alstonwang.com/images/camera/Santa%20Cruz%201.jpeg",
-          "caption": "Santa Cruz, Guatemala",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/Santa%20Cruz2.jpeg",
-          "caption": "Santa Cruz, Guatemala",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/Santa%20Cruz%203.jpeg",
-          "caption": "Santa Cruz, Guatemala",
-          "why": ""
+          "collage": [
+            {
+              "src": "https://alstonwang.com/images/camera/Santa%20Cruz%201.jpeg"
+            },
+            {
+              "src": "https://alstonwang.com/images/camera/Santa%20Cruz5.jpeg"
+            }
+          ],
+          "caption": "We found refuge in the green valleys and small houses that clung to the mountainsides, places where life moved slowly.",
+          "why": "Both show intimate human scale in the landscape; capture the quieter side of the journey"
         },
         {
           "src": "https://alstonwang.com/images/camera/Santa%20Cruz%204.jpeg",
-          "caption": "Santa Cruz, Guatemala",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/Santa%20Cruz5.jpeg",
-          "caption": "Santa Cruz, Guatemala",
-          "why": ""
+          "caption": "On the last evening, Lake Atitlán held the light like a prayer—mountains mirrored in still water.",
+          "why": "Reflective, tender close; elegant panorama wraps the chapter with peace"
         },
         {
           "video": "https://youtu.be/Nl-vJRuLz0k",
@@ -110,11 +104,11 @@
     {
       "id": "oregon-coast",
       "year": 2026,
-      "title": "The Oregon Coast",
+      "title": "Coast of Stone and Sky",
       "eyebrow": "Chapter · 2026",
-      "narrative": "",
-      "curationWhy": "",
-      "candidates": 20,
+      "narrative": "We came to Oregon seeking something vast and unshakeable—rocks that had held their shape for millennia, waves that knew no hurry, and the kind of silence that only comes when you're small against the Pacific. What we found was a landscape that felt like both an ending and a beginning.",
+      "curationWhy": "9 of 17 photographs kept. Chosen for narrative value over technical quality, near-duplicates dropped.",
+      "candidates": 17,
       "locations": [
         {
           "name": "Crater Lake",
@@ -164,89 +158,48 @@
       ],
       "slides": [
         {
-          "src": "https://alstonwang.com/images/camera/crater%20lake.jpeg",
-          "caption": "Crater Lake",
-          "why": ""
-        },
-        {
           "src": "https://alstonwang.com/images/camera/pistol%20river1.jpeg",
-          "caption": "Pistol River",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/pistol%20river2%20.jpg",
-          "caption": "Pistol River",
-          "why": ""
+          "caption": "The sky ignited as the day dissolved into the ocean, leaving everything in silhouette.",
+          "why": "Powerful opener that captures the emotional tone—fire and shadow, beauty and solitude"
         },
         {
           "src": "https://alstonwang.com/images/camera/pistol%20river%203.jpg",
-          "caption": "Pistol River",
-          "why": ""
+          "caption": "Twin sea stacks stood patient in the shallows, their reflections pooling beneath them like memory.",
+          "why": "Iconic landscape image that defines this coastal chapter; the stillness and monumentality are central to the experience"
         },
         {
-          "src": "https://alstonwang.com/images/camera/pistol%20river%204.jpg",
-          "caption": "Pistol River",
-          "why": ""
+          "collage": [
+            {
+              "src": "https://alstonwang.com/images/camera/secret%20beach%201.jpg"
+            },
+            {
+              "src": "https://alstonwang.com/images/camera/devil%27s%20punchbowl%202.jpeg"
+            }
+          ],
+          "caption": "We moved through stone passages carved by time, emerging into light and color that had been hidden in the dark.",
+          "why": "These two cave moments show the journey inward and outward—discovery, exploration, and the reveal of hidden beauty"
         },
         {
-          "src": "https://alstonwang.com/images/camera/pistol%20river%205.jpg",
-          "caption": "Pistol River",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/secret%20beach%201.jpg",
-          "caption": "Secret Beach",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/secret%20beach%202.jpg",
-          "caption": "Secret Beach",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/Samuel%20H.%20Boardman%201.jpg",
-          "caption": "Samuel H. Boardman",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/Samuel%20H.%20Boardman%202.jpg",
-          "caption": "Samuel H. Boardman",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/devil%27s%20punchbowl%201.jpg",
-          "caption": "Devil's Punchbowl",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/devil%27s%20punchbowl%202.jpeg",
-          "caption": "Devil's Punchbowl",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/devil%27s%20punchbowl%203.jpg",
-          "caption": "Devil's Punchbowl",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/devil%27s%20punchbowl%204.jpeg",
-          "caption": "Devil's Punchbowl",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/cannon%20beach%201.jpg",
-          "caption": "Cannon Beach",
-          "why": ""
+          "collage": [
+            {
+              "src": "https://alstonwang.com/images/camera/secret%20beach%202.jpg"
+            },
+            {
+              "src": "https://alstonwang.com/images/camera/devil%27s%20punchbowl%201.jpg"
+            }
+          ],
+          "caption": "The tide pools held entire worlds—creatures clinging to rocks, life finding purchase in the smallest spaces.",
+          "why": "Intimate details paired with cave exploration show how we noticed both the vast and the minute"
         },
         {
           "src": "https://alstonwang.com/images/camera/cannon%20beach%202.jpg",
-          "caption": "Cannon Beach",
-          "why": ""
+          "caption": "We sat with strangers on the sand beneath that impossible rock, all of us quiet, all of us held by something larger than ourselves.",
+          "why": "Humanity in landscape—a gentle moment that grounds the chapter in actual presence and shared witnessing"
         },
         {
           "src": "https://alstonwang.com/images/camera/moonlight1.jpeg",
-          "caption": "Moonlight",
-          "why": ""
+          "caption": "The moon rose over everything we'd walked through, and the day finally let us go.",
+          "why": "Quiet, reflective close—the night sky mirrors the emotional arc, ending with release and contemplation"
         },
         {
           "video": "https://youtu.be/vLBDJSs_OkY",
@@ -271,10 +224,10 @@
     {
       "id": "glacier",
       "year": 2024,
-      "title": "Glacier National Park",
+      "title": "Glacier's Quiet Grandeur",
       "eyebrow": "Chapter · 2024",
-      "narrative": "",
-      "curationWhy": "",
+      "narrative": "We came to Glacier National Park seeking the scale of mountains, but found ourselves undone by stillness—the kind that only high water and ancient stone can teach. Each lake held its own reflection like a secret, and in the gaps between peaks, we glimpsed what it means to be small.",
+      "curationWhy": "6 of 7 photographs kept. Chosen for narrative value over technical quality, near-duplicates dropped.",
       "candidates": 7,
       "locations": [
         {
@@ -291,48 +244,50 @@
       "slides": [
         {
           "src": "https://alstonwang.com/images/camera/Glacier%20National%20Park%20.jpg",
-          "caption": "Glacier National Park",
-          "why": ""
+          "caption": "The lodge sits small and solitary, cradled between mountains and their perfect mirror.",
+          "why": "Wide panoramic anchor; captures the park's defining moment of serene abundance."
         },
         {
           "src": "https://alstonwang.com/images/camera/Glacier%20National%20Park.jpeg",
-          "caption": "Glacier National Park",
-          "why": ""
+          "caption": "A burned tree stands sentinel on the ridge, life and ruin held in a single frame.",
+          "why": "Strong visual metaphor; shows the park's resilience and complexity beyond postcard beauty."
         },
         {
           "src": "https://alstonwang.com/images/camera/Glacier%20national%20park3.jpeg",
-          "caption": "Glacier National Park",
-          "why": ""
+          "caption": "A solitary figure wades into the shallows, surrounded by the forest's doubled world.",
+          "why": "Captures an intimate moment of connection; someone actually inhabiting the landscape."
         },
         {
-          "src": "https://alstonwang.com/images/camera/Glacier%20national%20park4.jpeg",
-          "caption": "Glacier National Park",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/Glacier%20national%20park5.jpeg",
-          "caption": "Glacier National Park",
-          "why": ""
+          "collage": [
+            {
+              "src": "https://alstonwang.com/images/camera/Glacier%20national%20park4.jpeg"
+            },
+            {
+              "src": "https://alstonwang.com/images/camera/Glacier%20national%20park5.jpeg"
+            }
+          ],
+          "caption": "Two peaks, two vistas—each reveals a different face of the park's architecture.",
+          "why": "Both are iconic lake reflections from different locations; together they show the recurring beauty across multiple hikes."
         },
         {
           "src": "https://alstonwang.com/images/camera/Glacier%20national%20park6.jpeg",
-          "caption": "Glacier National Park",
-          "why": ""
+          "caption": "A mountain goat, impossibly sure-footed, reminds us this is home for someone else.",
+          "why": "Shifts perspective; introduces the wild inhabitants and grounds the grandeur in real ecology."
         },
         {
           "src": "https://alstonwang.com/images/camera/Grinnell%20Glacier%2C%20Glacier%20national%20park.jpeg",
-          "caption": "Grinnell Glacier, Glacier National Park",
-          "why": ""
+          "caption": "Ice fragments drift in turquoise water, the glacier's slow gift to the valley below.",
+          "why": "Epic closer; shows geological time and change; the glacier itself becomes the subject, honoring the park's namesake."
         }
       ]
     },
     {
       "id": "asia",
       "year": 2025,
-      "title": "Japan and Taiwan",
+      "title": "Neon and Snow",
       "eyebrow": "Chapter · 2025",
-      "narrative": "",
-      "curationWhy": "",
+      "narrative": "Wandering between Tokyo's glowing streets and the quiet majesty of Mount Fuji, we found ourselves caught between two worlds—the frenetic pulse of city nights and the timeless stillness of nature. It was a journey through contrasts, each moment a small surrender to wherever the path led.",
+      "curationWhy": "5 of 11 photographs kept. Chosen for narrative value over technical quality, near-duplicates dropped.",
       "candidates": 11,
       "locations": [
         {
@@ -348,70 +303,54 @@
       ],
       "slides": [
         {
-          "src": "https://alstonwang.com/images/camera/Japan1.jpg",
-          "caption": "Japan",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/Japan2.jpg",
-          "caption": "Japan",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/Japan3.jpg",
-          "caption": "Japan",
-          "why": ""
+          "collage": [
+            {
+              "src": "https://alstonwang.com/images/camera/Japan1.jpg"
+            },
+            {
+              "src": "https://alstonwang.com/images/camera/Japan2.jpg"
+            }
+          ],
+          "caption": "Tokyo revealed itself in quiet corners and neon-soaked alleyways—a city that only comes alive after dark.",
+          "why": "Both capture Tokyo's nocturnal character and set the urban tone for the journey."
         },
         {
           "src": "https://alstonwang.com/images/camera/Japan4.jpg",
-          "caption": "Japan",
-          "why": ""
+          "caption": "Mount Fuji rose perfect and snow-crowned across the dark water, a moment of pilgrimage made real.",
+          "why": "A defining landscape—wide and iconic, deserves solo presentation for full impact."
         },
         {
           "src": "https://alstonwang.com/images/camera/Japan5.jpg",
-          "caption": "Japan",
-          "why": ""
+          "caption": "Even the quiet houses seemed to bow toward the mountain's eternal presence.",
+          "why": "Complements the Fuji view with a grounded, human perspective of the same sacred place."
         },
         {
-          "src": "https://alstonwang.com/images/camera/Taipei1.jpg",
-          "caption": "Taipei",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/Taipei2.jpg",
-          "caption": "Taipei",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/Taipei3.jpg",
-          "caption": "Taipei",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/Taipei4.jpg",
-          "caption": "Taipei",
-          "why": ""
+          "collage": [
+            {
+              "src": "https://alstonwang.com/images/camera/Taipei3.jpg"
+            },
+            {
+              "src": "https://alstonwang.com/images/camera/Taipie6.jpg"
+            }
+          ],
+          "caption": "The night markets bloomed with lantern light and neon—places where strangers became part of the spectacle.",
+          "why": "Both capture the glowing, alive energy of night markets across both cities."
         },
         {
           "src": "https://alstonwang.com/images/camera/Taipei5.jpg",
-          "caption": "Taipei",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/Taipie6.jpg",
-          "caption": "Taipei",
-          "why": ""
+          "caption": "A solitary figure stood between stone and sky, exactly where the earth meets the sea.",
+          "why": "A meditative landscape moment that echoes the quiet seeking found throughout the chapter."
         }
       ]
     },
     {
       "id": "costa-rica",
       "year": 2025,
-      "title": "Costa Rica",
+      "title": "Into the Green",
       "eyebrow": "Chapter · 2025",
-      "narrative": "",
-      "curationWhy": "",
-      "candidates": 7,
+      "narrative": "Costa Rica revealed itself slowly—first as a bright-beaked curiosity, then as mist and stone and the patient green that fills every ravine. We moved through the country's heart, waking each morning to the same perfect volcano, learning that some places ask nothing of you but to stay still and look.",
+      "curationWhy": "6 of 6 photographs kept. Chosen for narrative value over technical quality, near-duplicates dropped.",
+      "candidates": 6,
       "locations": [
         {
           "name": "Costa Rica",
@@ -437,33 +376,35 @@
       "slides": [
         {
           "src": "https://alstonwang.com/images/camera/Costa%20rica.jpeg",
-          "caption": "Costa Rica",
-          "why": ""
+          "caption": "A toucan tilts its head—the first bright thing you notice, expectant as the country itself.",
+          "why": "Strong entry image that captures the specificity and color of arrival; the tips box is a wry, human detail."
         },
         {
           "src": "https://alstonwang.com/images/camera/La%20paz%20waterfall%2C%20costa%20rica.jpeg",
-          "caption": "La Paz Waterfall, Costa Rica",
-          "why": ""
+          "caption": "A waterfall drops through layered green, and you understand why people speak of this place in whispers.",
+          "why": "The emotional heart of the journey—vertical and sublime, the kind of moment that stops time. Stands alone as a hero image."
         },
         {
-          "src": "https://alstonwang.com/images/camera/Arenal%20.jpeg",
-          "caption": "Arenal Volcano, Costa Rica",
-          "why": ""
-        },
-        {
-          "src": "https://alstonwang.com/images/camera/La%20Fortuna%20waterfall%2C%20costa%20rica.jpeg",
-          "caption": "La Fortuna, Costa Rica",
-          "why": ""
+          "collage": [
+            {
+              "src": "https://alstonwang.com/images/camera/Arenal%20.jpeg"
+            },
+            {
+              "src": "https://alstonwang.com/images/camera/La%20Fortuna%20waterfall%2C%20costa%20rica.jpeg"
+            }
+          ],
+          "caption": "The volcano appears and reappears—distant, patient, framed by ferns and cloud and the particular light of elevation.",
+          "why": "Two views of the same geography from different angles and distances; together they show how the volcano becomes a constant companion."
         },
         {
           "src": "https://alstonwang.com/images/camera/Arenal%20Volcano.jpeg",
-          "caption": "Arenal Volcano, Costa Rica",
-          "why": ""
+          "caption": "Arenal rises perfect above the pool, reflected in still water—the moment the landscape becomes personal.",
+          "why": "Wide panoramic landscape showing human comfort meeting untamed nature; a turning point in the narrative where you settle in."
         },
         {
           "src": "https://alstonwang.com/images/camera/Areanl%20Volcano%202.jpeg",
-          "caption": "Arenal Volcano, Costa Rica",
-          "why": ""
+          "caption": "Framed by glass and modern walls, the volcano fills the window—the view becomes the room, and home becomes temporary.",
+          "why": "The intimate final image showing how the landscape infiltrates your space; a quiet meditation on intimacy with place."
         },
         {
           "video": "https://youtu.be/M3Lvgr04tIQ",
@@ -489,7 +430,8 @@
         "src": "demo/media/born-1998.jpg",
         "caption": "Qionghai, on the tricycle."
       },
-      "date": "October 1998"
+      "date": "October 1998",
+      "era": "hainan-before-america"
     },
     {
       "year": 2002,
@@ -501,7 +443,8 @@
         "name": "Luxury Kindergarten, Qionghai",
         "lat": 19.227275,
         "lng": 110.472438
-      }
+      },
+      "era": "hainan-before-america"
     },
     {
       "year": 2004,
@@ -518,14 +461,16 @@
         "name": "Qionghai No.1 Elementary School",
         "lat": 19.235812,
         "lng": 110.464744
-      }
+      },
+      "era": "hainan-before-america"
     },
     {
       "year": 2005,
       "kind": "milestone",
       "title": "Learned chess, started competing",
       "detail": "Tournament play as a kid.",
-      "date": "June 2005"
+      "date": "June 2005",
+      "era": "hainan-before-america"
     },
     {
       "year": 2006,
@@ -536,7 +481,8 @@
       "linkLabel": "A New Place — read the poem",
       "date": "August 2006",
       "railText": "In first grade I told my teacher I was going to America, a decision I couldn't quite understand.",
-      "railAccent": true
+      "railAccent": true,
+      "era": "new-york-learning-english"
     },
     {
       "year": 2006,
@@ -555,7 +501,8 @@
         "lat": 40.7128,
         "lng": -74.006
       },
-      "date": "25 August 2006"
+      "date": "25 August 2006",
+      "era": "new-york-learning-english"
     },
     {
       "year": 2009,
@@ -566,7 +513,8 @@
         "src": "demo/media/ping-pong-2009.jpg",
         "caption": "Mid-forehand, age eleven."
       },
-      "date": "January 2009"
+      "date": "January 2009",
+      "era": "new-york-learning-english"
     },
     {
       "year": 2009,
@@ -585,7 +533,8 @@
         "lng": -73.9855
       },
       "link": "https://nintendoeverything.com/photos-and-captions-from-the-wii-sports-resort-launch-event-in-new-york-city/",
-      "linkLabel": "Launch coverage — I'm in the third photo"
+      "linkLabel": "Launch coverage — I'm in the third photo",
+      "era": "new-york-learning-english"
     },
     {
       "year": 2013,
@@ -602,7 +551,8 @@
         "lat": 40.7179,
         "lng": -74.0135
       },
-      "date": "September 2013"
+      "date": "September 2013",
+      "era": "rooms-full-of-better-people"
     },
     {
       "year": 2017,
@@ -628,7 +578,8 @@
           "src": "demo/media/prom-2017-car.webp",
           "caption": "Prom, the ride there."
         }
-      ]
+      ],
+      "era": "rooms-full-of-better-people"
     },
     {
       "year": 2017,
@@ -644,7 +595,8 @@
       "media": {
         "src": "demo/media/stony-brook-2017.webp",
         "caption": "The academic mall, in autumn."
-      }
+      },
+      "era": "rooms-full-of-better-people"
     },
     {
       "year": 2018,
@@ -691,7 +643,8 @@
           "src": "demo/media/trip-2018-mural.webp",
           "caption": "A painted wall."
         }
-      ]
+      ],
+      "era": "rooms-full-of-better-people"
     },
     {
       "year": 2018,
@@ -707,7 +660,8 @@
         "name": "Ithaca, New York",
         "lat": 42.4534,
         "lng": -76.4735
-      }
+      },
+      "era": "rooms-full-of-better-people"
     },
     {
       "year": 2018,
@@ -718,7 +672,8 @@
         "name": "Ithaca, New York",
         "lat": 42.4534,
         "lng": -76.4735
-      }
+      },
+      "era": "rooms-full-of-better-people"
     },
     {
       "year": 2020,
@@ -734,7 +689,8 @@
         "name": "Cornell campus, Ithaca",
         "lat": 42.448,
         "lng": -76.4819
-      }
+      },
+      "era": "rooms-full-of-better-people"
     },
     {
       "year": 2021,
@@ -750,180 +706,208 @@
         "name": "Seattle, Washington",
         "lat": 47.6062,
         "lng": -122.3321
-      }
+      },
+      "era": "seattle-from-nothing"
     },
     {
       "year": 2021,
       "kind": "achievement",
-      "ref": "a-aws"
+      "ref": "a-aws",
+      "era": "seattle-from-nothing"
     },
     {
       "year": 2023,
       "kind": "photo",
       "title": "Paris, Las Vegas",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Paris%2C%20Las%20Vegas.jpg"
+      "src": "https://alstonwang.com/images/camera/Paris%2C%20Las%20Vegas.jpg",
+      "era": "seattle-from-nothing"
     },
     {
       "year": 2024,
       "kind": "photo",
       "title": "Panama",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Panama2.jpeg"
+      "src": "https://alstonwang.com/images/camera/Panama2.jpeg",
+      "era": "seattle-from-nothing"
     },
     {
       "year": 2024,
       "kind": "photo",
       "title": "St. Patrick's Day, Chicago",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/St.Patrick%27s%20Day%2C%20Chicago.jpeg"
+      "src": "https://alstonwang.com/images/camera/St.Patrick%27s%20Day%2C%20Chicago.jpeg",
+      "era": "seattle-from-nothing"
     },
     {
       "year": 2024,
       "kind": "photo",
       "title": "Deep Sea Fishing",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Deep%20Sea%20fishing.jpeg"
+      "src": "https://alstonwang.com/images/camera/Deep%20Sea%20fishing.jpeg",
+      "era": "seattle-from-nothing"
     },
     {
       "year": 2024,
       "kind": "photo",
       "title": "Sailing",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/sail.jpeg"
+      "src": "https://alstonwang.com/images/camera/sail.jpeg",
+      "era": "seattle-from-nothing"
     },
     {
       "year": 2024,
       "kind": "photo",
       "title": "Clouds",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/clouds.jpeg"
+      "src": "https://alstonwang.com/images/camera/clouds.jpeg",
+      "era": "seattle-from-nothing"
     },
     {
       "year": 2024,
       "kind": "photo",
       "title": "Angkor Wat, Cambodia",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Angkor%20Wat%2C%20Cambodia.jpeg"
+      "src": "https://alstonwang.com/images/camera/Angkor%20Wat%2C%20Cambodia.jpeg",
+      "era": "seattle-from-nothing"
     },
     {
       "year": 2024,
       "kind": "chapter",
-      "ref": "glacier"
+      "ref": "glacier",
+      "era": "seattle-from-nothing"
     },
     {
       "year": 2024,
       "kind": "achievement",
-      "ref": "a-ab"
+      "ref": "a-ab",
+      "era": "seattle-from-nothing"
     },
     {
       "year": 2025,
       "kind": "photo",
       "title": "Shedd Aquarium, Chicago",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Shedd%20Aquarium.jpeg"
+      "src": "https://alstonwang.com/images/camera/Shedd%20Aquarium.jpeg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "photo",
       "title": "Blue Angels",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Blue%20Angels1.jpg"
+      "src": "https://alstonwang.com/images/camera/Blue%20Angels1.jpg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "photo",
       "title": "Olympic Coast",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Olympic%20Coast.jpeg"
+      "src": "https://alstonwang.com/images/camera/Olympic%20Coast.jpeg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "photo",
       "title": "Port Angeles",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Port%20Angeles.jpeg"
+      "src": "https://alstonwang.com/images/camera/Port%20Angeles.jpeg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "photo",
       "title": "Mount Rainier",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Rainier1.jpeg"
+      "src": "https://alstonwang.com/images/camera/Rainier1.jpeg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "photo",
       "title": "Barclay Lake",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Barclay%20Lake.jpeg"
+      "src": "https://alstonwang.com/images/camera/Barclay%20Lake.jpeg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "photo",
       "title": "Cascade Pass",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Cascade%20Pass%201.jpeg"
+      "src": "https://alstonwang.com/images/camera/Cascade%20Pass%201.jpeg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "photo",
       "title": "Kauai",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Kauai1.jpeg"
+      "src": "https://alstonwang.com/images/camera/Kauai1.jpeg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "photo",
       "title": "Maple Pass",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Maple%20Pass%202.jpg"
+      "src": "https://alstonwang.com/images/camera/Maple%20Pass%202.jpg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "photo",
       "title": "Stars",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Stars.jpeg"
+      "src": "https://alstonwang.com/images/camera/Stars.jpeg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "chapter",
-      "ref": "guatemala"
+      "ref": "guatemala",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "chapter",
-      "ref": "asia"
+      "ref": "asia",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "chapter",
-      "ref": "costa-rica"
+      "ref": "costa-rica",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "achievement",
-      "ref": "a-pickleball"
+      "ref": "a-pickleball",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2025,
       "kind": "achievement",
-      "ref": "a-stacked"
+      "ref": "a-stacked",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "photo",
       "title": "Whistler",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Whistler1.jpeg"
+      "src": "https://alstonwang.com/images/camera/Whistler1.jpeg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "photo",
       "title": "Deception Pass",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Deception%20Pass%20Bridge%201.jpg"
+      "src": "https://alstonwang.com/images/camera/Deception%20Pass%20Bridge%201.jpg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
@@ -931,87 +915,100 @@
       "title": "Deception Pass Bridge State Park, Whidbey Island, Washington",
       "detail": "",
       "video": "https://youtu.be/PVebPzdNJxg",
-      "src": "https://img.youtube.com/vi/PVebPzdNJxg/hqdefault.jpg"
+      "src": "https://img.youtube.com/vi/PVebPzdNJxg/hqdefault.jpg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "photo",
       "title": "San Francisco",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/San%20Francisco%201.jpg"
+      "src": "https://alstonwang.com/images/camera/San%20Francisco%201.jpg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "photo",
       "title": "Seahawks Parade",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/seahawk_parade_%21.jpg"
+      "src": "https://alstonwang.com/images/camera/seahawk_parade_%21.jpg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "photo",
       "title": "Space Needle",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/seattle2.jpeg"
+      "src": "https://alstonwang.com/images/camera/seattle2.jpeg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "photo",
       "title": "Las Vegas",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/vegas1.jpg"
+      "src": "https://alstonwang.com/images/camera/vegas1.jpg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "photo",
       "title": "Red Rock Canyon",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/redrock1.jpg"
+      "src": "https://alstonwang.com/images/camera/redrock1.jpg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "photo",
       "title": "Monorail",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/seattle1.jpg"
+      "src": "https://alstonwang.com/images/camera/seattle1.jpg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "photo",
       "title": "Brooklyn",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Brooklyn1.jpg"
+      "src": "https://alstonwang.com/images/camera/Brooklyn1.jpg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "photo",
       "title": "University of Washington",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/University%20of%20Washington%201.jpg"
+      "src": "https://alstonwang.com/images/camera/University%20of%20Washington%201.jpg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "photo",
       "title": "Amtrak",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/AMTRAK.jpeg"
+      "src": "https://alstonwang.com/images/camera/AMTRAK.jpeg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "photo",
       "title": "Elysian Park, Los Angeles",
       "detail": "",
-      "src": "https://alstonwang.com/images/camera/Elysian%20Park%2C%20LA.jpg"
+      "src": "https://alstonwang.com/images/camera/Elysian%20Park%2C%20LA.jpg",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "chapter",
-      "ref": "oregon-coast"
+      "ref": "oregon-coast",
+      "era": "pickleball-and-everywhere"
     },
     {
       "year": 2026,
       "kind": "achievement",
-      "ref": "a-remnant"
+      "ref": "a-remnant",
+      "era": "pickleball-and-everywhere"
     }
   ],
   "_HOW_TO_ADD": [
@@ -1050,14 +1047,62 @@
       ]
     }
   },
-  "eras": [],
+  "eras": [
+    {
+      "id": "hainan-before-america",
+      "label": "Island kid, radio voice, chess board",
+      "from": 1998,
+      "to": 2005,
+      "place": "Qionghai, Hainan, China",
+      "note": "Born on the island, announced the weather on kindergarten radio, got told not to sing, and started playing chess in tournaments.",
+      "why": "These years are the only ones lived entirely in Hainan, and the record is a handful of small, scattered milestones (2002 radio, 2004 speech competition, 2005 chess) with no photos or video. The era ends where the 2006 entries begin, when the person tells a teacher they are going to America."
+    },
+    {
+      "id": "new-york-learning-english",
+      "label": "Dropped a grade, found the ping pong table",
+      "from": 2006,
+      "to": 2012,
+      "place": "New York City",
+      "note": "The family moved to New York, he was put back a grade for lack of English, then became a top junior ping pong prospect and appeared in a Times Square Wii campaign.",
+      "why": "The 2006 move is the emotional center. It is the only event he wrote about twice, in the 2016 poem and again in 2026, with the line about his dad's tear. Everything through 2012 (the grade drop, ping pong in 2009, Wii Sports in Times Square) is the aftermath of arriving and finding a footing, before Stuyvesant changes the setting."
+    },
+    {
+      "id": "rooms-full-of-better-people",
+      "label": "Stuyvesant to Cornell: always the room above me",
+      "from": 2013,
+      "to": 2020,
+      "place": "New York City, Stony Brook, Ithaca",
+      "note": "Stuyvesant, a transfer-securing year at Stony Brook, Cornell in Information Science, collegiate table tennis, and the empty-campus lockdown.",
+      "why": "His own reflections on Stuyvesant and Cornell make the same point (more talented people than he'd assumed, then the same lesson one level up), so these years read as one long stretch of measuring himself against stronger rooms. The 2020 lockdown, which he says left almost no record, closes it as a visible gap in what was documented, just before the Seattle move."
+    },
+    {
+      "id": "seattle-from-nothing",
+      "label": "Seattle, building a life from nothing in particular",
+      "from": 2021,
+      "to": 2024,
+      "place": "Seattle, Washington",
+      "note": "Moved across the country for Amazon, worked in inbound sales and then AWS games and betting, switched to Program Manager in March 2024, and began traveling.",
+      "why": "The June 2021 move is where he places his confidence ('came from having to build a life from nothing'). The career change in 2024 is the other event he reflects on. Photos first appear in 2023 and thicken in 2024 (Panama, Angkor Wat, Chicago, sailing), so the record changes here from milestones to lived texture."
+    },
+    {
+      "id": "pickleball-and-everywhere",
+      "label": "Competing at 5.0, and out the door every weekend",
+      "from": 2025,
+      "to": 2026,
+      "place": "Pacific Northwest and beyond",
+      "note": "Entered pickleball tournaments, built a community, built Stacked, traveled (Guatemala, Japan and Taiwan, Costa Rica, Kauai), explored the Cascades and Oregon Coast, and made Remnant.",
+      "why": "This is by far the densest stretch in the record: a dozen photos in 2025, a dozen more plus a video in 2026, and four chapters. It starts in January 2025 with competitive pickleball, which he credits with giving him a community, and it runs through the present, where the record is being made."
+    }
+  ],
   "_eras_note": "Deliberately empty. Press 'Re-derive with AI' and the model groups the years itself.",
   "achievements": [
     {
       "id": "a-aws",
       "year": 2021,
       "title": "Inbound sales → AWS, games and betting",
-      "detail": "Started in inbound sales at Amazon, moved to AWS selling into the games industry, then into betting and gaming specifically. Through 2024."
+      "detail": "Started in inbound sales at Amazon, moved to AWS selling into the games industry, then into betting and gaming specifically. Through 2024.",
+      "included": false,
+      "why": "This leaves out the sales career: three years in inbound sales and AWS games and betting, which looks impressive from outside. He never draws a lesson from it. When he talks about those years, he credits the Seattle move and not the job for his confidence."
     },
     {
       "id": "a-ab",
@@ -1068,7 +1113,9 @@
         "kind": "advice",
         "at": "2026",
         "text": "Changing discipline three years in means being a beginner again on purpose, in front of people who watched you be competent at something else. That trade is almost always worth it, and it never once feels like it in the first six months."
-      }
+      },
+      "included": true,
+      "why": "He wrote a real lesson on this one: changing discipline means being a beginner on purpose, and the trade is worth it even though it doesn't feel that way at first. A pivot he reflects on this honestly counts for more than the longer sales stretch he only lists."
     },
     {
       "id": "a-pickleball",
@@ -1079,19 +1126,25 @@
         "kind": "forward",
         "at": "2026",
         "text": "I went in for the competition and what I actually got was a community. The tournaments are the excuse; the people you keep showing up with are the thing. If you are deciding whether to enter — enter, and not for the result."
-      }
+      },
+      "included": true,
+      "why": "He returns to it in his own words with a clear point: the tournaments are the excuse and the community is the thing, so enter and don't do it for the result. That is a lesson aimed at the reader, and it anchors his most recent and most documented era."
     },
     {
       "id": "a-stacked",
       "year": 2025,
       "title": "Stacked",
-      "detail": "A doubles-matching system built on complementary fit rather than similarity."
+      "detail": "A doubles-matching system built on complementary fit rather than similarity.",
+      "included": false,
+      "why": "This leaves out Stacked, the doubles-matching system, as a defining moment. The record gives only a one-line description and no reflection or lesson from him. Its link to the pickleball community is plausible, but that link is already carried by the pickleball entry."
     },
     {
       "id": "a-remnant",
       "year": 2026,
       "title": "Remnant",
-      "detail": "This."
+      "detail": "This.",
+      "included": false,
+      "why": "Remnant is described only as 'This.' It is the frame holding the record and not an event in his life. The lessons that matter were written into it and are attached to other moments, so counting it would double-count them. It is left out because he gives no learning of his own about the project itself."
     }
   ],
   "_achievements_note": "No 'included' or 'why' set — the model decides which are defining moments and which are résumé lines, and argues each call.",
@@ -1154,5 +1207,11 @@
       "why": "He never wrote about this. The archive returns nothing rather than inferring an answer — a plausible reconstruction of what someone would have said is the one output this product will not produce."
     }
   },
-  "_learnings_NEEDS_YOU": "Five trip chapters still have none. kind is 'advice', 'reflection', or 'forward'."
+  "_learnings_NEEDS_YOU": "Five trip chapters still have none. kind is 'advice', 'reflection', or 'forward'.",
+  "_provenance": {
+    "model": "claude-sonnet-5-5",
+    "at": "2026-11-09T12:05:35",
+    "input_tokens": 3295,
+    "output_tokens": 2897
+  }
 }

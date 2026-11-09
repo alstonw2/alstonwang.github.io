@@ -1,0 +1,354 @@
+{
+  "guatemala": {
+    "fingerprint": "4a939c7af1c68756",
+    "title": "Among the Volcanoes",
+    "narrative": "Guatemala revealed itself in layers—first the raw power of its living mountains, then the quiet life nestled in their shadow. We climbed toward fire and light, slept under stars that felt close enough to touch, and learned that beauty here runs deeper than any photograph can hold.",
+    "curationWhy": "9 of 10 photographs kept. Chosen for narrative value over technical quality, near-duplicates dropped.",
+    "slides": [
+      {
+        "src": "https://alstonwang.com/images/camera/Acatenango1.jpg",
+        "caption": "The sun rose over Acatenango and the valley below, a moment of stillness before everything changed.",
+        "why": "Iconic panoramic opener; sets the scale and wonder of the landscape"
+      },
+      {
+        "collage": [
+          {
+            "src": "https://alstonwang.com/images/camera/Acatenango2.jpeg"
+          },
+          {
+            "src": "https://alstonwang.com/images/camera/Acatenango3.jpeg"
+          }
+        ],
+        "caption": "The volcano breathed and shifted before us—smoke curling from its peak in daylight, ash and fire visible at night.",
+        "why": "Two different perspectives of the same living mountain show the full experience of being near it"
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/Acatenango4.jpeg",
+        "caption": "At night, the mountain glowed red against the dark—a reminder that we were standing on restless earth.",
+        "why": "Haunting, rare moment of volcanic activity; most powerful emotional image"
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/Antigua.jpeg",
+        "caption": "Antigua's colonial heart framed the volcano in the distance—centuries of stone watching over centuries more.",
+        "why": "Shifts narrative to human settlement; landscape-wide shot shows context and connection"
+      },
+      {
+        "collage": [
+          {
+            "src": "https://alstonwang.com/images/camera/Santa%20Cruz%201.jpeg"
+          },
+          {
+            "src": "https://alstonwang.com/images/camera/Santa%20Cruz5.jpeg"
+          }
+        ],
+        "caption": "We found refuge in the green valleys and small houses that clung to the mountainsides, places where life moved slowly.",
+        "why": "Both show intimate human scale in the landscape; capture the quieter side of the journey"
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/Santa%20Cruz%204.jpeg",
+        "caption": "On the last evening, Lake Atitlán held the light like a prayer—mountains mirrored in still water.",
+        "why": "Reflective, tender close; elegant panorama wraps the chapter with peace"
+      },
+      {
+        "video": "https://youtu.be/Nl-vJRuLz0k",
+        "src": "https://img.youtube.com/vi/Nl-vJRuLz0k/hqdefault.jpg",
+        "caption": "Santa Cruz, Guatemala",
+        "why": ""
+      },
+      {
+        "video": "https://youtu.be/q5FjjyQM17c",
+        "src": "https://img.youtube.com/vi/q5FjjyQM17c/hqdefault.jpg",
+        "caption": "San Pedro, Guatemala",
+        "why": ""
+      },
+      {
+        "video": "https://youtu.be/APTed2nsYuE",
+        "src": "https://img.youtube.com/vi/APTed2nsYuE/hqdefault.jpg",
+        "caption": "Volcan de Fuego, Guatemala",
+        "why": ""
+      }
+    ],
+    "candidates": 10,
+    "_usage": {
+      "input_tokens": 5104,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 678,
+      "service_tier": "standard",
+      "inference_geo": "not_available",
+      "speed": "standard"
+    }
+  },
+  "oregon-coast": {
+    "fingerprint": "cee1fbeb821ef0bb",
+    "title": "Coast of Stone and Sky",
+    "narrative": "We came to Oregon seeking something vast and unshakeable—rocks that had held their shape for millennia, waves that knew no hurry, and the kind of silence that only comes when you're small against the Pacific. What we found was a landscape that felt like both an ending and a beginning.",
+    "curationWhy": "9 of 17 photographs kept. Chosen for narrative value over technical quality, near-duplicates dropped.",
+    "slides": [
+      {
+        "src": "https://alstonwang.com/images/camera/pistol%20river1.jpeg",
+        "caption": "The sky ignited as the day dissolved into the ocean, leaving everything in silhouette.",
+        "why": "Powerful opener that captures the emotional tone—fire and shadow, beauty and solitude"
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/pistol%20river%203.jpg",
+        "caption": "Twin sea stacks stood patient in the shallows, their reflections pooling beneath them like memory.",
+        "why": "Iconic landscape image that defines this coastal chapter; the stillness and monumentality are central to the experience"
+      },
+      {
+        "collage": [
+          {
+            "src": "https://alstonwang.com/images/camera/secret%20beach%201.jpg"
+          },
+          {
+            "src": "https://alstonwang.com/images/camera/devil%27s%20punchbowl%202.jpeg"
+          }
+        ],
+        "caption": "We moved through stone passages carved by time, emerging into light and color that had been hidden in the dark.",
+        "why": "These two cave moments show the journey inward and outward—discovery, exploration, and the reveal of hidden beauty"
+      },
+      {
+        "collage": [
+          {
+            "src": "https://alstonwang.com/images/camera/secret%20beach%202.jpg"
+          },
+          {
+            "src": "https://alstonwang.com/images/camera/devil%27s%20punchbowl%201.jpg"
+          }
+        ],
+        "caption": "The tide pools held entire worlds—creatures clinging to rocks, life finding purchase in the smallest spaces.",
+        "why": "Intimate details paired with cave exploration show how we noticed both the vast and the minute"
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/cannon%20beach%202.jpg",
+        "caption": "We sat with strangers on the sand beneath that impossible rock, all of us quiet, all of us held by something larger than ourselves.",
+        "why": "Humanity in landscape—a gentle moment that grounds the chapter in actual presence and shared witnessing"
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/moonlight1.jpeg",
+        "caption": "The moon rose over everything we'd walked through, and the day finally let us go.",
+        "why": "Quiet, reflective close—the night sky mirrors the emotional arc, ending with release and contemplation"
+      },
+      {
+        "video": "https://youtu.be/vLBDJSs_OkY",
+        "src": "https://img.youtube.com/vi/vLBDJSs_OkY/hqdefault.jpg",
+        "caption": "Samuel H. Boardman Scenic State Park, Oregon Coast",
+        "why": ""
+      },
+      {
+        "video": "https://youtu.be/pe4iGaTIvzo",
+        "src": "https://img.youtube.com/vi/pe4iGaTIvzo/hqdefault.jpg",
+        "caption": "Thor's Well, Oregon Coast",
+        "why": ""
+      },
+      {
+        "video": "https://www.youtube.com/watch?v=Mk-JG3_Wp4c",
+        "src": "https://img.youtube.com/vi/Mk-JG3_Wp4c/hqdefault.jpg",
+        "caption": "Shingle Mills, Oregon Coast",
+        "why": ""
+      }
+    ],
+    "candidates": 17,
+    "_usage": {
+      "input_tokens": 9530,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 710,
+      "service_tier": "standard",
+      "inference_geo": "not_available",
+      "speed": "standard"
+    }
+  },
+  "glacier": {
+    "fingerprint": "e56c216aa364ab5b",
+    "title": "Glacier's Quiet Grandeur",
+    "narrative": "We came to Glacier National Park seeking the scale of mountains, but found ourselves undone by stillness—the kind that only high water and ancient stone can teach. Each lake held its own reflection like a secret, and in the gaps between peaks, we glimpsed what it means to be small.",
+    "curationWhy": "6 of 7 photographs kept. Chosen for narrative value over technical quality, near-duplicates dropped.",
+    "slides": [
+      {
+        "src": "https://alstonwang.com/images/camera/Glacier%20National%20Park%20.jpg",
+        "caption": "The lodge sits small and solitary, cradled between mountains and their perfect mirror.",
+        "why": "Wide panoramic anchor; captures the park's defining moment of serene abundance."
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/Glacier%20National%20Park.jpeg",
+        "caption": "A burned tree stands sentinel on the ridge, life and ruin held in a single frame.",
+        "why": "Strong visual metaphor; shows the park's resilience and complexity beyond postcard beauty."
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/Glacier%20national%20park3.jpeg",
+        "caption": "A solitary figure wades into the shallows, surrounded by the forest's doubled world.",
+        "why": "Captures an intimate moment of connection; someone actually inhabiting the landscape."
+      },
+      {
+        "collage": [
+          {
+            "src": "https://alstonwang.com/images/camera/Glacier%20national%20park4.jpeg"
+          },
+          {
+            "src": "https://alstonwang.com/images/camera/Glacier%20national%20park5.jpeg"
+          }
+        ],
+        "caption": "Two peaks, two vistas—each reveals a different face of the park's architecture.",
+        "why": "Both are iconic lake reflections from different locations; together they show the recurring beauty across multiple hikes."
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/Glacier%20national%20park6.jpeg",
+        "caption": "A mountain goat, impossibly sure-footed, reminds us this is home for someone else.",
+        "why": "Shifts perspective; introduces the wild inhabitants and grounds the grandeur in real ecology."
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/Grinnell%20Glacier%2C%20Glacier%20national%20park.jpeg",
+        "caption": "Ice fragments drift in turquoise water, the glacier's slow gift to the valley below.",
+        "why": "Epic closer; shows geological time and change; the glacier itself becomes the subject, honoring the park's namesake."
+      }
+    ],
+    "candidates": 7,
+    "_usage": {
+      "input_tokens": 3851,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 589,
+      "service_tier": "standard",
+      "inference_geo": "not_available",
+      "speed": "standard"
+    }
+  },
+  "asia": {
+    "fingerprint": "20334d2399581e57",
+    "title": "Neon and Snow",
+    "narrative": "Wandering between Tokyo's glowing streets and the quiet majesty of Mount Fuji, we found ourselves caught between two worlds—the frenetic pulse of city nights and the timeless stillness of nature. It was a journey through contrasts, each moment a small surrender to wherever the path led.",
+    "curationWhy": "5 of 11 photographs kept. Chosen for narrative value over technical quality, near-duplicates dropped.",
+    "slides": [
+      {
+        "collage": [
+          {
+            "src": "https://alstonwang.com/images/camera/Japan1.jpg"
+          },
+          {
+            "src": "https://alstonwang.com/images/camera/Japan2.jpg"
+          }
+        ],
+        "caption": "Tokyo revealed itself in quiet corners and neon-soaked alleyways—a city that only comes alive after dark.",
+        "why": "Both capture Tokyo's nocturnal character and set the urban tone for the journey."
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/Japan4.jpg",
+        "caption": "Mount Fuji rose perfect and snow-crowned across the dark water, a moment of pilgrimage made real.",
+        "why": "A defining landscape—wide and iconic, deserves solo presentation for full impact."
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/Japan5.jpg",
+        "caption": "Even the quiet houses seemed to bow toward the mountain's eternal presence.",
+        "why": "Complements the Fuji view with a grounded, human perspective of the same sacred place."
+      },
+      {
+        "collage": [
+          {
+            "src": "https://alstonwang.com/images/camera/Taipei3.jpg"
+          },
+          {
+            "src": "https://alstonwang.com/images/camera/Taipie6.jpg"
+          }
+        ],
+        "caption": "The night markets bloomed with lantern light and neon—places where strangers became part of the spectacle.",
+        "why": "Both capture the glowing, alive energy of night markets across both cities."
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/Taipei5.jpg",
+        "caption": "A solitary figure stood between stone and sky, exactly where the earth meets the sea.",
+        "why": "A meditative landscape moment that echoes the quiet seeking found throughout the chapter."
+      }
+    ],
+    "candidates": 11,
+    "_usage": {
+      "input_tokens": 6430,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 595,
+      "service_tier": "standard",
+      "inference_geo": "not_available",
+      "speed": "standard"
+    }
+  },
+  "costa-rica": {
+    "fingerprint": "9f68b6835540948e",
+    "title": "Into the Green",
+    "narrative": "Costa Rica revealed itself slowly—first as a bright-beaked curiosity, then as mist and stone and the patient green that fills every ravine. We moved through the country's heart, waking each morning to the same perfect volcano, learning that some places ask nothing of you but to stay still and look.",
+    "curationWhy": "6 of 6 photographs kept. Chosen for narrative value over technical quality, near-duplicates dropped.",
+    "slides": [
+      {
+        "src": "https://alstonwang.com/images/camera/Costa%20rica.jpeg",
+        "caption": "A toucan tilts its head—the first bright thing you notice, expectant as the country itself.",
+        "why": "Strong entry image that captures the specificity and color of arrival; the tips box is a wry, human detail."
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/La%20paz%20waterfall%2C%20costa%20rica.jpeg",
+        "caption": "A waterfall drops through layered green, and you understand why people speak of this place in whispers.",
+        "why": "The emotional heart of the journey—vertical and sublime, the kind of moment that stops time. Stands alone as a hero image."
+      },
+      {
+        "collage": [
+          {
+            "src": "https://alstonwang.com/images/camera/Arenal%20.jpeg"
+          },
+          {
+            "src": "https://alstonwang.com/images/camera/La%20Fortuna%20waterfall%2C%20costa%20rica.jpeg"
+          }
+        ],
+        "caption": "The volcano appears and reappears—distant, patient, framed by ferns and cloud and the particular light of elevation.",
+        "why": "Two views of the same geography from different angles and distances; together they show how the volcano becomes a constant companion."
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/Arenal%20Volcano.jpeg",
+        "caption": "Arenal rises perfect above the pool, reflected in still water—the moment the landscape becomes personal.",
+        "why": "Wide panoramic landscape showing human comfort meeting untamed nature; a turning point in the narrative where you settle in."
+      },
+      {
+        "src": "https://alstonwang.com/images/camera/Areanl%20Volcano%202.jpeg",
+        "caption": "Framed by glass and modern walls, the volcano fills the window—the view becomes the room, and home becomes temporary.",
+        "why": "The intimate final image showing how the landscape infiltrates your space; a quiet meditation on intimacy with place."
+      },
+      {
+        "video": "https://youtu.be/M3Lvgr04tIQ",
+        "src": "https://img.youtube.com/vi/M3Lvgr04tIQ/hqdefault.jpg",
+        "caption": "Arenal Volcano, Costa Rica",
+        "why": ""
+      }
+    ],
+    "candidates": 6,
+    "_usage": {
+      "input_tokens": 3225,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 604,
+      "service_tier": "standard",
+      "inference_geo": "not_available",
+      "speed": "standard"
+    }
+  },
+  "_provenance": {
+    "model": "claude-haiku-4-5-20251001",
+    "at": "2026-11-09T12:06:42"
+  }
+}
