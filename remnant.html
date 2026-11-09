@@ -1149,7 +1149,6 @@
       background: #fff; color: var(--ink);
     }
     .voice-form input:focus { outline: 2px solid rgba(196,113,58,.4); outline-offset: 1px; }
-    .voice-chips { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .8rem; }
     .quote-card {
       margin-top: 1.2rem; padding: 1.5rem 1.7rem; background: #fff;
       border: 1px solid rgba(44,44,44,.08); border-radius: 10px;
@@ -1496,22 +1495,6 @@
     </section>
 
     <!-- Voice -->
-    <section class="voice">
-      <h2 class="ex-section-title">Ask what she said</h2>
-      <p class="ex-section-sub">
-        Answers are her own words, with the date she wrote them. Remnant will not
-        generate speech in her voice — if she never wrote about it, you get nothing.
-      </p>
-      <div class="voice-form">
-        <input type="text" id="voice-q" placeholder="e.g. what was she afraid of"
-               aria-label="Ask what she wrote about something"
-               onkeydown="if(event.key==='Enter')askVoice()" />
-        <button class="btn-primary" style="padding:.75rem 1.6rem;font-size:.9rem" onclick="askVoice()">Ask</button>
-      </div>
-      <div class="voice-chips" id="voice-chips"></div>
-      <div id="voice-out"></div>
-    </section>
-
     <!-- Start your own -->
     <section style="margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(44,44,44,.1)">
       <h2 class="ex-section-title">Start yours</h2>
@@ -4084,7 +4067,6 @@ function renderExplorer() {
   renderCoverage();
   renderLifeMap();
   renderSurvives();
-  renderVoiceChips();
 
   const r = document.getElementById('ex-range');
   r.value = span.to;
@@ -4349,14 +4331,9 @@ function renderSurvives() {
 }
 
 // ── Voice: retrieval, never generation ──────────
-function renderVoiceChips() {
-  const qs = (LIFE.voice && LIFE.voice.prompts) || [];
-  document.getElementById('voice-chips').innerHTML = qs.map(t =>
-    `<button class="mini" onclick="askVoice('${esc(t)}')">${esc(t)}</button>`).join('');
-}
-
-// Learnings are first-class passages in their own words — the lookup searches
-// them alongside anything explicitly recorded as a quote.
+// Everything the person wrote in their own words: recorded quotes plus the
+// learning on every experience. The lookup UI that read from this is gone, but
+// the derivation prompt still weighs these heavily when ranking what mattered.
 function voiceCorpus() {
   const out = (LIFE.voice && LIFE.voice.quotes || []).slice();
   const add = (holder, label) => {
@@ -4377,59 +4354,6 @@ function voiceCorpus() {
   (LIFE.letters || []).forEach(l => add(l, 'Letter'));
   (LIFE.events || []).forEach(e => add(e, String(e.year)));
   return out;
-}
-
-function askVoice(preset) {
-  const input = document.getElementById('voice-q');
-  if (preset) input.value = preset;
-  const q = input.value.trim();
-  const out = document.getElementById('voice-out');
-  if (!q) { out.innerHTML = ''; return; }
-
-  const corpus = voiceCorpus();
-  if (!corpus.length) {
-    out.innerHTML = `<div class="quote-card empty">
-      <blockquote>Nothing written down yet.</blockquote>
-      <div class="quote-src">This record has no passages in their own words — the part of a life
-        that only the person can supply.</div></div>`;
-    return;
-  }
-  const words = (q.toLowerCase().match(/[a-z']+/g) || [])
-    .filter(w => w.length > 2 && !VOICE_STOP.has(w));
-
-  // A topic hit is worth more than an incidental word appearing in the prose.
-  // The threshold matters: matching loosely here is how a system starts
-  // answering questions the person never actually addressed.
-  let best = null, bestScore = 0;
-  corpus.forEach(qt => {
-    const topics = (qt.topics || []).map(t => t.toLowerCase());
-    const text = qt.text.toLowerCase();
-    let score = 0;
-    words.forEach(w => {
-      // An exact topic hit has to beat a partial one, or "Stuyvesant" loses a
-      // tie to "teacher" merely containing "teach".
-      if (topics.some(t => t === w))          score += 4;
-      else if (topics.some(t => t.includes(w))) score += 2;
-      else if (text.includes(w))               score += 1;
-    });
-    if (score > bestScore) { bestScore = score; best = qt; }
-  });
-  if (bestScore < 2) best = null;
-
-  if (!best) {
-    out.innerHTML = `<div class="quote-card empty">
-      <blockquote>She never wrote about this.</blockquote>
-      <div class="quote-src">No passage in the archive addresses “${esc(q)}”.</div>
-      ${whyChip(LIFE.voice.noAnswer.why, 'Why there is no answer here')}
-    </div>`;
-    return;
-  }
-
-  out.innerHTML = `<div class="quote-card">
-    <blockquote>“${esc(best.text)}”</blockquote>
-    <div class="quote-src">${esc(best.source)}${best.at ? ' · ' + esc(best.at) : ''}</div>
-    ${whyChip('Matched on her own wording, not on meaning. This passage is returned because the words in it overlap the question — the system is not interpreting what she meant, and it will return nothing rather than reach for the nearest thing.', 'How this was found')}
-  </div>`;
 }
 
 // ── Entry / exit ────────────────────────────────
