@@ -1388,6 +1388,8 @@
       50% { transform: scale(1.5); box-shadow: 0 0 0 7px rgba(196,113,58,.25); }
     }
     @media (max-width: 640px) { .rail-geo { margin-left: calc(3.4rem + 1.4rem + 1rem); } }
+  
+    .cov-year.blank { background: none; height: 0; pointer-events: none; }
   </style>
 </head>
 <body>
@@ -3855,23 +3857,19 @@ function renderCoverage() {
   const years = Object.keys(counts).map(Number);
   const filled = years.filter(y => counts[y]).length;
 
+  // Years with nothing in them keep their place on the axis but say nothing —
+  // the strip reads as density, not as a list of what is absent.
   const bars = years.map(y => {
     const n = counts[y];
-    const h = n ? Math.max(22, Math.round(n / max * 100)) : 14;
-    return `<button class="cov-year ${n ? '' : 'empty'}" style="height:${h}%"
+    if (!n) return `<span class="cov-year blank" aria-hidden="true"></span>`;
+    return `<button class="cov-year" style="height:${Math.max(22, Math.round(n / max * 100))}%"
       data-year="${y}" onclick="scrubTo(${y})"
-      title="${y} — ${n ? n + ' recorded' : 'nothing recorded'}"
-      aria-label="${y}, ${n ? n + ' entries' : 'empty'}"></button>`;
+      title="${y} — ${n} recorded" aria-label="${y}, ${n} entries"></button>`;
   }).join('');
-
-  const runs = emptyRuns().filter(([a, b]) => b - a >= 1);
-  const biggest = runs.sort((p, q) => (q[1] - q[0]) - (p[1] - p[0]))[0];
 
   document.getElementById('ex-coverage').innerHTML = `
     <div class="cov-strip">${bars}</div>
-    <div class="cov-axis"><span>${LIFE._span.from}</span><span>${LIFE._span.to}</span></div>
-    <div class="cov-legend"><b>${filled}</b> of <b>${years.length}</b> years hold something${
-      biggest ? ` · longest gap <b>${biggest[0]}–${biggest[1]}</b>` : ''}</div>`;
+    <div class="cov-axis"><span>${LIFE._span.from}</span><span>${LIFE._span.to}</span></div>`;
 }
 
 function scrubTo(year) {
@@ -4034,8 +4032,7 @@ function renderExplorer() {
   document.getElementById('ex-name').textContent = p.name;
   document.getElementById('ex-dates').textContent =
     [p.born ? String(p.born) : null,
-     p.living ? 'still here, still adding' : p.died,
-     p.hometown].filter(Boolean).join(' · ');
+     p.living ? 'still here, still adding' : p.died].filter(Boolean).join(' · ');
   document.getElementById('ex-tagline').textContent = p.tagline || '';
   document.getElementById('ex-demo-badge').hidden = !LIFE.demo;
 
@@ -4082,7 +4079,7 @@ function renderExplorer() {
     </div>`;
   }).join('');
 
-  document.getElementById('ex-derive').innerHTML = deriveStatusHtml() + incompleteHtml();
+  document.getElementById('ex-derive').innerHTML = deriveStatusHtml();
   document.getElementById('ex-detail').innerHTML = emptyDetailHtml();
   renderCoverage();
   renderLifeMap();
